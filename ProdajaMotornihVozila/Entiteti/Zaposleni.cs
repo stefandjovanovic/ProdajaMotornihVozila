@@ -14,10 +14,25 @@ namespace ProdajaMotornihVozila.Entiteti
         public virtual required DateTime  DatumRodjenja { get; set; }
         public virtual required DateTime  DatumZaposlenja { get; set; }
         public virtual string? StrucnaSprema { get; set; }
-        public virtual required string TipZaposlenja { get; set; }
+        //public virtual required string TipZaposlenja { get; set; }
+        
+
+        public virtual Radnja? RadnjaAngazovanja { get; set; }
+
+        public virtual Zaposleni? RukovodiocZaposlenog { get; set; }
+
+        public virtual IList<Zaposleni>? PodredjeniZaposleni { get; set; } = [];
+
+
+    }
+
+    public class StalnoZaposleni: Zaposleni
+    {
         public virtual float? Plata { get; set; }
+    }
+
+    public class ZaposleniNaOdredjeno: Zaposleni
+    {
         public virtual DateTime? DatumIstekaUgovora { get; set; }
-
-
     }
 }
