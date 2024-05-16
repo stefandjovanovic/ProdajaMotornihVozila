@@ -8,10 +8,23 @@ using System.Threading.Tasks;
 
 namespace ProdajaMotornihVozila.Mapiranja
 {
-    public class EkonomskeStrukeMapiranja : SubclassMap<EkonomskeStruke>
+    public class EkonomskeStrukeStalnoMapiranja : SubclassMap<EkonomskeStrukeStalno>
     {
-        public EkonomskeStrukeMapiranja()
+        public EkonomskeStrukeStalnoMapiranja()
         {
+            Table("EKONOMSKE_STRUKE");
+
+
+            KeyColumn("MATICNI_BROJ");
+        }
+    }
+
+    public class EkonomskeStrukeNaOdredjenoMapiranja : SubclassMap<EkonomskeStrukeNaOdredjeno>
+    {
+        public EkonomskeStrukeNaOdredjenoMapiranja()
+        {
+            Table("EKONOMSKE_STRUKE");
+
             KeyColumn("MATICNI_BROJ");
         }
     }

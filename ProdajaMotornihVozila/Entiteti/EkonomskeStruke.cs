@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace ProdajaMotornihVozila.Entiteti
 {
-    public class EkonomskeStruke : Zaposleni
+    public class EkonomskeStrukeStalno : StalnoZaposleni
+    {
+
+    }
+
+    public class EkonomskeStrukeNaOdredjeno : ZaposleniNaOdredjeno
     {
 
     }

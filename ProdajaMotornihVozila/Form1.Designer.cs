@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             UcitavanjeZaposlenog = new Button();
+            RadnjaProba = new Button();
             SuspendLayout();
             // 
             // UcitavanjeZaposlenog
@@ -37,15 +38,26 @@
             UcitavanjeZaposlenog.Name = "UcitavanjeZaposlenog";
             UcitavanjeZaposlenog.Size = new Size(171, 48);
             UcitavanjeZaposlenog.TabIndex = 0;
-            UcitavanjeZaposlenog.Text = "Ucitavanje zaposlenog";
+            UcitavanjeZaposlenog.Text = "Zaposleni proba";
             UcitavanjeZaposlenog.UseVisualStyleBackColor = true;
             UcitavanjeZaposlenog.Click += UcitavanjeZaposlenog_Click;
+            // 
+            // RadnjaProba
+            // 
+            RadnjaProba.Location = new Point(176, 147);
+            RadnjaProba.Name = "RadnjaProba";
+            RadnjaProba.Size = new Size(161, 50);
+            RadnjaProba.TabIndex = 1;
+            RadnjaProba.Text = "Radnja proba";
+            RadnjaProba.UseVisualStyleBackColor = true;
+            RadnjaProba.Click += RadnjaProba_Click;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1240, 533);
+            Controls.Add(RadnjaProba);
             Controls.Add(UcitavanjeZaposlenog);
             Name = "Form1";
             Text = "Form1";
@@ -55,5 +67,6 @@
         #endregion
 
         private Button UcitavanjeZaposlenog;
+        private Button RadnjaProba;
     }
 }

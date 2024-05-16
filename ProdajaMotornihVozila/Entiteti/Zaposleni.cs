@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProdajaMotornihVozila.Entiteti
 {
-    public class Zaposleni
+    public abstract class Zaposleni
     {
         public virtual required string MaticniBroj { get; set; }
         public virtual required string Ime { get; set; }

@@ -16,7 +16,14 @@ namespace ProdajaMotornihVozila.Mapiranja
 
             Id(x => x.Id, "ID").GeneratedBy.TriggerIdentity();
 
-            DiscriminateSubClassesOnColumn("").Formula("predikat");
+            DiscriminateSubClassesOnColumn("").Formula("(CASE WHEN (OVLASCENI_SERVIS_F = 'Da' AND SALON_F = 'Ne' ) " +
+                "THEN 'Servis'" +
+                " WHEN (OVLASCENI_SERVIS_F = 'Ne' AND SALON_F = 'Da' )" +
+                " THEN 'Salon' " +
+                "WHEN (OVLASCENI_SERVIS_F = 'Da' AND SALON_F = 'Da' ) THEN " +
+                "'ServisSalon'" +
+                "ELSE 'Nepoznato'" +
+                "END)");
 
 
             References(x => x.PripadaPredstavnistvu).Column("ID_PREDSTAVNISTVA").LazyLoad();
@@ -33,7 +40,7 @@ namespace ProdajaMotornihVozila.Mapiranja
 
         public OvlasceniServisMapiranja()
         {
-            DiscriminatorValue("Da");
+            DiscriminatorValue("Servis");
 
             Map(x => x.StepenOpremljenosti, "STEPEN_OPREMLJENOSTI");
             Map(x => x.Farbarske, "FARBARSKE");
@@ -49,6 +56,27 @@ namespace ProdajaMotornihVozila.Mapiranja
 
     public class SalonMapiranja : SubclassMap<Salon>
     {
-
+        public SalonMapiranja()
+        {
+            DiscriminatorValue("Salon");
+        }
     }
+
+    public class OvlasceniServiIRadnjaMapiranja : SubclassMap<OvlasceniServisIRadnja>
+    {
+        public OvlasceniServiIRadnjaMapiranja()
+        {
+            DiscriminatorValue("ServisSalon");
+
+            Map(x => x.StepenOpremljenosti, "STEPEN_OPREMLJENOSTI");
+            Map(x => x.Farbarske, "FARBARSKE");
+            Map(x => x.Limarske, "LIMARSKE");
+            Map(x => x.Vulkanizerske, "VULKANICARSKE");
+            Map(x => x.Mehanicarske, "MEHANICARSKE");
+
+            References(x => x.ServisVisegRanga).Column("ID_SERVISA_VISEG_RANGA").LazyLoad();
+            HasMany(x => x.ServisiNizegRanga).KeyColumn("ID_SERVISA_VISEG_RANGA").Cascade.All().Inverse();
+        }
+    }
+
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProdajaMotornihVozila.Entiteti
 {
-    public class Radnja
+    public abstract class Radnja
     {
         public virtual int Id { get; protected set; }
 
@@ -38,4 +38,17 @@ namespace ProdajaMotornihVozila.Entiteti
     {
 
     }
+
+    public class OvlasceniServisIRadnja: Radnja
+    {
+        public virtual string? StepenOpremljenosti { get; protected set; }
+        public virtual string? Farbarske { get; protected set; }
+        public virtual string? Limarske { get; protected set; }
+        public virtual string? Vulkanizerske { get; protected set; }
+        public virtual string? Mehanicarske { get; protected set; }
+
+        public virtual OvlasceniServis? ServisVisegRanga { get; set; }
+        public virtual IList<OvlasceniServis>? ServisiNizegRanga { get; set; } = [];
+    }
+
 }
