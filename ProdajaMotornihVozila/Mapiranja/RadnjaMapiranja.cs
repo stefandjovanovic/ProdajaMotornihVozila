@@ -59,10 +59,12 @@ namespace ProdajaMotornihVozila.Mapiranja
         public SalonMapiranja()
         {
             DiscriminatorValue("Salon");
+
+            HasMany(x => x.ProdataVozila).KeyColumn("ID_MESTA_PRODAJE").Cascade.All().Inverse();
         }
     }
 
-    public class OvlasceniServiIRadnjaMapiranja : SubclassMap<OvlasceniServisIRadnja>
+    public class OvlasceniServiIRadnjaMapiranja : SubclassMap<OvlasceniServisISalon>
     {
         public OvlasceniServiIRadnjaMapiranja()
         {

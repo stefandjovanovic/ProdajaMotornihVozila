@@ -8,31 +8,20 @@ using System.Threading.Tasks;
 
 namespace ProdajaMotornihVozila.Mapiranja
 {
-    public class TehnickeStrukeStalnoMapiranja : SubclassMap<TehnickeStrukeStalno>
+    public class TehnickeStrukeMapiranja : SubclassMap<TehnickeStruke>
     {
-        public TehnickeStrukeStalnoMapiranja()
+        public TehnickeStrukeMapiranja()
         {
             Table("TEHNICKE_STRUKE");
 
             KeyColumn("MATICNI_BROJ");
 
             Map(x => x.NazivSpecijalnosti, "NAZIV");
+            Map(x => x.DatumSticanjaDiplome, "DATUM_STICANJA");
             Map(x => x.Institucija, "INSTITUCIJA");
-            Map(x => x.DatumSticanjaDiplome, "DATUM");
+           
         }
     }
-    public class TehnickeStrukeNaOdredjenoMapiranja : SubclassMap<TehnickeStrukeNaOdredjeno>
-    {
-        public TehnickeStrukeNaOdredjenoMapiranja()
-        {
-            Table("TEHNICKE_STRUKE");
-
-            KeyColumn("MATICNI_BROJ");
-
-            Map(x => x.NazivSpecijalnosti, "NAZIV");
-            Map(x => x.Institucija, "INSTITUCIJA");
-            Map(x => x.DatumSticanjaDiplome, "DATUM");
-        }
-    }
+    
 
 }

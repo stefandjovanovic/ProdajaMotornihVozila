@@ -36,10 +36,10 @@ namespace ProdajaMotornihVozila.Entiteti
 
     public class Salon: Radnja
     {
-
+        public virtual IList<ProdajaVozila>? ProdataVozila { get; set; } = [];
     }
 
-    public class OvlasceniServisIRadnja: Radnja
+    public class OvlasceniServisISalon: Radnja
     {
         public virtual string? StepenOpremljenosti { get; protected set; }
         public virtual string? Farbarske { get; protected set; }

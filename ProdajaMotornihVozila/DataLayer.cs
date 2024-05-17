@@ -52,7 +52,7 @@ namespace ProdajaMotornihVozila
 
                 return Fluently.Configure()
                         .Database(cfg)
-                        .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Zaposleni>())
+                        .Mappings(m => m.FluentMappings.AddFromAssemblyOf<ZaposleniMapiranja>())
                         //.ExposeConfiguration(BuildSchema)
                         .BuildSessionFactory();
             }
