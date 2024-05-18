@@ -18,7 +18,8 @@ namespace ProdajaMotornihVozila.Mapiranja
 
             References(x => x.MestoProdaje).Column("ID_MESTA_PRODAJE").LazyLoad();
             References(x => x.IzvrsioProdaju).Column("MATICNI_BROJ_POSLODAVCA").LazyLoad();
-            References(x => x.KupacVozila).Column("ID_KUPCA");
+            References(x => x.KupacVozila).Column("ID_KUPCA").LazyLoad();
+            References(x => x.ProdatoVozilo).Column("BROJ_SASIJE_VOZILA").LazyLoad();
 
         }
     }

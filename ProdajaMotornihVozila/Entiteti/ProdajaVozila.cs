@@ -13,5 +13,6 @@ namespace ProdajaMotornihVozila.Entiteti
         public virtual Salon? MestoProdaje { get; set; }
         public virtual Zaposleni? IzvrsioProdaju { get; set; }
         public virtual Kupac? KupacVozila { get; set; }
+        public virtual VoziloKompanije? ProdatoVozilo {  get; set; }
     }
 }
