@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProdajaMotornihVozila.Entiteti
 {
-    public abstract class Zaposleni
+    public class Zaposleni
     {
         public virtual required string MaticniBroj { get; set; }
         public virtual required string Ime { get; set; }
@@ -24,6 +24,13 @@ namespace ProdajaMotornihVozila.Entiteti
 
         public virtual IList<Zaposleni>? PodredjeniZaposleni { get; set; } = [];
         public virtual IList<ProdajaVozila>? IzvrseneProdaje { get; set; } = [];
+
+
+        public Zaposleni()
+        {
+            PodredjeniZaposleni = new List<Zaposleni>();
+            IzvrseneProdaje = new List<ProdajaVozila>();
+        }
 
 
     }
