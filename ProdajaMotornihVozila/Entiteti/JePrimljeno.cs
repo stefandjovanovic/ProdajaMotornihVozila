@@ -10,9 +10,9 @@ namespace ProdajaMotornihVozila.Entiteti
     {
         public virtual int Id { get; protected set; }
 
-        public virtual required int IdObavljenogServisa { get; set; }
+        public virtual required ObavljeniServis IdObavljenogServisa { get; set; }
 
-        public virtual required string RegistarskiBroj { get; set; }
+        public virtual required Vozilo RegistarskiBroj { get; set; }
 
         public virtual required string Model { get; set; }
 

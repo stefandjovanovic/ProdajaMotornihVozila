@@ -8,6 +8,10 @@ namespace ProdajaMotornihVozila.Entiteti
 {
     public class EkonomskeStruke : Zaposleni
     {
+        public virtual required string PosedujeSertifikat { get; set; }
+
+        public virtual DateTime? DatumSticanja { get; set; }
+
 
     }
 }

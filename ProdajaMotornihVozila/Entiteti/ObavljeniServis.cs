@@ -6,9 +6,9 @@
         public virtual required DateTime DatumPrjema { get; set; }
         public virtual DateTime? DatumZavrsetka { get; set; }
 
-        public virtual required string MbrIzvrsiocaPrijema { get; set; }
+        public virtual required Zaposleni MbrIzvrsiocaPrijema { get; set; }
 
-        public virtual required int IdServisa { get; set; }
+        public virtual required Radnja IdServisa { get; set; }
 
         public virtual IList<JePrimljeno>? JePrimljeno { get; set; }
 

@@ -16,6 +16,8 @@ namespace ProdajaMotornihVozila.Mapiranja
 
 
             KeyColumn("MATICNI_BROJ");
+            Map(x => x.PosedujeSertifikat, "POSEDUJE_SERTIFIKAT");
+            Map(x => x.DatumSticanja, "DATUM_STICANJA");
         }
     }
 

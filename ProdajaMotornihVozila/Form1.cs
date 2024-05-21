@@ -22,8 +22,8 @@ namespace ProdajaMotornihVozila
                     EkonomskeStruke zaposleni2 = session.Load<EkonomskeStruke>("6024395763401");
                     zaposleni2.RukovodiocZaposlenog = zaposleni;
 
-                    //MessageBox.Show(zaposleni.Ime + " " + zaposleni.Prezime + " " + zaposleni.Plata + " " + zaposleni.DatumZaposlenja
-                    //    + " " + zaposleni.Institucija + " " + zaposleni.StrucnaSprema);
+                    MessageBox.Show(zaposleni.Ime + " " + zaposleni.Prezime + " " + zaposleni.Plata + " " + zaposleni.DatumZaposlenja
+                        + " " + zaposleni.Institucija + " " + zaposleni.StrucnaSprema);
 
                     //TehnickeStruke zaposleni1 = new()
                     //{
