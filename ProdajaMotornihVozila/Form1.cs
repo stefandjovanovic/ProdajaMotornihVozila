@@ -1,5 +1,6 @@
 using NHibernate;
 using ProdajaMotornihVozila.Entiteti;
+using ProdajaMotornihVozila.Forme;
 
 namespace ProdajaMotornihVozila
 {
@@ -67,13 +68,13 @@ namespace ProdajaMotornihVozila
                 {
                     OvlasceniServisISalon servisSalon = session.Load<OvlasceniServisISalon>(1);
                     MessageBox.Show(servisSalon.PripadaPredstavnistvu.Direktor.Ime);
-                    foreach(var servis in  servisSalon.ServisiNizegRanga) 
+                    foreach (var servis in servisSalon.ServisiNizegRanga)
                     {
                         MessageBox.Show(servis.Limarske);
                     }
 
                     Salon salon = new()
-                    { 
+                    {
                         PripadaPredstavnistvu = servisSalon.PripadaPredstavnistvu
                     };
 
@@ -93,6 +94,36 @@ namespace ProdajaMotornihVozila
                 session?.Close();
 
             }
+        }
+
+        private void btnZaposleni_Click(object sender, EventArgs e)
+        {
+            ZaposleniForma forma = new ZaposleniForma();
+            forma.ShowDialog();
+        }
+
+        private void btnPredstavnistva_Click(object sender, EventArgs e)
+        {
+            PredstavnistvaForma forma = new PredstavnistvaForma();
+            forma.ShowDialog();
+        }
+
+        private void btnVozila_Click(object sender, EventArgs e)
+        {
+            VozilaForma forma = new VozilaForma();
+            forma.ShowDialog();
+        }
+
+        private void btnServisi_Click(object sender, EventArgs e)
+        {
+            ServisForma forma = new ServisForma();
+            forma.ShowDialog();
+        }
+
+        private void btnProdaje_Click(object sender, EventArgs e)
+        {
+            ProdajaForma forma = new ProdajaForma();
+            forma.ShowDialog();
         }
     }
 }
