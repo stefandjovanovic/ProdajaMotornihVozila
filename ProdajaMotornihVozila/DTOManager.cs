@@ -176,7 +176,7 @@ namespace ProdajaMotornihVozila
 
                 Zaposleni rukovodilac = zaposleni.RukovodiocZaposlenog;
 
-                if(rukovodilac == null)
+                if (rukovodilac == null)
                 {
                     return null;
                 }
@@ -236,7 +236,7 @@ namespace ProdajaMotornihVozila
 
                     zaposleni.Add(new ZaposleniBasic(z.MaticniBroj, z.Ime, z.Prezime, z.StrucnaSprema, z.TipZaposlenja, tip));
 
-                    
+
                 }
 
                 s.Close();
@@ -315,6 +315,7 @@ namespace ProdajaMotornihVozila
 
                 ekonomStrBasic.ZaposleniId = ekonomskeStruke.MaticniBroj;
                 ekonomStrBasic.Ime = ekonomskeStruke.Ime;
+                ekonomStrBasic.Prezime = ekonomStrBasic.Prezime;
                 ekonomStrBasic.TipZaposlenja = ekonomskeStruke.TipZaposlenja;
                 ekonomStrBasic.StrucnaSprema = ekonomskeStruke.StrucnaSprema;
                 ekonomStrBasic.PosedujeSertifikat = ekonomskeStruke.PosedujeSertifikat;
@@ -402,7 +403,6 @@ namespace ProdajaMotornihVozila
 
         #endregion
 
-
         #region TehnickeStruke
 
         public static void obrisiTehnickeStruke(string zaposleniId)
@@ -438,6 +438,7 @@ namespace ProdajaMotornihVozila
 
                 tehnickeStr.ZaposleniId = tehnickeStruke.MaticniBroj;
                 tehnickeStr.Ime = tehnickeStruke.Ime;
+                tehnickeStr.Prezime = tehnickeStruke.Prezime;
                 tehnickeStr.TipZaposlenja = tehnickeStruke.TipZaposlenja;
                 tehnickeStr.StrucnaSprema = tehnickeStruke.StrucnaSprema;
                 tehnickeStr.NazivSpecijalnosti = tehnickeStruke.NazivSpecijalnosti;
@@ -456,7 +457,7 @@ namespace ProdajaMotornihVozila
 
             return tehnickeStr;
 
-            #endregion
+
 
         }
 
@@ -496,7 +497,7 @@ namespace ProdajaMotornihVozila
             }
         }
 
-        public static void azurirajTehnickeStuke (TehnickeStrBasic tehnickeStrBasic)
+        public static void azurirajTehnickeStuke(TehnickeStrBasic tehnickeStrBasic)
         {
             try
             {
@@ -521,12 +522,318 @@ namespace ProdajaMotornihVozila
                 session.Flush();
 
                 session.Close();
-                
+
             }
 
             catch (Exception ex)
             {
                 throw new Exception("Neuspesno azuriranje zaposlenog tehnicke struke! " + ex.Message);
+            }
+        }
+
+        #endregion
+
+        #region Predstavnistvo
+        public static List<PredstavnistvoBasic> vratiSvaPredstavnistva()
+        {
+            List<PredstavnistvoBasic> values = new List<PredstavnistvoBasic>();
+
+            try
+            {
+                ISession s = DataLayer.GetSession();
+
+                IEnumerable<Predstavnistvo> predstavnistva = from p in s.Query<Predstavnistvo>()
+                                                             select p;
+
+                foreach (Predstavnistvo p in predstavnistva)
+                {
+                    values.Add(new PredstavnistvoBasic(p.Id, p.Grad, p.Adresa, p.Direktor.Ime, p.Direktor.Prezime));
+                }
+
+                s.Close();
+            }
+
+            catch (Exception e)
+            {
+                throw new Exception("Neuspesno vracanje predstavnistava! " + e.Message);
+            }
+
+            return values;
+
+
+        }
+
+        public static void obrisiPredstavnistvo(int id)
+        {
+            try
+            {
+                ISession s = DataLayer.GetSession();
+
+                Predstavnistvo predstavnistvo = s.Load<Predstavnistvo>(id);
+
+                s.Delete(predstavnistvo);
+                s.Flush();
+
+                s.Close();
+
+            }
+
+            catch (Exception ex)
+            {
+                throw new Exception("Neuspesno brisanje predstavnistva! " + ex.Message);
+            }
+        }
+
+        public static void dodajPredstavnistvo(PredstavnistvoView predstavnistvoView)
+        {
+            try
+            {
+                ISession session = DataLayer.GetSession();
+
+                Predstavnistvo p = new()
+                {
+                    Adresa = predstavnistvoView.Adresa,
+                    Grad = predstavnistvoView.Grad,
+                    Direktor = session.Load<Zaposleni>(predstavnistvoView.IdDirektora)
+                };
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Neuspesno dodavanje predstavnistva! " + ex.Message);
+            }
+
+
+            #endregion
+
+        }
+
+        public static RadnjaView prikaziSadrzaj(int idPredstavnistva)
+        {
+            try
+            {
+                ISession session = DataLayer.GetSession();
+
+                Radnja radnja = session.Query<Radnja>().FirstOrDefault(r => r.PripadaPredstavnistvu.Id == idPredstavnistva);
+
+                if (radnja != null)
+                {
+                    return new RadnjaView
+                    {
+                        Id = radnja.Id,
+                        ImeSefa = radnja.SefRadnje.Ime,
+                        PrezimeSefa = radnja.SefRadnje.Prezime,
+                        SalonF = radnja.SalonF,
+                        ServisF = radnja.ServisF
+                    };
+
+                }
+                else
+                {
+                    throw new Exception("Ne postoji radnja u predstavnistvu!");
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw new Exception("Neuspesno vracanje sadrzaja radnje! " + ex.Message);
+            }
+
+        }
+
+        public static List<ZaposleniBasic> prikaziZaposlene (int idRadnje)
+        {
+            List<ZaposleniBasic> zaposleni = new List<ZaposleniBasic>();
+            try
+            {
+                ISession session = DataLayer.GetSession();
+
+                Radnja radnja = session.Load<Radnja>(idRadnje);
+
+                foreach (Zaposleni z in radnja.ZaposleniURadnji)
+                {
+                    if (z == null)
+                        continue;
+
+                    string tip;
+
+                    if (z.GetType() == typeof(TehnickeStruke))
+                        tip = "TehnickeStruke";
+                    else if (z.GetType() == typeof(EkonomskeStruke))
+                        tip = "EkonomskeStruke";
+                    else
+                        tip = "Zaposleni";
+
+                    zaposleni.Add(new ZaposleniBasic(z.MaticniBroj, z.Ime, z.Prezime, z.StrucnaSprema, z.TipZaposlenja, tip));
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Neuspesno vracanje zaposlenih radnje! " + ex.Message);
+            }
+
+            return zaposleni;
+        }
+
+        public static ServisView detaljiServis(int idRadnje)
+        {
+            try
+            {
+                ISession session = DataLayer.GetSession();
+                Radnja radnja = session.Load<Radnja>(idRadnje);
+
+                if( radnja.GetType() == typeof(OvlasceniServis))
+                {
+                    OvlasceniServis s = radnja as OvlasceniServis;
+                    ServisView sv = new()
+                    {
+                        Id = s.Id,
+                        StepenOpremljenosti = s.StepenOpremljenosti,
+                        Farbarske = s.Farbarske,
+                        Limarske = s.Limarske,
+                        Vulkanizerske = s.Vulkanizerske,
+                        Mehanicarske = s.Mehanicarske
+                    };
+                    return sv;
+
+                }
+                else if (radnja.GetType() == typeof(OvlasceniServisISalon))
+                {
+                    OvlasceniServisISalon s = radnja as OvlasceniServisISalon;
+                    ServisView sv = new()
+                    {
+                        Id = s.Id,
+                        StepenOpremljenosti = s.StepenOpremljenosti,
+                        Farbarske = s.Farbarske,
+                        Limarske = s.Limarske,
+                        Vulkanizerske = s.Vulkanizerske,
+                        Mehanicarske = s.Mehanicarske
+                    };
+                    return sv;
+                }
+                else
+                {
+                    throw new Exception("Radnja nije servis!");
+                }
+
+
+            }
+
+            catch(Exception ex)
+            {
+                throw new Exception("Neuspesno vracanje detalja servisa! " + ex.Message);
+            }
+
+            
+        }
+
+        public static ServisVisegNizegRangaView servisVisegRanga (int idRadnje)
+        {
+            try
+            {
+                ISession session = DataLayer.GetSession();
+                Radnja radnja = session.Load<Radnja>(idRadnje);
+
+                if(radnja.GetType() == typeof(OvlasceniServis))
+                {
+                    OvlasceniServis s = radnja as OvlasceniServis;
+                    ServisVisegNizegRangaView sv = new()
+                    {
+                        Id = s.ServisVisegRanga.Id,
+                        Adresa = s.ServisVisegRanga.PripadaPredstavnistvu.Adresa,
+                        Grad = s.ServisVisegRanga.PripadaPredstavnistvu.Grad
+
+                    };
+
+                    return sv;
+
+
+                }
+
+                else if (radnja.GetType() == typeof(OvlasceniServisISalon))
+                {
+                    OvlasceniServisISalon s = radnja as OvlasceniServisISalon;
+                    ServisVisegNizegRangaView sv = new()
+                    {
+                        Id = s.ServisVisegRanga.Id,
+                        Adresa = s.ServisVisegRanga.PripadaPredstavnistvu.Adresa,
+                        Grad = s.ServisVisegRanga.PripadaPredstavnistvu.Grad
+
+                    };
+
+                    return sv;
+                }
+
+                else
+                {
+                    throw new Exception("Radnja nije servis!");
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw new Exception("Neuspesno vracanje servisa viseg ranga! " + ex.Message);
+            }
+        }
+
+        public static List<ServisVisegNizegRangaView> servisiNizegRanga (int idRadnje)
+        {
+            List<ServisVisegNizegRangaView> sv = new List<ServisVisegNizegRangaView>();
+
+            try
+            {
+                ISession session = DataLayer.GetSession();
+
+                Radnja radnja = session.Load<Radnja>(idRadnje);
+
+                if (radnja.GetType() == typeof(OvlasceniServis))
+                {
+                    OvlasceniServis s = radnja as OvlasceniServis;
+                    foreach(OvlasceniServis os in s.ServisiNizegRanga)
+                    {
+                        ServisVisegNizegRangaView servis = new()
+                        {
+                            Id = os.Id,
+                            Adresa = os.PripadaPredstavnistvu.Adresa,
+                            Grad = os.PripadaPredstavnistvu.Grad
+                        };
+                        sv.Add(servis);
+                    }
+                    
+
+                    return sv;
+
+
+                }
+
+                else if (radnja.GetType() == typeof(OvlasceniServisISalon))
+                {
+                    OvlasceniServisISalon s = radnja as OvlasceniServisISalon;
+                    
+                    foreach(Radnja os in s.ServisiNizegRanga)
+                    {
+
+                       
+                        ServisVisegNizegRangaView servis = new()
+                        {
+                            Id = os.Id,
+                            Adresa = os.PripadaPredstavnistvu.Adresa,
+                            Grad = os.PripadaPredstavnistvu.Grad
+                        };
+                        sv.Add(servis);
+                    }
+                    return sv;
+                }
+
+                else
+                {
+                    throw new Exception("Radnja nije servis!");
+                }
+
+
+            }
+            catch(Exception ex)
+            {
+                throw new Exception("Neuspesno vracanje servisa nizeg ranga! " + ex.Message);
             }
         }
 

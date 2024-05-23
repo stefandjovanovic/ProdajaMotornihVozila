@@ -106,9 +106,138 @@ namespace ProdajaMotornihVozila
 
     }
 
-  
 
 
+
+
+    #endregion
+
+    #region Predstavnistvo
+
+    public class PredstavnistvoBasic
+    {
+        public int PredstavnistvoId { get; set; }
+
+        public string Grad { get; set; }
+
+        public string Adresa { get; set; }
+
+        public string ImeDirektora { get; set; }
+
+        public string PrezimeDirektora { get; set; }
+
+        public PredstavnistvoBasic(int predstavnistvoId, string grad, string adresa, string imeDirektora, string prezimeDirektora)
+        {
+            PredstavnistvoId = predstavnistvoId;
+            Grad = grad;
+            Adresa = adresa;
+            ImeDirektora = imeDirektora;
+            PrezimeDirektora = prezimeDirektora;
+        }
+
+        public PredstavnistvoBasic()
+        {
+        }
+
+
+    }
+
+
+    public class PredstavnistvoView
+    {
+        public string Grad { get; set; }
+
+        public string Adresa { get; set; }
+
+        public string IdDirektora { get; set; }
+
+        public PredstavnistvoView(string grad, string adresa, string idDirektora)
+        {
+            Grad = grad;
+            Adresa = adresa;
+            IdDirektora = idDirektora;
+        }
+
+        public PredstavnistvoView()
+        { }
+    }
+
+    public class RadnjaView
+    {
+        public int Id { get; set; }
+        public string ImeSefa { get; set; }
+
+        public string PrezimeSefa { get; set; }
+
+        public string SalonF { get; set; }
+
+        public string ServisF { get; set; }
+
+        public RadnjaView(int id, string imeSefa, string prezimeSefa, string salonF, string servisF)
+        {
+            Id = id;
+            ImeSefa = imeSefa;
+            PrezimeSefa = prezimeSefa;
+            SalonF = salonF;
+            ServisF = servisF;
+        }
+
+        public RadnjaView()
+        { 
+        }
+    }
+
+    public class ServisView
+    {
+        public int Id { get; set; }
+
+        public string StepenOpremljenosti { get; set; }
+
+        public string Farbarske { get; set; }
+
+        public string Limarske { get; set; }
+
+        public string Vulkanizerske { get; set; }
+
+        public string Mehanicarske { get; set; }
+
+        
+
+        public ServisView(int id, string stepenOpremljenosti, string farbarske, string limarske, string vulkanizerske, string mehanicarske)
+        {
+            Id = id;
+            StepenOpremljenosti = stepenOpremljenosti;
+            Farbarske = farbarske;
+            Limarske = limarske;
+            Vulkanizerske = vulkanizerske;
+            Mehanicarske = mehanicarske;
+        }
+
+        public ServisView()
+        { }
+
+
+    }
+
+
+    public class ServisVisegNizegRangaView
+    {
+        public int Id { get; set; }
+
+        public string Adresa { get; set; }
+
+        public string Grad { get; set; }
+
+        public ServisVisegNizegRangaView(string id, string adresa, string grad)
+        {
+            Id = id;
+            Adresa = adresa;
+            Grad = grad;
+        }
+
+        public ServisVisegNizegRangaView()
+        { }
+    }
 
     #endregion
 
