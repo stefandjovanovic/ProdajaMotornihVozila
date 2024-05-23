@@ -26,6 +26,22 @@ namespace ProdajaMotornihVozila.Forme
         {
             listaZaposlenih.Items.Clear();
 
+            List<ZaposleniBasic> zaposleni = DTOManager.vratiSveZaposlene();
+
+            foreach (ZaposleniBasic z in zaposleni)
+            {
+                ListViewItem item = new ListViewItem(new string[] { z.ZaposleniId, z.Ime, z.Prezime, z.StrucnaSprema, z.TipZaposlenja, z.TipStruke });
+                item.Tag = z;
+                listaZaposlenih.Items.Add(item);
+            }
+
+            listaZaposlenih.Refresh();
+
+        }
+
+        private void btnDetalji_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void btnDetalji_Click(object sender, EventArgs e)
