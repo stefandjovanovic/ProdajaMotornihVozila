@@ -35,6 +35,8 @@
             columnHeader4 = new ColumnHeader();
             btnDodaj = new Button();
             button1 = new Button();
+            button2 = new Button();
+            button3 = new Button();
             SuspendLayout();
             // 
             // listView1
@@ -42,10 +44,9 @@
             listView1.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2, columnHeader3, columnHeader4 });
             listView1.FullRowSelect = true;
             listView1.GridLines = true;
-            listView1.Location = new Point(30, 36);
-            listView1.Margin = new Padding(3, 2, 3, 2);
+            listView1.Location = new Point(34, 48);
             listView1.Name = "listView1";
-            listView1.Size = new Size(457, 280);
+            listView1.Size = new Size(522, 372);
             listView1.TabIndex = 0;
             listView1.UseCompatibleStateImageBehavior = false;
             listView1.View = View.Details;
@@ -71,34 +72,50 @@
             // 
             // btnDodaj
             // 
-            btnDodaj.Location = new Point(605, 36);
-            btnDodaj.Margin = new Padding(3, 2, 3, 2);
+            btnDodaj.Location = new Point(691, 48);
             btnDodaj.Name = "btnDodaj";
-            btnDodaj.Size = new Size(137, 30);
+            btnDodaj.Size = new Size(164, 40);
             btnDodaj.TabIndex = 1;
             btnDodaj.Text = "Dodaj Predstavnistvo";
             btnDodaj.UseVisualStyleBackColor = true;
-            btnDodaj.Click += btnDodaj_Click;
             // 
             // button1
             // 
-            button1.Location = new Point(605, 86);
-            button1.Margin = new Padding(3, 2, 3, 2);
+            button1.Location = new Point(691, 244);
             button1.Name = "button1";
-            button1.Size = new Size(137, 30);
+            button1.Size = new Size(164, 40);
             button1.TabIndex = 2;
             button1.Text = "Prikazi sadrzaj";
             button1.UseVisualStyleBackColor = true;
             // 
+            // button2
+            // 
+            button2.Location = new Point(691, 109);
+            button2.Name = "button2";
+            button2.Size = new Size(164, 40);
+            button2.TabIndex = 3;
+            button2.Text = "Izmeni Predstavnistvo";
+            button2.UseVisualStyleBackColor = true;
+            // 
+            // button3
+            // 
+            button3.Location = new Point(691, 177);
+            button3.Name = "button3";
+            button3.Size = new Size(164, 40);
+            button3.TabIndex = 4;
+            button3.Text = "Obrisi Predstavnistvo";
+            button3.UseVisualStyleBackColor = true;
+            // 
             // PredstavnistvaForma
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(934, 400);
+            ClientSize = new Size(1067, 533);
+            Controls.Add(button3);
+            Controls.Add(button2);
             Controls.Add(button1);
             Controls.Add(btnDodaj);
             Controls.Add(listView1);
-            Margin = new Padding(3, 2, 3, 2);
             Name = "PredstavnistvaForma";
             Text = "PredstavnistvaForma";
             ResumeLayout(false);
@@ -113,5 +130,7 @@
         private ColumnHeader columnHeader4;
         private Button btnDodaj;
         private Button button1;
+        private Button button2;
+        private Button button3;
     }
 }
