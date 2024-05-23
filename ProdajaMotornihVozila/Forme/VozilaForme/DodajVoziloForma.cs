@@ -8,18 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ProdajaMotornihVozila.Forme
+namespace ProdajaMotornihVozila.Forme.VozilaForme
 {
-    public partial class PredstavnistvaForma : Form
+    public partial class DodajVoziloForma : Form
     {
-        public PredstavnistvaForma()
+        public DodajVoziloForma()
         {
             InitializeComponent();
-        }
-
-        private void btnDodaj_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }
