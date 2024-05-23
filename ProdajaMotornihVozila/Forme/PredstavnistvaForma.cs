@@ -16,5 +16,10 @@ namespace ProdajaMotornihVozila.Forme
         {
             InitializeComponent();
         }
+
+        private void btnDodaj_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
