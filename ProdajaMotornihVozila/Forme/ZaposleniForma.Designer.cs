@@ -101,6 +101,7 @@
             btnDetalji.TabIndex = 1;
             btnDetalji.Text = "Detalji";
             btnDetalji.UseVisualStyleBackColor = true;
+            btnDetalji.Click += btnDetalji_Click;
             // 
             // btnDodaj
             // 

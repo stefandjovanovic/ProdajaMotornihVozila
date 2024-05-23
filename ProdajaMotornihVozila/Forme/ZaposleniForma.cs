@@ -27,5 +27,20 @@ namespace ProdajaMotornihVozila.Forme
             listaZaposlenih.Items.Clear();
 
         }
+
+        private void btnDetalji_Click(object sender, EventArgs e)
+        {
+            if(listaZaposlenih.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Morate selektovati zaposlenog");
+                return;
+            }
+
+            string jmbg = listaZaposlenih.SelectedItems[0].SubItems[0].Text;
+            string tipZaposlenog = listaZaposlenih.SelectedItems[0].SubItems[4].Text;
+
+            MessageBox.Show("Detalji zaposlenog: " + jmbg + " " + tipZaposlenog);
+
+        }
     }
 }
