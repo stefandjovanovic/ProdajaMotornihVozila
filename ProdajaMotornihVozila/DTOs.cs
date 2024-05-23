@@ -74,7 +74,7 @@ namespace ProdajaMotornihVozila
 
         public DateTime DatumSticanjaDiplome { get; set; }
 
-        public TehnickeStrBasic(string zaposleniId, string ime, string prezime, string strucnaSprema, string tipZaposlenja, string tipstruke, DateTime datumRodjenja, DateTime datumZaposlenja, float plata, DateTime datumIstekaUgovora, string institucija, string nazivSpecijalnosti, DateTime datumSticanjaDiplome) 
+        public TehnickeStrBasic(string zaposleniId, string ime, string prezime, string strucnaSprema, string tipZaposlenja, string tipstruke, DateTime datumRodjenja, DateTime datumZaposlenja, float? plata, DateTime? datumIstekaUgovora, string institucija, string nazivSpecijalnosti, DateTime datumSticanjaDiplome) 
         : base(zaposleniId, ime, prezime, strucnaSprema, tipZaposlenja, tipstruke, datumRodjenja, datumZaposlenja, plata, datumIstekaUgovora)
         {
             Institucija = institucija;
@@ -94,7 +94,7 @@ namespace ProdajaMotornihVozila
 
         public DateTime? DatumSticanja { get; set; }
 
-        public EkonomStrBasic(string zaposleniId, string ime, string prezime, string strucnaSprema , string tipZaposlenja, DateTime datumRodjenja, DateTime datumZaposlenja, float plata, DateTime datumIstekaUgovora, string tipstruke, string posedujeSertifikat, DateTime datumSticanja) 
+        public EkonomStrBasic(string zaposleniId, string ime, string prezime, string strucnaSprema , string tipZaposlenja, DateTime datumRodjenja, DateTime datumZaposlenja, float? plata, DateTime? datumIstekaUgovora, string tipstruke, string posedujeSertifikat, DateTime? datumSticanja) 
         : base (zaposleniId, ime, prezime, strucnaSprema, tipZaposlenja, tipstruke, datumRodjenja, datumZaposlenja, plata, datumIstekaUgovora)
         {
             PosedujeSertifikat = posedujeSertifikat;

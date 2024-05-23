@@ -69,7 +69,7 @@ namespace ProdajaMotornihVozila
 
         }
 
-        public static ZaposleniView vratiZaposlenog(int id)
+        public static ZaposleniView vratiZaposlenog(string id)
         {
             ZaposleniView zaposleniView = new ZaposleniView();
             try
@@ -303,7 +303,7 @@ namespace ProdajaMotornihVozila
 
         }
 
-        public static EkonomStrBasic vratiZaposlenogEkonom(int id)
+        public static EkonomStrBasic vratiZaposlenogEkonom(string id)
         {
             EkonomStrBasic ekonomStrBasic = new EkonomStrBasic();
 
@@ -315,14 +315,15 @@ namespace ProdajaMotornihVozila
 
                 ekonomStrBasic.ZaposleniId = ekonomskeStruke.MaticniBroj;
                 ekonomStrBasic.Ime = ekonomskeStruke.Ime;
+                ekonomStrBasic.Prezime = ekonomskeStruke.Prezime;
                 ekonomStrBasic.TipZaposlenja = ekonomskeStruke.TipZaposlenja;
                 ekonomStrBasic.StrucnaSprema = ekonomskeStruke.StrucnaSprema;
                 ekonomStrBasic.PosedujeSertifikat = ekonomskeStruke.PosedujeSertifikat;
                 ekonomStrBasic.DatumSticanja = ekonomskeStruke.DatumSticanja;
-                ekonomskeStruke.DatumRodjenja = ekonomskeStruke.DatumRodjenja;
-                ekonomskeStruke.DatumZaposlenja = ekonomskeStruke.DatumZaposlenja;
-                ekonomskeStruke.Plata = ekonomskeStruke.Plata;
-                ekonomskeStruke.DatumIstekaUgovora = ekonomskeStruke.DatumIstekaUgovora;
+                ekonomStrBasic.DatumRodjenja = ekonomskeStruke.DatumRodjenja;
+                ekonomStrBasic.DatumZaposlenja = ekonomskeStruke.DatumZaposlenja;
+                ekonomStrBasic.Plata = ekonomskeStruke.Plata;
+                ekonomStrBasic.DatumIstekaUgovora = ekonomskeStruke.DatumIstekaUgovora;
 
             }
             catch (Exception e)
@@ -427,7 +428,7 @@ namespace ProdajaMotornihVozila
 
         }
 
-        public static TehnickeStrBasic vratiZaposlenogTehnicke(int id)
+        public static TehnickeStrBasic vratiZaposlenogTehnicke(string id)
         {
             TehnickeStrBasic tehnickeStr = new TehnickeStrBasic();
             try
@@ -438,6 +439,7 @@ namespace ProdajaMotornihVozila
 
                 tehnickeStr.ZaposleniId = tehnickeStruke.MaticniBroj;
                 tehnickeStr.Ime = tehnickeStruke.Ime;
+                tehnickeStr.Prezime = tehnickeStruke.Prezime;
                 tehnickeStr.TipZaposlenja = tehnickeStruke.TipZaposlenja;
                 tehnickeStr.StrucnaSprema = tehnickeStruke.StrucnaSprema;
                 tehnickeStr.NazivSpecijalnosti = tehnickeStruke.NazivSpecijalnosti;
@@ -446,6 +448,7 @@ namespace ProdajaMotornihVozila
                 tehnickeStr.DatumZaposlenja = tehnickeStruke.DatumZaposlenja;
                 tehnickeStr.Plata = tehnickeStruke.Plata;
                 tehnickeStr.DatumIstekaUgovora = tehnickeStruke.DatumIstekaUgovora;
+                tehnickeStr.DatumSticanjaDiplome = tehnickeStruke.DatumSticanjaDiplome;
 
             }
 
