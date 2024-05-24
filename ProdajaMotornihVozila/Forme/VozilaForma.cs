@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProdajaMotornihVozila.Forme.VozilaForme;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,26 @@ namespace ProdajaMotornihVozila.Forme
         public VozilaForma()
         {
             InitializeComponent();
+        }
+
+        private void VozilaForma_Load(object sender, EventArgs e)
+        {
+            popuniPodacima();
+        }
+        private void popuniPodacima()
+        {
+
+        }
+        private void btnObrisi_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnDodaj_Click(object sender, EventArgs e)
+        {
+            /*DodajVoziloForma forma = new DodajVoziloForma();
+            forma.ShowDialog();
+            this.popuniPodacima();*/
         }
     }
 }
