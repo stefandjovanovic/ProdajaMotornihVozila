@@ -136,7 +136,7 @@ namespace ProdajaMotornihVozila.Forme
 
         private void btnObrisi_Click(object sender, EventArgs e)
         {
-            if(listaZaposlenih.SelectedItems.Count == 0)
+            if (listaZaposlenih.SelectedItems.Count == 0)
             {
                 MessageBox.Show("Morate selektovati zaposlenog");
                 return;
@@ -151,11 +151,11 @@ namespace ProdajaMotornihVozila.Forme
 
             if (result == DialogResult.OK)
             {
-                if(tipZaposlenog == "EkonomskeStruke")
+                if (tipZaposlenog == "EkonomskeStruke")
                 {
                     DTOManager.obrisiEkonomskeStruke(jmbg);
                 }
-                else if(tipZaposlenog == "TehnickeStruke")
+                else if (tipZaposlenog == "TehnickeStruke")
                 {
                     DTOManager.obrisiTehnickeStruke(jmbg);
                 }
@@ -166,6 +166,22 @@ namespace ProdajaMotornihVozila.Forme
                 MessageBox.Show("Brisanje zaposlenog je uspesno obavljeno!");
                 this.popuniPodatke();
             }
+
+        }
+
+        private void btnIzmeni_Click(object sender, EventArgs e)
+        {
+            if (listaZaposlenih.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Morate selektovati zaposlenog");
+                return;
+            }
+            string jmbg = listaZaposlenih.SelectedItems[0].SubItems[0].Text;
+            string tipZaposlenog = listaZaposlenih.SelectedItems[0].SubItems[5].Text;
+
+            DodajZaposlenogForma forma = new DodajZaposlenogForma(jmbg, tipZaposlenog);
+            forma.ShowDialog();
+            this.popuniPodatke();
 
         }
     }

@@ -276,6 +276,7 @@
             numericUpDownPlata.DecimalPlaces = 2;
             numericUpDownPlata.Enabled = false;
             numericUpDownPlata.Location = new Point(282, 393);
+            numericUpDownPlata.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
             numericUpDownPlata.Name = "numericUpDownPlata";
             numericUpDownPlata.Size = new Size(150, 27);
             numericUpDownPlata.TabIndex = 23;
@@ -393,6 +394,7 @@
             Controls.Add(textBoxIme);
             Name = "DodajZaposlenogForma";
             Text = "DodajZaposlenogForma";
+            Load += DodajZaposlenogForma_Load;
             ((System.ComponentModel.ISupportInitialize)numericUpDownPlata).EndInit();
             ResumeLayout(false);
             PerformLayout();

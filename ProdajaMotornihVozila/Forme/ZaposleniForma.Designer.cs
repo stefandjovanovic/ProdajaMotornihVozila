@@ -121,6 +121,7 @@
             btnIzmeni.TabIndex = 3;
             btnIzmeni.Text = "Izmeni";
             btnIzmeni.UseVisualStyleBackColor = true;
+            btnIzmeni.Click += btnIzmeni_Click;
             // 
             // btnObrisi
             // 

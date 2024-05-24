@@ -12,24 +12,36 @@ namespace ProdajaMotornihVozila.Forme.ZaposleniForme
 {
     public partial class DodajZaposlenogForma : Form
     {
+        private bool rezimIzmene;
+        private string? jmbgZaposlenog;
+        private string? tipStruke;
         public DodajZaposlenogForma()
         {
+            this.rezimIzmene = false;
+            InitializeComponent();
+        }
+
+        public DodajZaposlenogForma(string jmbgZaposlenog, string tipStruke)
+        {
+            this.rezimIzmene = true;
+            this.jmbgZaposlenog = jmbgZaposlenog;
+            this.tipStruke = tipStruke;
             InitializeComponent();
         }
 
 
-        
+
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if(textBoxIme.Text == "" || textBoxPrezime.Text == "" || comboBoxTipZaposlenja.SelectedItem == null || comboBoxTipStruke.SelectedItem == null
-                || textBoxJMBG.Text == "" || textBoxStrucnaSprema.Text=="")
+            if (textBoxIme.Text == "" || textBoxPrezime.Text == "" || comboBoxTipZaposlenja.SelectedItem == null || comboBoxTipStruke.SelectedItem == null
+                || textBoxJMBG.Text == "" || textBoxStrucnaSprema.Text == "")
             {
                 MessageBox.Show("Morate popuniti sva polja");
                 return;
             }
 
-            if(textBoxJMBG.Text.Length != 13)
+            if (textBoxJMBG.Text.Length != 13)
             {
                 MessageBox.Show("JMBG mora imati 13 cifara");
                 return;
@@ -48,7 +60,7 @@ namespace ProdajaMotornihVozila.Forme.ZaposleniForme
 
             if (comboBoxTipStruke.SelectedItem!.ToString() == "Ekonomske")
             {
-                if(comboBoxSertifikat.SelectedItem == null)
+                if (comboBoxSertifikat.SelectedItem == null)
                 {
                     MessageBox.Show("Morate popuniti sva polja");
                     return;
@@ -69,10 +81,18 @@ namespace ProdajaMotornihVozila.Forme.ZaposleniForme
                     comboBoxSertifikat.SelectedItem!.ToString() == "Da" ? dateTimePickerSertifikata.Value : null
                     );
 
-                DTOManager.dodajEkonomskeStruke(ekonmske);
+                if(this.rezimIzmene)
+                {
+                    DTOManager.azurirajEkonomskeStruke(ekonmske);
+                }
+                else
+                {
+                    DTOManager.dodajEkonomskeStruke(ekonmske);
+                }
+
 
             }
-            else if(comboBoxTipStruke.SelectedItem!.ToString() == "Tehnicke")
+            else if (comboBoxTipStruke.SelectedItem!.ToString() == "Tehnicke")
             {
                 if (textBoxNazivSpecijalnosti.Text == "" || textBoxInstitucija.Text == "")
                 {
@@ -97,7 +117,15 @@ namespace ProdajaMotornihVozila.Forme.ZaposleniForme
                     dateTimePickerDiplome.Value
                     );
 
-                DTOManager.dodajTehnickeStruke(tehnicke);
+                if(this.rezimIzmene)
+                {
+                    DTOManager.azurirajTehnickeStuke(tehnicke);
+                }
+                else
+                {
+                    DTOManager.dodajTehnickeStruke(tehnicke);
+                }
+
 
 
             }
@@ -116,7 +144,15 @@ namespace ProdajaMotornihVozila.Forme.ZaposleniForme
                     datumIstekaUgovora
                     );
 
-                DTOManager.dodajZaposlenog(zaposleni);
+                if(this.rezimIzmene)
+                {
+                    DTOManager.azurirajZaposlenog(zaposleni);
+                }
+                else
+                {
+                    DTOManager.dodajZaposlenog(zaposleni);
+                }
+
             }
 
 
@@ -176,13 +212,117 @@ namespace ProdajaMotornihVozila.Forme.ZaposleniForme
 
         private void comboBoxSertifikat_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(comboBoxSertifikat.SelectedItem!.ToString() == "Da")
+            if (comboBoxSertifikat.SelectedItem!.ToString() == "Da")
             {
                 dateTimePickerSertifikata.Enabled = true;
             }
             else
             {
                 dateTimePickerSertifikata.Enabled = false;
+            }
+        }
+
+        private void DodajZaposlenogForma_Load(object sender, EventArgs e)
+        {
+            if(this.rezimIzmene)
+            {
+                button1.Text = "Azuriraj";
+
+                if (this.tipStruke == "TehnickeStruke")
+                {
+                    TehnickeStrBasic tehnicke = DTOManager.vratiZaposlenogTehnicke(this.jmbgZaposlenog!);
+                    textBoxIme.Text = tehnicke.Ime;
+                    textBoxPrezime.Text = tehnicke.Prezime;
+                    textBoxJMBG.Text = tehnicke.ZaposleniId;
+                    textBoxStrucnaSprema.Text = tehnicke.StrucnaSprema;
+                    dateTimePickerRodjenja.Value = tehnicke.DatumRodjenja;
+                    dateTimePickerZaposlenja.Value = tehnicke.DatumZaposlenja;
+                    comboBoxTipZaposlenja.SelectedItem = tehnicke.TipZaposlenja;
+                    if(tehnicke.TipZaposlenja == "Stalno")
+                    {
+                        numericUpDownPlata.Value = (decimal)tehnicke.Plata!;
+                    }
+                    else
+                    {
+                        dateTimePickerIstekaUgovora.Value = tehnicke.DatumIstekaUgovora ?? new DateTime();
+                    }
+                    comboBoxTipStruke.SelectedItem = "Tehnicke";
+                    comboBoxTipStruke.Enabled = false;
+                    textBoxInstitucija.Text = tehnicke.Institucija;
+                    textBoxNazivSpecijalnosti.Text = tehnicke.NazivSpecijalnosti;
+                    dateTimePickerDiplome.Value = tehnicke.DatumSticanjaDiplome;
+                    textBoxInstitucija.Enabled = true;
+                    textBoxNazivSpecijalnosti.Enabled = true;
+                    dateTimePickerDiplome.Enabled = true;
+
+                    //sakrij za ekonomsku struku
+                    comboBoxSertifikat.Visible = false;
+                    dateTimePickerSertifikata.Visible = false;
+
+                }
+                else if (this.tipStruke == "EkonomskeStruke")
+                {
+                    EkonomStrBasic ekonomske = DTOManager.vratiZaposlenogEkonom(this.jmbgZaposlenog!);
+
+                    textBoxIme.Text = ekonomske.Ime;
+                    textBoxPrezime.Text = ekonomske.Prezime;
+                    textBoxJMBG.Text = ekonomske.ZaposleniId;
+                    textBoxStrucnaSprema.Text = ekonomske.StrucnaSprema;
+                    dateTimePickerRodjenja.Value = ekonomske.DatumRodjenja;
+                    dateTimePickerZaposlenja.Value = ekonomske.DatumZaposlenja;
+                    comboBoxTipZaposlenja.SelectedItem = ekonomske.TipZaposlenja;
+                    if (ekonomske.TipZaposlenja == "Stalno")
+                    {
+                        numericUpDownPlata.Value = (decimal)ekonomske.Plata!;
+                    }
+                    else
+                    {
+                        dateTimePickerIstekaUgovora.Value = ekonomske.DatumIstekaUgovora ?? new DateTime();
+                    }
+                    comboBoxTipStruke.SelectedItem = "Ekonomske";
+                    comboBoxTipStruke.Enabled = false;
+                    comboBoxSertifikat.SelectedItem = ekonomske.PosedujeSertifikat;
+                    comboBoxSertifikat.Enabled = true;
+                    if (ekonomske.PosedujeSertifikat == "Da")
+                    {
+                        dateTimePickerSertifikata.Value = ekonomske.DatumSticanja ?? new DateTime();
+                    }
+
+                    //sakrij za tehnicku struku
+                    textBoxInstitucija.Visible = false;
+                    textBoxNazivSpecijalnosti.Visible = false;
+                    dateTimePickerDiplome.Visible = false;
+
+                }
+                else
+                {
+                    ZaposleniView zaposleni = DTOManager.vratiZaposlenog(this.jmbgZaposlenog!);
+                    textBoxIme.Text = zaposleni.Ime;
+                    textBoxPrezime.Text = zaposleni.Prezime;
+                    textBoxJMBG.Text = zaposleni.ZaposleniId;
+                    textBoxStrucnaSprema.Text = zaposleni.StrucnaSprema;
+                    dateTimePickerRodjenja.Value = zaposleni.DatumRodjenja;
+                    dateTimePickerZaposlenja.Value = zaposleni.DatumZaposlenja;
+                    comboBoxTipZaposlenja.SelectedItem = zaposleni.TipZaposlenja;
+                    if (zaposleni.TipZaposlenja == "Stalno")
+                    {
+                        numericUpDownPlata.Value = (decimal)zaposleni.Plata!;
+                    }
+                    else
+                    {
+                        dateTimePickerIstekaUgovora.Value = zaposleni.DatumIstekaUgovora ?? new DateTime();
+                    }
+                    comboBoxTipStruke.SelectedItem = "Ostalo";
+                    comboBoxTipStruke.Enabled = false;
+
+                    //sakrij za tehnicku struku i ekonomsku struku
+                    textBoxInstitucija.Visible = false;
+                    textBoxNazivSpecijalnosti.Visible = false;
+                    dateTimePickerDiplome.Visible = false;
+
+                    comboBoxSertifikat.Visible = false;
+                    dateTimePickerSertifikata.Visible = false;
+                }
             }
         }
     }
