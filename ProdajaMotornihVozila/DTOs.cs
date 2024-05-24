@@ -228,7 +228,7 @@ namespace ProdajaMotornihVozila
 
         public string Grad { get; set; }
 
-        public ServisVisegNizegRangaView(string id, string adresa, string grad)
+        public ServisVisegNizegRangaView(int id, string adresa, string grad)
         {
             Id = id;
             Adresa = adresa;

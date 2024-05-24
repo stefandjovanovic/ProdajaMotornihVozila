@@ -130,6 +130,7 @@
             btnObrisi.TabIndex = 4;
             btnObrisi.Text = "Obrisi";
             btnObrisi.UseVisualStyleBackColor = true;
+            btnObrisi.Click += btnObrisi_Click;
             // 
             // btnPrikaziRkv
             // 
