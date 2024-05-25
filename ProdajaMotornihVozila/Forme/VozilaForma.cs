@@ -24,7 +24,7 @@ namespace ProdajaMotornihVozila.Forme
         }
         private void popuniPodacima()
         {
-
+            listaVozila.Items.Clear();
         }
         private void btnObrisi_Click(object sender, EventArgs e)
         {
@@ -33,9 +33,14 @@ namespace ProdajaMotornihVozila.Forme
 
         private void btnDodaj_Click(object sender, EventArgs e)
         {
-            /*DodajVoziloForma forma = new DodajVoziloForma();
+            DodajVoziloForma forma = new DodajVoziloForma();
             forma.ShowDialog();
-            this.popuniPodacima();*/
+            //this.popuniPodacima();
+        }
+
+        private void btnServis_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
