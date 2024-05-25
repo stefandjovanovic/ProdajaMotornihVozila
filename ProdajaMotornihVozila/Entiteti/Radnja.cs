@@ -37,6 +37,7 @@ namespace ProdajaMotornihVozila.Entiteti
     public class Salon: Radnja
     {
         public virtual IList<ProdajaVozila>? ProdataVozila { get; set; } = [];
+        public virtual IList<VoziloKompanije>? IzlozenaVozila { get; set; } = [];
     }
 
     public class OvlasceniServisISalon: Radnja
@@ -49,6 +50,8 @@ namespace ProdajaMotornihVozila.Entiteti
 
         public virtual OvlasceniServis? ServisVisegRanga { get; set; }
         public virtual IList<OvlasceniServis>? ServisiNizegRanga { get; set; } = [];
+
+        public virtual IList<VoziloKompanije>? IzlozenaVozila { get; set; } = [];
     }
 
 }

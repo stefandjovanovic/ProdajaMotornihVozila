@@ -17,10 +17,19 @@ namespace ProdajaMotornihVozila.Mapiranja
 
             KeyColumn("BROJ_SASIJE");
 
-            //Map(x => x.IdSalona, "ID_SALONA");
+            DiscriminatorValue("Ne");
+
+
+
             Map(x => x.UvezenoF, "UVEZENO_F");
+
             Map(x => x.Datum_Uvoza, "DATUM_UVOZA");
-            //Map(x => x.MbrIzvrsiocaPrijemaUvoza, "MBR_IZVRIOCA_PRIJEMA_UVOZA");
+
+            References(x => x.IdSalona, "ID_SALONA").LazyLoad();
+
+
         }
     }
+
+    
 }
