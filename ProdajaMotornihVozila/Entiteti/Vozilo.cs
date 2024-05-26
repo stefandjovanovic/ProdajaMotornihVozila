@@ -18,6 +18,8 @@ namespace ProdajaMotornihVozila.Entiteti
 
         public virtual required int KubikazaMotora { get; set; }
 
+        public virtual required string BrojMotora { get; set; }
+
         public virtual string? PutnickaF { get; set; }
 
         public virtual int? BrojPutnika { get; set; }

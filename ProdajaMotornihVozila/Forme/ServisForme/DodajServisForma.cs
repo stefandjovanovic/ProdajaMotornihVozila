@@ -8,16 +8,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ProdajaMotornihVozila.Forme.VozilaForme
+namespace ProdajaMotornihVozila.Forme.ServisForme
 {
-    public partial class DodajVoziloForma : Form
+    public partial class DodajServisForma : Form
     {
-        public DodajVoziloForma()
+        public DodajServisForma()
         {
             InitializeComponent();
         }
 
-        private void DodajVoziloForma_Load(object sender, EventArgs e)
+        private void textBox2_TextChanged(object sender, EventArgs e)
         {
 
         }
@@ -25,6 +25,16 @@ namespace ProdajaMotornihVozila.Forme.VozilaForme
         private void btnOdustani_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void DodajServisForma_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

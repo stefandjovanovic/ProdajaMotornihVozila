@@ -243,5 +243,195 @@ namespace ProdajaMotornihVozila
 
     #endregion
 
-    
+    #region Vozila
+
+    public class VoziloBasic
+    {
+        public string BrojSasije { get; set; }
+
+        public string Boja { get; set; }
+
+        public string Model { get; set; }
+
+        public string TipGoriva { get; set; }
+
+        public int Kubikaza { get; set; }
+
+        public string BrojMotora { get; set; }
+
+
+        public VoziloBasic(string brojSasije, string boja, string model, string tipGoriva, int kubikaza, string brojMotora)
+        {
+            BrojSasije = brojSasije;
+            Boja = boja;
+            Model = model;
+            TipGoriva = tipGoriva;
+            Kubikaza = kubikaza;
+            BrojMotora = brojMotora;
+        }
+
+        public VoziloBasic()
+        {
+        }
+
+    }
+
+    public class VoziloView : VoziloBasic
+    {
+        public string PutnickaF { get; set; }
+
+        public int? BrojPutnika { get; set; }
+
+        public string TeretnaF { get; set; }
+
+        public int? Nosivost { get; set; }
+
+        public string TeretniProstorOtvorenogTipa { get; set; }
+
+
+        public VoziloView(string brojSasije, string boja, string model, string tipGoriva, int kubikaza, string brojMotora, string putnickaF, int brojPutnika, string teretnaF, int nosivost, string teretniProstorOtvorenogTipa) : base(brojSasije, boja, model, tipGoriva, kubikaza, brojMotora)
+            
+        {
+            PutnickaF = putnickaF;
+            BrojPutnika = brojPutnika;
+            TeretnaF = teretnaF;
+            Nosivost = nosivost;
+            TeretniProstorOtvorenogTipa = teretniProstorOtvorenogTipa;
+        }
+
+        public VoziloView()
+        {
+        }
+
+    }
+
+    public class  NezavisnoVoziloBasic : VoziloView
+    {
+        public string ImeVlasnika { get; set; }
+
+        public string PrezimeVlasnika { get; set; }
+
+        public string BrojTelefonaVlasnika { get; set; }
+
+        public NezavisnoVoziloBasic(string brojSasije, string boja, string model, string tipGoriva, int kubikaza, string brojMotora, string putnickaF, int brojPutnika, string teretnaF, int nosivost, string teretniProstorOtvorenogTipa, string imeVlasnika, string prezimeVlasnika, string brojTelefonaVlasnika): base(brojSasije, boja, model, tipGoriva, kubikaza, brojMotora, putnickaF, brojPutnika, teretnaF, nosivost, teretniProstorOtvorenogTipa)
+        {
+            ImeVlasnika = imeVlasnika;
+            PrezimeVlasnika = prezimeVlasnika;
+            BrojTelefonaVlasnika = brojTelefonaVlasnika;
+        }
+
+        public NezavisnoVoziloBasic()
+        {
+        }
+
+    }
+
+    public class VoziloKompanijeBasic : VoziloView
+    {
+        public string UvezenoF { get; set; }
+
+        public int IdSalona { get; set; }
+
+        public string MbrIzvrsiocaPrijemaUvoza { get; set; }
+
+        public DateTime DatumUvoza { get; set; }
+
+
+        public VoziloKompanijeBasic(string brojSasije, string boja, string model, string tipGoriva, int kubikaza, string brojMotora, string putnickaF, int brojPutnika, string teretnaF, int nosivost, string teretniProstorOtvorenogTipa, string uvezenoF, int idSalona, string mbrIzvrsiocaPrijemaUvoza, DateTime datumUvoza) : base(brojSasije, boja, model, tipGoriva, kubikaza, brojMotora, putnickaF, brojPutnika, teretnaF, nosivost, teretniProstorOtvorenogTipa)
+        {
+            UvezenoF = uvezenoF;
+            IdSalona = idSalona;
+            MbrIzvrsiocaPrijemaUvoza = mbrIzvrsiocaPrijemaUvoza;
+            DatumUvoza = datumUvoza;
+        }
+
+        public VoziloKompanijeBasic()
+        {
+        }
+
+
+    }
+
+    #endregion
+
+    #region ObavljeniServis
+
+    public class ObavljeniServisBasic
+    {
+        public int Id { get; set; }
+
+        public int ServisId { get; set; }
+
+        public string RegistarskiBroj { get; set; }
+
+        public string Model { get; set; }
+
+        public string Opis { get; set; }
+
+        public string MbrIzvrsiocaPrijema { get; set; }
+
+        public string GodinaProizvodnje { get; set; }
+
+
+        public ObavljeniServisBasic(int id, string registarskiBroj, string model, string opis, string mbrIzvrsiocaPrijema, string godinaprozivodnja, int servisId)
+        {
+            Id = id;
+            RegistarskiBroj = registarskiBroj;
+            Model = model;
+            Opis = opis;
+            MbrIzvrsiocaPrijema = mbrIzvrsiocaPrijema;
+            GodinaProizvodnje = godinaprozivodnja;
+            ServisId = servisId;
+        }
+
+        public ObavljeniServisBasic()
+        {
+        }
+    }
+
+    public class ObavljeniServisView : ObavljeniServisBasic
+    {
+        public DateTime DatumPrijema { get; set; }
+
+        public DateTime? DatumZavrsetka { get; set; }
+
+        public string AdresaServisa { get; set; }
+
+        public string GradServisa { get; set; }
+
+        public ObavljeniServisView(int id, string registarskiBroj, string model, string opis, string mbrIzvrsiocaPrijema, string godinaProizvodnje, int servisId, DateTime datumPrijema, DateTime datumZavrsetka, string adresaServisa, string gradServisa) : base(id, registarskiBroj, model, opis, mbrIzvrsiocaPrijema, godinaProizvodnje, servisId)
+        {
+            DatumPrijema = datumPrijema;
+            DatumZavrsetka = datumZavrsetka;
+            AdresaServisa = adresaServisa;
+            GradServisa = gradServisa;
+        }
+
+        public ObavljeniServisView()
+        {
+        }
+
+    }
+
+    public class ObavljeniServisCreate : ObavljeniServisBasic
+    {
+        public string BrojSasijeVozila { get; set; }
+
+        public DateTime DatumPrijemaVozila { get; set; }
+
+        public DateTime DatumZavrsetkaServisa { get; set; }
+
+        public ObavljeniServisCreate(int id, string registarskiBroj, string model, string opis, string mbrIzvrsiocaPrijema, string godinaProizvodnje, int servisId, string brojSasijeVozila, DateTime datumPrijemaVozila, DateTime datumZavrsetkaServisa) : base(id, registarskiBroj, model, opis, mbrIzvrsiocaPrijema, godinaProizvodnje, servisId)
+        {
+            BrojSasijeVozila = brojSasijeVozila;
+            DatumPrijemaVozila = datumPrijemaVozila;
+            DatumZavrsetkaServisa = datumZavrsetkaServisa;
+        }
+
+        public ObavljeniServisCreate()
+        {
+        }
+    }
+
+    #endregion
 }

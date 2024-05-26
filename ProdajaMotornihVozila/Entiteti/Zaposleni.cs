@@ -25,11 +25,12 @@ namespace ProdajaMotornihVozila.Entiteti
         public virtual IList<Zaposleni>? PodredjeniZaposleni { get; set; } = [];
         public virtual IList<ProdajaVozila>? IzvrseneProdaje { get; set; } = [];
 
+        public virtual IList<VoziloKompanije>? UvezenaVozila { get; set; } = [];
+
 
         public Zaposleni()
         {
-            PodredjeniZaposleni = new List<Zaposleni>();
-            IzvrseneProdaje = new List<ProdajaVozila>();
+           
         }
 
 

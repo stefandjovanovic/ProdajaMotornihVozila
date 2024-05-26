@@ -21,8 +21,9 @@ namespace ProdajaMotornihVozila.Mapiranja
             Map(x => x.Model, "MODEL");
             Map(x => x.GodinaProizvodnje, "GODINA_PROIZVODNJE");
             Map(x => x.Opis, "OPIS");
+            Map(x => x.RegistarskiBroj, "REGISTARSKI_BROJ");
 
-            References(x => x.RegistarskiBroj, "REGISTARSKI_BROJ").LazyLoad();
+            References(x => x.BrojSasijeVozila, "BROJ_SASIJE_VOZILA").LazyLoad();
             References(x => x.IdObavljenogServisa, "ID_OBAVLJENOG_SERVISA").LazyLoad();
 
 

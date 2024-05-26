@@ -33,6 +33,7 @@ namespace ProdajaMotornihVozila.Mapiranja
 
             HasMany(x => x.PodredjeniZaposleni).KeyColumn("MATICNI_BROJ_RUKOVODIOCA").Cascade.All().Inverse();
             HasMany(x => x.IzvrseneProdaje).KeyColumn("MATICNI_BROJ_POSLODAVCA").Cascade.All().Inverse();
+            HasMany(x => x.UvezenaVozila).KeyColumn("MBR_IZVRSIOCA_PRIJEMA_UVOZA").Cascade.All().Inverse();
         }
     }
 

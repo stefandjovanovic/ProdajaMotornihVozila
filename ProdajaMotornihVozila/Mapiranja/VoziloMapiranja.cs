@@ -22,6 +22,7 @@ namespace ProdajaMotornihVozila.Mapiranja
             Map(x => x.TipGoriva, "TIP_GORIVA");
             Map(x => x.KubikazaMotora, "KUBIKAZA_MOTORA");
             Map(x => x.PutnickaF, "PUTNICKA_F");
+            Map(x => x.BrojMotora, "BROJ_MOTORA");
             Map(x => x.BrojPutnika, "BROJ_PUTNIKA");
             Map(x => x.TeretnaF, "TERETNA_F");
             Map(x => x.Nosivost, "NOSIVOST");
