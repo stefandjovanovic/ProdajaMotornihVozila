@@ -2,6 +2,7 @@
 using ProdajaMotornihVozila.Entiteti;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -26,10 +27,11 @@ namespace ProdajaMotornihVozila
                 string tip;
                 foreach (Zaposleni z in zaposleniIzBaze)
                 {
+                    Type actualtype = NHibernateUtil.GetClass(z);
 
-                    if (z.GetType() == typeof(TehnickeStruke))
+                    if (actualtype == typeof(TehnickeStruke))
                         tip = "TehnickeStruke";
-                    else if (z.GetType() == typeof(EkonomskeStruke))
+                    else if (actualtype == typeof(EkonomskeStruke))
                         tip = "EkonomskeStruke";
                     else
                         tip = "Zaposleni";
@@ -69,7 +71,7 @@ namespace ProdajaMotornihVozila
 
         }
 
-        public static ZaposleniView vratiZaposlenog(string id)
+        public static ZaposleniView vratiZaposlenog(string id)  
         {
             ZaposleniView zaposleniView = new ZaposleniView();
             try
@@ -80,9 +82,11 @@ namespace ProdajaMotornihVozila
 
                 string tip;
 
-                if (zaposleni.GetType() == typeof(TehnickeStruke))
+                Type actualtype = NHibernateUtil.GetClass(zaposleni);
+
+                if (actualtype == typeof(TehnickeStruke))
                     tip = "TehnickeStruke";
-                else if (zaposleni.GetType() == typeof(EkonomskeStruke))
+                else if (actualtype == typeof(EkonomskeStruke))
                     tip = "EkonomskeStruke";
                 else
                     tip = "Zaposleni";
@@ -183,9 +187,11 @@ namespace ProdajaMotornihVozila
 
                 string tip;
 
-                if (zaposleni.GetType() == typeof(TehnickeStruke))
+                Type type = NHibernateUtil.GetClass(rukovodilac);
+
+                if (type == typeof(TehnickeStruke))
                     tip = "TehnickeStruke";
-                else if (zaposleni.GetType() == typeof(EkonomskeStruke))
+                else if (type == typeof(EkonomskeStruke))
                     tip = "EkonomskeStruke";
                 else
                     tip = "Zaposleni";
@@ -227,9 +233,11 @@ namespace ProdajaMotornihVozila
 
                     string tip;
 
-                    if (z.GetType() == typeof(TehnickeStruke))
+                    Type type = NHibernateUtil.GetClass(z);
+
+                    if (type == typeof(TehnickeStruke))
                         tip = "TehnickeStruke";
-                    else if (z.GetType() == typeof(EkonomskeStruke))
+                    else if (type == typeof(EkonomskeStruke))
                         tip = "EkonomskeStruke";
                     else
                         tip = "Zaposleni";
@@ -632,6 +640,7 @@ namespace ProdajaMotornihVozila
         }
         #endregion
 
+        #region ObavljeniServis
         public static RadnjaView prikaziSadrzaj(int idPredstavnistva)
         {
             try
@@ -878,5 +887,7 @@ namespace ProdajaMotornihVozila
 
 
     }
+
+    #endregion
 }
 
