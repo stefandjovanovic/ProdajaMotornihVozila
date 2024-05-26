@@ -6,6 +6,7 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace ProdajaMotornihVozila
 {
@@ -633,6 +634,8 @@ namespace ProdajaMotornihVozila
         }
         #endregion
 
+        #region Radnja
+
         public static RadnjaView prikaziSadrzaj(int idPredstavnistva)
         {
             try
@@ -648,6 +651,7 @@ namespace ProdajaMotornihVozila
                         Id = radnja.Id,
                         ImeSefa = radnja.SefRadnje != null ? radnja.SefRadnje.Ime : null,
                         PrezimeSefa = radnja.SefRadnje != null ? radnja.SefRadnje.Prezime : null,
+                        JmbgSefa = radnja.SefRadnje != null ? radnja.SefRadnje.MaticniBroj : null,
                         SalonF = radnja.GetType() == typeof(Salon) || radnja.GetType() == typeof(OvlasceniServisISalon) ? "Da" : "Ne",
                         ServisF = radnja.GetType() == typeof(OvlasceniServis) || radnja.GetType() == typeof(OvlasceniServisISalon) ? "Da" : "Ne"
                     };
@@ -876,323 +880,614 @@ namespace ProdajaMotornihVozila
                 throw new Exception("Neuspesno vracanje servisa nizeg ranga! " + ex.Message);
             }
         }
-        #endregion
 
-        #region Vozilo
-
-        public static List<VoziloBasic> vratiSvaVozila()
+        public static void DodajServis(ServisBasic servis)
         {
-            List<VoziloBasic> vozila = new List<VoziloBasic>();
+            try
+            {
+                ISession session = DataLayer.GetSession(); 
+                if(session != null)
+                {
+                    Zaposleni sef;
+                    if (servis.JmbgSefa != null)
+                        sef = session.Load<Zaposleni>(servis.JmbgSefa);
+                    else
+                        sef = null;
+
+                    Radnja servisVisegNivoa;
+                    if(servis.IdServisaVsiegRanga != null)
+                    {
+                        servisVisegNivoa = session.Load<Radnja>(servis.IdServisaVsiegRanga);
+                    }
+                    else
+                    {
+                        servisVisegNivoa = null;
+                    }
+
+                    Predstavnistvo predstavnistvo = session.Load<Predstavnistvo>(servis.IdPredstavnistva);
+
+                    OvlasceniServis noviServis = new()
+                    {
+                        StepenOpremljenosti = servis.StepenOpremljenosti,
+                        Farbarske = servis.Farbarske,
+                        Limarske = servis.Limarske,
+                        Vulkanizerske = servis.Vulkanizerske,
+                        Mehanicarske = servis.Mehanicarske,
+                        SefRadnje = sef,
+                        ServisVisegRanga = servisVisegNivoa,
+                        PripadaPredstavnistvu = predstavnistvo
+                    };
+                    session.SaveOrUpdate(noviServis);
+                    session.Flush();
+                    session.Close();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Neuspesno dodavanje servisa! " + ex.Message);
+            }
+        }
+
+        public static void AzurirajServis(ServisBasic servis)
+        {
+            try
+            {
+                ISession session = DataLayer.GetSession();
+                if (session != null)
+                {
+                    //OvlasceniServis s = session.Load<OvlasceniServis>(servis.Id);
+                    OvlasceniServis s = session.Query<OvlasceniServis>().FirstOrDefault(r => r.PripadaPredstavnistvu.Id == servis.IdPredstavnistva);
+                    Zaposleni sef;
+                    if (servis.JmbgSefa != null)
+                        sef = session.Load<Zaposleni>(servis.JmbgSefa);
+                    else
+                        sef = null;
+
+                    Radnja servisVisegNivoa;
+                    if (servis.IdServisaVsiegRanga != null)
+                    {
+                        servisVisegNivoa = session.Load<Radnja>(servis.IdServisaVsiegRanga);
+                    }
+                    else
+                    {
+                        servisVisegNivoa = null;
+                    }
+
+                    s.StepenOpremljenosti = servis.StepenOpremljenosti;
+                    s.Farbarske = servis.Farbarske;
+                    s.Limarske = servis.Limarske;
+                    s.Vulkanizerske = servis.Vulkanizerske;
+                    s.Mehanicarske = servis.Mehanicarske;
+                    s.SefRadnje = sef;
+                    s.ServisVisegRanga = servisVisegNivoa;
+
+                    session.SaveOrUpdate(s);
+                    session.Flush();
+                    session.Close();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Neuspesno azuriranje servisa! " + ex.Message);
+            }
+        }
+
+        public static void ObrisiRadnjuUPredstavnistvu(int idPredstavnistva)
+        {
+            try
+            {
+                ISession session = DataLayer.GetSession();
+                if (session != null)
+                {
+                    int idRadnje = session.Query<Radnja>().FirstOrDefault(r => r.PripadaPredstavnistvu.Id == idPredstavnistva).Id;
+
+                    Radnja s = session.Load<OvlasceniServis>(idRadnje);
+                    session.Delete(s);
+                    session.Flush();
+                    session.Close();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Neuspesno brisanje radnje! " + ex.Message);
+            }
+        }
+
+        public static void DodajServisISalon(ServisISalonBasic servisISalon)
+        {
+            try
+            {
+                ISession session = DataLayer.GetSession();
+                if (session != null)
+                {
+                    Zaposleni sef;
+                    if (servisISalon.JmbgSefa != null)
+                        sef = session.Load<Zaposleni>(servisISalon.JmbgSefa);
+                    else
+                        sef = null;
+
+                    Radnja servisVisegNivoa;
+                    if (servisISalon.IdServisaVsiegRanga != null)
+                    {
+                        servisVisegNivoa = session.Load<Radnja>(servisISalon.IdServisaVsiegRanga);
+                    }
+                    else
+                    {
+                        servisVisegNivoa = null;
+                    }
+
+                    Predstavnistvo predstavnistvo = session.Load<Predstavnistvo>(servisISalon.IdPredstavnistva);
+
+                    OvlasceniServisISalon noviServis = new()
+                    {
+                        StepenOpremljenosti = servisISalon.StepenOpremljenosti,
+                        Farbarske = servisISalon.Farbarske,
+                        Limarske = servisISalon.Limarske,
+                        Vulkanizerske = servisISalon.Vulkanizerske,
+                        Mehanicarske = servisISalon.Mehanicarske,
+                        SefRadnje = sef,
+                        ServisVisegRanga = servisVisegNivoa,
+                        PripadaPredstavnistvu = predstavnistvo
+                    };
+                    session.SaveOrUpdate(noviServis);
+                    session.Flush();
+                    session.Close();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Neuspesno dodavanje servisa! " + ex.Message);
+            }
+        }
+        public static void AzurirajServisISalon(ServisISalonBasic servisIS)
+        {
+            try
+            {
+                ISession session = DataLayer.GetSession();
+                if (session != null)
+                {
+                    OvlasceniServisISalon s = session.Query<OvlasceniServisISalon>().FirstOrDefault(r => r.PripadaPredstavnistvu.Id == servisIS.IdPredstavnistva);
+                    Zaposleni sef;
+                    if (servisIS.JmbgSefa != null)
+                        sef = session.Load<Zaposleni>(servisIS.JmbgSefa);
+                    else
+                        sef = null;
+
+                    Radnja servisVisegNivoa;
+                    if (servisIS.IdServisaVsiegRanga != null)
+                    {
+                        servisVisegNivoa = session.Load<Radnja>(servisIS.IdServisaVsiegRanga);
+                    }
+                    else
+                    {
+                        servisVisegNivoa = null;
+                    }
+
+                    s.StepenOpremljenosti = servisIS.StepenOpremljenosti;
+                    s.Farbarske = servisIS.Farbarske;
+                    s.Limarske = servisIS.Limarske;
+                    s.Vulkanizerske = servisIS.Vulkanizerske;
+                    s.Mehanicarske = servisIS.Mehanicarske;
+                    s.SefRadnje = sef;
+                    s.ServisVisegRanga = servisVisegNivoa;
+
+                    session.SaveOrUpdate(s);
+                    session.Flush();
+                    session.Close();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Neuspesno azuriranje servisa! " + ex.Message);
+            }
+        }
+
+        public static void DodajSalon(SalonBasic salon)
+        {
 
             try
             {
                 ISession session = DataLayer.GetSession();
-
-                IEnumerable<Vozilo> vozilaIzBaze = from v in session.Query<Vozilo>()
-                                                   select v;
-
-                foreach (Vozilo v in vozilaIzBaze)
+                if (session != null)
                 {
-                    vozila.Add(new VoziloBasic(v.BrojSasije, v.Boja, v.Model, v.TipGoriva, v.KubikazaMotora, v.BrojMotora));
+                    Zaposleni sef;
+                    if (salon.JmbgSefa != null)
+                        sef = session.Load<Zaposleni>(salon.JmbgSefa);
+                    else
+                        sef = null;
+                    Predstavnistvo predstavnistvo = session.Load<Predstavnistvo>(salon.IdPredstavnistva);
+
+                    Salon salon1 = new()
+                    {
+                        SefRadnje = sef,
+                        PripadaPredstavnistvu = predstavnistvo
+                    };
+
+                    
+                    session.SaveOrUpdate(salon1);
+                    session.Flush();
+                    session.Close();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Neuspesno dodavanje salona! " + ex.Message);
+            }
+        }
+
+        public static void AzurirajSalon(SalonBasic salon)
+        {
+            try
+            {
+                ISession session = DataLayer.GetSession();
+                if (session != null)
+                {
+                    Salon s = session.Query<Salon>().FirstOrDefault(r => r.PripadaPredstavnistvu.Id == salon.IdPredstavnistva);
+                    Zaposleni sef;
+                    if (salon.JmbgSefa != null)
+                        sef = session.Load<Zaposleni>(salon.JmbgSefa);
+                    else
+                        sef = null;
+
+                    s.SefRadnje = sef;
+
+                    session.SaveOrUpdate(s);
+                    session.Flush();
+                    session.Close();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Neuspesno azuriranje salona! " + ex.Message);
+            }
+        }
+        public static bool PosedujeRadnju(int idPredstavnistva)
+        {
+            try
+            {
+                ISession session = DataLayer.GetSession();
+
+                Radnja radnja = session.Query<Radnja>().FirstOrDefault(r => r.PripadaPredstavnistvu.Id == idPredstavnistva);
+
+                if (radnja != null)
+                {
+                    return true;
+
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Neuspesno vracanje sadrzaja radnje! " + ex.Message);
+            }
+        }
+
+            #endregion
+
+            #region Vozilo
+
+            public static List<VoziloBasic> vratiSvaVozila()
+            {
+                List<VoziloBasic> vozila = new List<VoziloBasic>();
+
+                try
+                {
+                    ISession session = DataLayer.GetSession();
+
+                    IEnumerable<Vozilo> vozilaIzBaze = from v in session.Query<Vozilo>()
+                                                       select v;
+
+                    foreach (Vozilo v in vozilaIzBaze)
+                    {
+                        vozila.Add(new VoziloBasic(v.BrojSasije, v.Boja, v.Model, v.TipGoriva, v.KubikazaMotora, v.BrojMotora));
+                    }
+
+                    session.Close();
                 }
 
-                session.Close();
-            }
-
-            catch(Exception ex)
-            {
-                throw new Exception("Neuspesno vracanje vozila! " + ex.Message);
-            }
-
-            return vozila;
-        }
-
-        public static void obrisiVozilo(string brojSasije)
-        {
-            try
-            {
-                ISession session = DataLayer.GetSession();
-
-                Vozilo vozilo = session.Load<Vozilo>(brojSasije);
-
-                session.Delete(vozilo);
-                session.Flush();
-
-                session.Close();
-            }
-
-            catch (Exception ex)
-            {
-                throw new Exception("Neuspesno brisanje vozila! " + ex.Message);
-            }
-        }
-
-        public static VoziloView prikaziVozilo(string brojSasije)
-        {
-            VoziloView voziloView = new VoziloView();
-
-            try
-            {
-                ISession session = DataLayer.GetSession();
-
-                Vozilo vozilo = session.Load<Vozilo>(brojSasije);
-
-                voziloView.BrojSasije = vozilo.BrojSasije;
-                voziloView.Boja = vozilo.Boja;
-                voziloView.Model = vozilo.Model;
-                voziloView.TipGoriva = vozilo.TipGoriva;
-                voziloView.Kubikaza = vozilo.KubikazaMotora;
-                voziloView.BrojMotora = vozilo.BrojMotora;
-                voziloView.PutnickaF = vozilo.PutnickaF;
-                voziloView.BrojPutnika = vozilo.BrojPutnika;
-                voziloView.TeretnaF = vozilo.TeretnaF;
-                voziloView.Nosivost = vozilo.Nosivost;
-                voziloView.TeretniProstorOtvorenogTipa = vozilo.TeretniProstorOtvorenogTipa;
-
-
-                session.Close();
-            }
-
-            catch (Exception ex)
-            {
-                throw new Exception("Neuspesno vracanje vozila! " + ex.Message);
-            }
-
-            return voziloView;
-        }
-
-
-
-
-
-
-
-
-        #endregion
-
-        #region NezavisnoVozilo
-        public static void dodajNezavisnoVozilo(NezavisnoVoziloBasic nezavisnoVoziloBasic)
-        {
-            try
-            {
-                ISession session = DataLayer.GetSession();
-
-                NezavisnoVozilo nv = new()
+                catch (Exception ex)
                 {
-                    BrojSasije = nezavisnoVoziloBasic.BrojSasije,
-                    Boja = nezavisnoVoziloBasic.Boja,
-                    Model = nezavisnoVoziloBasic.Model,
-                    TipGoriva = nezavisnoVoziloBasic.TipGoriva,
-                    KubikazaMotora = nezavisnoVoziloBasic.Kubikaza,
-                    BrojMotora = nezavisnoVoziloBasic.BrojMotora,
-                    PutnickaF = nezavisnoVoziloBasic.PutnickaF,
-                    BrojPutnika = nezavisnoVoziloBasic.BrojPutnika,
-                    TeretnaF = nezavisnoVoziloBasic.TeretnaF,
-                    Nosivost = nezavisnoVoziloBasic.Nosivost,
-                    TeretniProstorOtvorenogTipa = nezavisnoVoziloBasic.TeretniProstorOtvorenogTipa,
-                    ImeVlasnika = nezavisnoVoziloBasic.ImeVlasnika,
-                    PrezimeVlasnika = nezavisnoVoziloBasic.PrezimeVlasnika,
-                    BrojTelefonaVlasnika = nezavisnoVoziloBasic.BrojTelefonaVlasnika
-
-                };
-
-                session.SaveOrUpdate(nv);
-
-                session.Flush();
-
-                session.Close();
-
-
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Neuspesno dodavanje nezavisnog vozila! " + ex.Message);
-            }
-        }
-
-        #endregion
-
-        #region VoziloKompanije
-
-       public static void dodajVoziloKompanije(VoziloKompanijeBasic voziloKompanijeBasic)
-        {
-            try
-            {
-                ISession session = DataLayer.GetSession();
-
-                Zaposleni zaposleni = session.Load<Zaposleni>(voziloKompanijeBasic.MbrIzvrsiocaPrijemaUvoza);
-
-                Radnja radnja = session.Load<Radnja>(voziloKompanijeBasic.IdSalona);
-
-
-                VoziloKompanije vk = new()
-                {
-                    BrojSasije = voziloKompanijeBasic.BrojSasije,
-                    Boja = voziloKompanijeBasic.Boja,
-                    Model = voziloKompanijeBasic.Model,
-                    TipGoriva = voziloKompanijeBasic.TipGoriva,
-                    KubikazaMotora = voziloKompanijeBasic.Kubikaza,
-                    BrojMotora = voziloKompanijeBasic.BrojMotora,
-                    PutnickaF = voziloKompanijeBasic.PutnickaF,
-                    BrojPutnika = voziloKompanijeBasic.BrojPutnika,
-                    TeretnaF = voziloKompanijeBasic.TeretnaF,
-                    Nosivost = voziloKompanijeBasic.Nosivost,
-                    TeretniProstorOtvorenogTipa = voziloKompanijeBasic.TeretniProstorOtvorenogTipa,
-                    UvezenoF = voziloKompanijeBasic.UvezenoF,
-                    Datum_Uvoza = voziloKompanijeBasic.DatumUvoza,
-                    MbrIzvrsiocaPrijemaUvoza = zaposleni,
-                    IdSalona = radnja
-
-                };
-
-                zaposleni.UvezenaVozila.Add(vk); 
-
-
-                if(radnja.GetType() == typeof(Salon))
-                {
-                    Salon s = radnja as Salon;
-                    s.IzlozenaVozila.Add(vk);
+                    throw new Exception("Neuspesno vracanje vozila! " + ex.Message);
                 }
 
-                else if (radnja.GetType() == typeof(OvlasceniServisISalon))
+                return vozila;
+            }
+
+            public static void obrisiVozilo(string brojSasije)
+            {
+                try
                 {
-                    OvlasceniServisISalon s = radnja as OvlasceniServisISalon;
-                    s.IzlozenaVozila.Add(vk);
+                    ISession session = DataLayer.GetSession();
+
+                    Vozilo vozilo = session.Load<Vozilo>(brojSasije);
+
+                    session.Delete(vozilo);
+                    session.Flush();
+
+                    session.Close();
                 }
 
-
-
-
-                session.SaveOrUpdate(vk);
-
-                session.Flush();
-
-                session.Close();
-
+                catch (Exception ex)
+                {
+                    throw new Exception("Neuspesno brisanje vozila! " + ex.Message);
+                }
             }
 
-            catch (Exception ex)
+            public static VoziloView prikaziVozilo(string brojSasije)
             {
-                throw new Exception("Neuspesno dodavanje vozila kompanije! " + ex.Message);
+                VoziloView voziloView = new VoziloView();
+
+                try
+                {
+                    ISession session = DataLayer.GetSession();
+
+                    Vozilo vozilo = session.Load<Vozilo>(brojSasije);
+
+                    voziloView.BrojSasije = vozilo.BrojSasije;
+                    voziloView.Boja = vozilo.Boja;
+                    voziloView.Model = vozilo.Model;
+                    voziloView.TipGoriva = vozilo.TipGoriva;
+                    voziloView.Kubikaza = vozilo.KubikazaMotora;
+                    voziloView.BrojMotora = vozilo.BrojMotora;
+                    voziloView.PutnickaF = vozilo.PutnickaF;
+                    voziloView.BrojPutnika = vozilo.BrojPutnika;
+                    voziloView.TeretnaF = vozilo.TeretnaF;
+                    voziloView.Nosivost = vozilo.Nosivost;
+                    voziloView.TeretniProstorOtvorenogTipa = vozilo.TeretniProstorOtvorenogTipa;
+
+
+                    session.Close();
+                }
+
+                catch (Exception ex)
+                {
+                    throw new Exception("Neuspesno vracanje vozila! " + ex.Message);
+                }
+
+                return voziloView;
             }
-        }
 
 
 
-        #endregion
 
-        #region ObavljeniServis
 
-        public static List<ObavljeniServisBasic> vratiObavljeneServise()
-        {
-            List<ObavljeniServisBasic> ob = new List<ObavljeniServisBasic>();
 
-            try
+
+
+            #endregion
+
+            #region NezavisnoVozilo
+            public static void dodajNezavisnoVozilo(NezavisnoVoziloBasic nezavisnoVoziloBasic)
             {
-                ISession session = DataLayer.GetSession();
+                try
+                {
+                    ISession session = DataLayer.GetSession();
 
-                IEnumerable<JePrimljeno> obavljeniServisi = from o in session.Query<JePrimljeno>()
+                    NezavisnoVozilo nv = new()
+                    {
+                        BrojSasije = nezavisnoVoziloBasic.BrojSasije,
+                        Boja = nezavisnoVoziloBasic.Boja,
+                        Model = nezavisnoVoziloBasic.Model,
+                        TipGoriva = nezavisnoVoziloBasic.TipGoriva,
+                        KubikazaMotora = nezavisnoVoziloBasic.Kubikaza,
+                        BrojMotora = nezavisnoVoziloBasic.BrojMotora,
+                        PutnickaF = nezavisnoVoziloBasic.PutnickaF,
+                        BrojPutnika = nezavisnoVoziloBasic.BrojPutnika,
+                        TeretnaF = nezavisnoVoziloBasic.TeretnaF,
+                        Nosivost = nezavisnoVoziloBasic.Nosivost,
+                        TeretniProstorOtvorenogTipa = nezavisnoVoziloBasic.TeretniProstorOtvorenogTipa,
+                        ImeVlasnika = nezavisnoVoziloBasic.ImeVlasnika,
+                        PrezimeVlasnika = nezavisnoVoziloBasic.PrezimeVlasnika,
+                        BrojTelefonaVlasnika = nezavisnoVoziloBasic.BrojTelefonaVlasnika
+
+                    };
+
+                    session.SaveOrUpdate(nv);
+
+                    session.Flush();
+
+                    session.Close();
+
+
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Neuspesno dodavanje nezavisnog vozila! " + ex.Message);
+                }
+            }
+
+            #endregion
+
+            #region VoziloKompanije
+
+            public static void dodajVoziloKompanije(VoziloKompanijeBasic voziloKompanijeBasic)
+            {
+                try
+                {
+                    ISession session = DataLayer.GetSession();
+
+                    Zaposleni zaposleni = session.Load<Zaposleni>(voziloKompanijeBasic.MbrIzvrsiocaPrijemaUvoza);
+
+                    Radnja radnja = session.Load<Radnja>(voziloKompanijeBasic.IdSalona);
+
+
+                    VoziloKompanije vk = new()
+                    {
+                        BrojSasije = voziloKompanijeBasic.BrojSasije,
+                        Boja = voziloKompanijeBasic.Boja,
+                        Model = voziloKompanijeBasic.Model,
+                        TipGoriva = voziloKompanijeBasic.TipGoriva,
+                        KubikazaMotora = voziloKompanijeBasic.Kubikaza,
+                        BrojMotora = voziloKompanijeBasic.BrojMotora,
+                        PutnickaF = voziloKompanijeBasic.PutnickaF,
+                        BrojPutnika = voziloKompanijeBasic.BrojPutnika,
+                        TeretnaF = voziloKompanijeBasic.TeretnaF,
+                        Nosivost = voziloKompanijeBasic.Nosivost,
+                        TeretniProstorOtvorenogTipa = voziloKompanijeBasic.TeretniProstorOtvorenogTipa,
+                        UvezenoF = voziloKompanijeBasic.UvezenoF,
+                        Datum_Uvoza = voziloKompanijeBasic.DatumUvoza,
+                        MbrIzvrsiocaPrijemaUvoza = zaposleni,
+                        IdSalona = radnja
+
+                    };
+
+                    zaposleni.UvezenaVozila.Add(vk);
+
+
+                    if (radnja.GetType() == typeof(Salon))
+                    {
+                        Salon s = radnja as Salon;
+                        s.IzlozenaVozila.Add(vk);
+                    }
+
+                    else if (radnja.GetType() == typeof(OvlasceniServisISalon))
+                    {
+                        OvlasceniServisISalon s = radnja as OvlasceniServisISalon;
+                        s.IzlozenaVozila.Add(vk);
+                    }
+
+
+
+
+                    session.SaveOrUpdate(vk);
+
+                    session.Flush();
+
+                    session.Close();
+
+                }
+
+                catch (Exception ex)
+                {
+                    throw new Exception("Neuspesno dodavanje vozila kompanije! " + ex.Message);
+                }
+            }
+
+
+
+            #endregion
+
+            #region ObavljeniServis
+
+            public static List<ObavljeniServisBasic> vratiObavljeneServise()
+            {
+                List<ObavljeniServisBasic> ob = new List<ObavljeniServisBasic>();
+
+                try
+                {
+                    ISession session = DataLayer.GetSession();
+
+                    IEnumerable<JePrimljeno> obavljeniServisi = from o in session.Query<JePrimljeno>()
                                                                 select o;
 
-                foreach (JePrimljeno o in obavljeniServisi)
-                {
-                    ob.Add(new ObavljeniServisBasic(o.Id, o.RegistarskiBroj, o.Model, o.Opis, o.IdObavljenogServisa.MbrIzvrsiocaPrijema.MaticniBroj, o.GodinaProizvodnje, o.IdObavljenogServisa));
+                    foreach (JePrimljeno o in obavljeniServisi)
+                    {
+                        ob.Add(new ObavljeniServisBasic(o.Id, o.RegistarskiBroj, o.Model, o.Opis, o.IdObavljenogServisa.MbrIzvrsiocaPrijema.MaticniBroj, o.GodinaProizvodnje, o.IdObavljenogServisa.Id));
+                    }
+
+                    session.Close();
                 }
 
-                session.Close();
-            }
-
-            catch (Exception ex)
-            {
-                throw new Exception("Neuspesno vracanje obavljenih servisa! " + ex.Message);
-            }
-
-            return ob;
-
-        }
-
-        public static ObavljeniServisView vratiObavljeniServis(int id)
-        {
-            ObavljeniServisView osw = new ObavljeniServisView();
-
-            try
-            {
-                ISession session = DataLayer.GetSession();
-
-                JePrimljeno os = session.Load<JePrimljeno>(id);
-
-                osw.Id = os.Id;
-                osw.ServisId = os.Id;
-                osw.RegistarskiBroj = os.RegistarskiBroj;
-                osw.Opis = os.Opis;
-                osw.Model = os.Model;
-                osw.MbrIzvrsiocaPrijema = os.IdObavljenogServisa.MbrIzvrsiocaPrijema.MaticniBroj;
-                osw.GodinaProizvodnje = os.GodinaProizvodnje;
-                osw.DatumPrijema = os.IdObavljenogServisa.DatumPrjema;
-                osw.DatumZavrsetka = os.IdObavljenogServisa.DatumZavrsetka;
-                osw.AdresaServisa = os.IdObavljenogServisa.IdServisa.PripadaPredstavnistvu.Adresa;
-                osw.GradServisa = os.IdObavljenogServisa.IdServisa.PripadaPredstavnistvu.Grad;
-
-                session.Close();
-
-            }
-            catch(Exception ex)
-            {
-                throw new Exception("Neuspesno vracanje obavljenog servisa! " + ex.Message);
-            }
-
-            return osw;
-        }
-
-        public static void ObaviServis(ObavljeniServisCreate osc)
-        {
-            try
-            {
-                ISession session = DataLayer.GetSession();
-
-                ObavljeniServis os = new ObavljeniServis
+                catch (Exception ex)
                 {
-                    DatumPrjema = osc.DatumPrijemaVozila,
-                    DatumZavrsetka = osc.DatumZavrsetkaServisa,
-                    MbrIzvrsiocaPrijema = session.Load<Zaposleni>(osc.MbrIzvrsiocaPrijema),
-                    IdServisa = session.Load<Radnja>(osc.ServisId)
-                };
-                
+                    throw new Exception("Neuspesno vracanje obavljenih servisa! " + ex.Message);
+                }
 
-                session.SaveOrUpdate(os);
-
-                JePrimljeno jp = new JePrimljeno
-                {
-                    RegistarskiBroj = osc.RegistarskiBroj,
-                    Model = osc.Model,
-                    Opis = osc.Opis,
-                    GodinaProizvodnje = osc.GodinaProizvodnje,
-                    IdObavljenogServisa = os,
-                    BrojSasijeVozila = session.Load<Vozilo>(osc.BrojSasijeVozila)
-                };
-
-                
-
-                os.JePrimljeno.Add(jp);
-
-                session.SaveOrUpdate(jp);
-
-                session.Flush();
-
-                session.Close();
-
+                return ob;
 
             }
 
-            catch( Exception ex)
+            public static ObavljeniServisView vratiObavljeniServis(int id)
             {
-                throw new Exception("Neuspesno obavljanje servisa! " + ex.Message);
+                ObavljeniServisView osw = new ObavljeniServisView();
+
+                try
+                {
+                    ISession session = DataLayer.GetSession();
+
+                    JePrimljeno os = session.Load<JePrimljeno>(id);
+
+                    osw.Id = os.Id;
+                    osw.ServisId = os.Id;
+                    osw.RegistarskiBroj = os.RegistarskiBroj;
+                    osw.Opis = os.Opis;
+                    osw.Model = os.Model;
+                    osw.MbrIzvrsiocaPrijema = os.IdObavljenogServisa.MbrIzvrsiocaPrijema.MaticniBroj;
+                    osw.GodinaProizvodnje = os.GodinaProizvodnje;
+                    osw.DatumPrijema = os.IdObavljenogServisa.DatumPrjema;
+                    osw.DatumZavrsetka = os.IdObavljenogServisa.DatumZavrsetka;
+                    osw.AdresaServisa = os.IdObavljenogServisa.IdServisa.PripadaPredstavnistvu.Adresa;
+                    osw.GradServisa = os.IdObavljenogServisa.IdServisa.PripadaPredstavnistvu.Grad;
+
+                    session.Close();
+
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Neuspesno vracanje obavljenog servisa! " + ex.Message);
+                }
+
+                return osw;
             }
+
+            public static void ObaviServis(ObavljeniServisCreate osc)
+            {
+                try
+                {
+                    ISession session = DataLayer.GetSession();
+
+                    ObavljeniServis os = new ObavljeniServis
+                    {
+                        DatumPrjema = osc.DatumPrijemaVozila,
+                        DatumZavrsetka = osc.DatumZavrsetkaServisa,
+                        MbrIzvrsiocaPrijema = session.Load<Zaposleni>(osc.MbrIzvrsiocaPrijema),
+                        IdServisa = session.Load<Radnja>(osc.ServisId)
+                    };
+
+
+                    session.SaveOrUpdate(os);
+
+                    JePrimljeno jp = new JePrimljeno
+                    {
+                        RegistarskiBroj = osc.RegistarskiBroj,
+                        Model = osc.Model,
+                        Opis = osc.Opis,
+                        GodinaProizvodnje = osc.GodinaProizvodnje,
+                        IdObavljenogServisa = os,
+                        BrojSasijeVozila = session.Load<Vozilo>(osc.BrojSasijeVozila)
+                    };
+
+
+
+                    os.JePrimljeno.Add(jp);
+
+                    session.SaveOrUpdate(jp);
+
+                    session.Flush();
+
+                    session.Close();
+
+
+                }
+
+                catch (Exception ex)
+                {
+                    throw new Exception("Neuspesno obavljanje servisa! " + ex.Message);
+                }
+            }
+
+            #endregion
         }
 
-        #endregion
-
-
-    }
 }
 

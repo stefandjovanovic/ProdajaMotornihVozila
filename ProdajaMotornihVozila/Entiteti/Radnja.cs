@@ -24,11 +24,11 @@ namespace ProdajaMotornihVozila.Entiteti
 
     public class OvlasceniServis: Radnja
     {
-        public virtual string? StepenOpremljenosti { get; protected set; }
-        public virtual string? Farbarske { get; protected set; }
-        public virtual string? Limarske { get; protected set; }
-        public virtual string? Vulkanizerske { get; protected set; }
-        public virtual string? Mehanicarske { get; protected set; }
+        public virtual string? StepenOpremljenosti { get; set; }
+        public virtual string? Farbarske { get; set; }
+        public virtual string? Limarske { get; set; }
+        public virtual string? Vulkanizerske { get; set; }
+        public virtual string? Mehanicarske { get; set; }
 
         public virtual Radnja? ServisVisegRanga { get; set; }
         public virtual IList<Radnja>? ServisiNizegRanga { get; set; } = [];
@@ -42,11 +42,11 @@ namespace ProdajaMotornihVozila.Entiteti
 
     public class OvlasceniServisISalon: Radnja
     {
-        public virtual string? StepenOpremljenosti { get; protected set; }
-        public virtual string? Farbarske { get; protected set; }
-        public virtual string? Limarske { get; protected set; }
-        public virtual string? Vulkanizerske { get; protected set; }
-        public virtual string? Mehanicarske { get; protected set; }
+        public virtual string? StepenOpremljenosti { get; set; }
+        public virtual string? Farbarske { get; set; }
+        public virtual string? Limarske { get; set; }
+        public virtual string? Vulkanizerske { get; set; }
+        public virtual string? Mehanicarske { get; set; }
 
         public virtual Radnja? ServisVisegRanga { get; set; }
         public virtual IList<Radnja>? ServisiNizegRanga { get; set; } = [];

@@ -37,6 +37,8 @@
             button1 = new Button();
             button2 = new Button();
             button3 = new Button();
+            btnDodajRadnju = new Button();
+            button4 = new Button();
             SuspendLayout();
             // 
             // listaPredstavnistva
@@ -46,7 +48,7 @@
             listaPredstavnistva.GridLines = true;
             listaPredstavnistva.Location = new Point(34, 48);
             listaPredstavnistva.Name = "listaPredstavnistva";
-            listaPredstavnistva.Size = new Size(522, 372);
+            listaPredstavnistva.Size = new Size(522, 437);
             listaPredstavnistva.TabIndex = 0;
             listaPredstavnistva.UseCompatibleStateImageBehavior = false;
             listaPredstavnistva.View = View.Details;
@@ -110,11 +112,33 @@
             button3.UseVisualStyleBackColor = true;
             button3.Click += button3_Click;
             // 
+            // btnDodajRadnju
+            // 
+            btnDodajRadnju.Location = new Point(691, 365);
+            btnDodajRadnju.Name = "btnDodajRadnju";
+            btnDodajRadnju.Size = new Size(164, 48);
+            btnDodajRadnju.TabIndex = 5;
+            btnDodajRadnju.Text = "Dodaj radnju za predstavnistvo";
+            btnDodajRadnju.UseVisualStyleBackColor = true;
+            btnDodajRadnju.Click += btnDodajRadnju_Click;
+            // 
+            // button4
+            // 
+            button4.Location = new Point(691, 437);
+            button4.Name = "button4";
+            button4.Size = new Size(164, 48);
+            button4.TabIndex = 6;
+            button4.Text = "Izbrisi radnju za predstavnistvo";
+            button4.UseVisualStyleBackColor = true;
+            button4.Click += button4_Click;
+            // 
             // PredstavnistvaForma
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1067, 533);
+            Controls.Add(button4);
+            Controls.Add(btnDodajRadnju);
             Controls.Add(button3);
             Controls.Add(button2);
             Controls.Add(button1);
@@ -137,5 +161,7 @@
         private Button button1;
         private Button button2;
         private Button button3;
+        private Button btnDodajRadnju;
+        private Button button4;
     }
 }

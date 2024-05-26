@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProdajaMotornihVozila.Forme.PredstavnistvoForme;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,10 +14,12 @@ namespace ProdajaMotornihVozila.Forme
     public partial class RadnjaForma : Form
     {
         private RadnjaView radnja;
+        private int idPredstavnistva;
 
-        public RadnjaForma(RadnjaView radnja)
+        public RadnjaForma(RadnjaView radnja, int idPredstavnistva)
         {
             this.radnja = radnja;
+            this.idPredstavnistva = idPredstavnistva;
             InitializeComponent();
         }
 
@@ -64,6 +67,25 @@ namespace ProdajaMotornihVozila.Forme
         {
             ServisDetaljiForm servisDetalji = new ServisDetaljiForm(radnja.Id);
             servisDetalji.ShowDialog();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if(radnja.ServisF == "Ne" && radnja.SalonF == "Da")
+            {
+                UrediRadnjuForma forma = new UrediRadnjuForma(idPredstavnistva, "SALON");
+                forma.ShowDialog();
+            }
+            else if(radnja.ServisF == "Da" && radnja.SalonF == "Ne")
+            {
+                UrediRadnjuForma forma = new UrediRadnjuForma(idPredstavnistva, "SERVIS");
+                forma.ShowDialog();
+            }
+            else if(radnja.ServisF == "Da" && radnja.SalonF == "Da")
+            {
+                UrediRadnjuForma forma = new UrediRadnjuForma(idPredstavnistva, "SERVIS_I_SALON");
+                forma.ShowDialog();
+            }
         }
     }
 }

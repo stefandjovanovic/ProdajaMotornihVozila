@@ -170,6 +170,7 @@ namespace ProdajaMotornihVozila
         public string? ImeSefa { get; set; }
 
         public string? PrezimeSefa { get; set; }
+        public string? JmbgSefa { get; set; }
 
         public string SalonF { get; set; }
 
@@ -239,6 +240,64 @@ namespace ProdajaMotornihVozila
 
         public ServisVisegNizegRangaView()
         { }
+    }
+
+    public class ServisBasic
+    {
+        public int IdPredstavnistva { get; set; }
+
+        public string StepenOpremljenosti { get; set; }
+
+        public string Farbarske { get; set; }
+
+        public string Limarske { get; set; }
+
+        public string Vulkanizerske { get; set; }
+
+        public string Mehanicarske { get; set; }
+        public string? JmbgSefa { get; set; }
+        public int? IdServisaVsiegRanga { get; set; }
+
+        public ServisBasic(int id, string stepenOpremljenosti, string farbarske, string limarske, string vulkanizerske, string mehanicarske, string? jmmbgSefa, int? idServisaVisegRanga)
+        {
+            IdPredstavnistva = id;
+            StepenOpremljenosti = stepenOpremljenosti;
+            Farbarske = farbarske;
+            Limarske = limarske;
+            Vulkanizerske = vulkanizerske;
+            Mehanicarske = mehanicarske;
+            JmbgSefa = jmmbgSefa;
+            IdServisaVsiegRanga = idServisaVisegRanga;
+        }
+
+        public ServisBasic()
+        {
+        }
+    }
+    public class ServisISalonBasic : ServisBasic
+    {
+        public ServisISalonBasic(int id, string stepenOpremljenosti, string farbarske, string limarske, string vulkanizerske, string mehanicarske, string? jmbgSefa, int? idServisaVsiegRanga) 
+            : base(id, stepenOpremljenosti, farbarske, limarske, vulkanizerske, mehanicarske, jmbgSefa, idServisaVsiegRanga)
+        {
+        }
+        public ServisISalonBasic() { }
+    }
+
+    public class SalonBasic
+    {
+        public int IdPredstavnistva { get; set; }
+
+        public string? JmbgSefa { get; set; }
+
+        public SalonBasic(int id, string? jmbgSefa)
+        {
+            IdPredstavnistva = id;
+            JmbgSefa = jmbgSefa;
+        }
+
+        public SalonBasic()
+        {
+        }
     }
 
     #endregion

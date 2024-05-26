@@ -98,7 +98,7 @@ namespace ProdajaMotornihVozila.Forme
             try
             {
                 RadnjaView r = DTOManager.prikaziSadrzaj(id);
-                RadnjaForma forma = new RadnjaForma(r);
+                RadnjaForma forma = new RadnjaForma(r, id);
                 forma.ShowDialog();
                 this.popuniPodatke();
             }
@@ -107,6 +107,53 @@ namespace ProdajaMotornihVozila.Forme
                 MessageBox.Show(ex.Message);
             }
 
+        }
+
+        private void btnDodajRadnju_Click(object sender, EventArgs e)
+        {
+            if (listaPredstavnistva.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Morate selektovati predstavnistvo");
+                return;
+            }
+
+            int id = int.Parse(listaPredstavnistva.SelectedItems[0].SubItems[0].Text);
+
+            if (DTOManager.PosedujeRadnju(id))
+            {
+                MessageBox.Show("Predstavnistvo vec poseduje radnju");
+                return;
+            }
+
+            UrediRadnjuForma forma = new UrediRadnjuForma(id);
+            forma.ShowDialog();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            if (listaPredstavnistva.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Morate selektovati predstavnistvo");
+                return;
+            }
+
+            int id = int.Parse(listaPredstavnistva.SelectedItems[0].SubItems[0].Text);
+
+            if (DTOManager.PosedujeRadnju(id))
+            {
+                try
+                {
+                    DTOManager.ObrisiRadnjuUPredstavnistvu(id);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Greska prilikom brisanja radnje: " + ex.Message);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Predstavnistvo ne poseduje radnju");
+            }
         }
     }
 }

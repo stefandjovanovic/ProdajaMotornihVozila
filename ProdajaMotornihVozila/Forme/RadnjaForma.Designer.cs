@@ -33,6 +33,7 @@
             labelServis = new Label();
             labelSalon = new Label();
             btnPrikaziServis = new Button();
+            button1 = new Button();
             SuspendLayout();
             // 
             // labelSef
@@ -85,11 +86,22 @@
             btnPrikaziServis.UseVisualStyleBackColor = true;
             btnPrikaziServis.Click += btnPrikaziServis_Click;
             // 
+            // button1
+            // 
+            button1.Location = new Point(301, 249);
+            button1.Name = "button1";
+            button1.Size = new Size(175, 44);
+            button1.TabIndex = 5;
+            button1.Text = "Izmeni Radnju";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
             // RadnjaForma
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(500, 319);
+            Controls.Add(button1);
             Controls.Add(btnPrikaziServis);
             Controls.Add(labelSalon);
             Controls.Add(labelServis);
@@ -109,5 +121,6 @@
         private Label labelServis;
         private Label labelSalon;
         private Button btnPrikaziServis;
+        private Button button1;
     }
 }
