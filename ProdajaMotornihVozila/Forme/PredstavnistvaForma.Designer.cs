@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            listView1 = new ListView();
+            listaPredstavnistva = new ListView();
             columnHeader1 = new ColumnHeader();
             columnHeader2 = new ColumnHeader();
             columnHeader3 = new ColumnHeader();
@@ -39,17 +39,17 @@
             button3 = new Button();
             SuspendLayout();
             // 
-            // listView1
+            // listaPredstavnistva
             // 
-            listView1.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2, columnHeader3, columnHeader4 });
-            listView1.FullRowSelect = true;
-            listView1.GridLines = true;
-            listView1.Location = new Point(34, 48);
-            listView1.Name = "listView1";
-            listView1.Size = new Size(522, 372);
-            listView1.TabIndex = 0;
-            listView1.UseCompatibleStateImageBehavior = false;
-            listView1.View = View.Details;
+            listaPredstavnistva.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2, columnHeader3, columnHeader4 });
+            listaPredstavnistva.FullRowSelect = true;
+            listaPredstavnistva.GridLines = true;
+            listaPredstavnistva.Location = new Point(34, 48);
+            listaPredstavnistva.Name = "listaPredstavnistva";
+            listaPredstavnistva.Size = new Size(522, 372);
+            listaPredstavnistva.TabIndex = 0;
+            listaPredstavnistva.UseCompatibleStateImageBehavior = false;
+            listaPredstavnistva.View = View.Details;
             // 
             // columnHeader1
             // 
@@ -78,6 +78,7 @@
             btnDodaj.TabIndex = 1;
             btnDodaj.Text = "Dodaj Predstavnistvo";
             btnDodaj.UseVisualStyleBackColor = true;
+            btnDodaj.Click += btnDodaj_Click;
             // 
             // button1
             // 
@@ -87,6 +88,7 @@
             button1.TabIndex = 2;
             button1.Text = "Prikazi sadrzaj";
             button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // button2
             // 
@@ -96,6 +98,7 @@
             button2.TabIndex = 3;
             button2.Text = "Izmeni Predstavnistvo";
             button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
             // 
             // button3
             // 
@@ -105,6 +108,7 @@
             button3.TabIndex = 4;
             button3.Text = "Obrisi Predstavnistvo";
             button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
             // 
             // PredstavnistvaForma
             // 
@@ -115,15 +119,16 @@
             Controls.Add(button2);
             Controls.Add(button1);
             Controls.Add(btnDodaj);
-            Controls.Add(listView1);
+            Controls.Add(listaPredstavnistva);
             Name = "PredstavnistvaForma";
             Text = "PredstavnistvaForma";
+            Load += PredstavnistvaForma_Load;
             ResumeLayout(false);
         }
 
         #endregion
 
-        private ListView listView1;
+        private ListView listaPredstavnistva;
         private ColumnHeader columnHeader1;
         private ColumnHeader columnHeader2;
         private ColumnHeader columnHeader3;

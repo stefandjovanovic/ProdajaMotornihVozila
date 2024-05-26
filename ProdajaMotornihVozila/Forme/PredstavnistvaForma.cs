@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProdajaMotornihVozila.Forme.PredstavnistvoForme;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,8 +18,94 @@ namespace ProdajaMotornihVozila.Forme
             InitializeComponent();
         }
 
+        private void popuniPodatke()
+        {
+            listaPredstavnistva.Items.Clear();
+            try
+            {
+                List<PredstavnistvoBasic> predstavnistva = DTOManager.vratiSvaPredstavnistva();
+                foreach (PredstavnistvoBasic p in predstavnistva)
+                {
+                    ListViewItem item = new ListViewItem(new string[] { p.PredstavnistvoId.ToString(), p.Grad, p.Adresa, p.ImeDirektora + " " + p.PrezimeDirektora });
+                    item.Tag = p;
+                    listaPredstavnistva.Items.Add(item);
+                }
+                listaPredstavnistva.Refresh();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Greska prilikoom ucitavanj podataka: " + ex.Message);
+            }
+        }
+
         private void btnDodaj_Click(object sender, EventArgs e)
         {
+            DodajPredstavnistvoForma forma = new DodajPredstavnistvoForma();
+            forma.ShowDialog();
+            popuniPodatke();
+        }
+
+        private void PredstavnistvaForma_Load(object sender, EventArgs e)
+        {
+            popuniPodatke();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (listaPredstavnistva.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Morate selektovati predstavnistvo");
+                return;
+            }
+
+            PredstavnistvoBasic p = (PredstavnistvoBasic)listaPredstavnistva.SelectedItems[0].Tag;
+            int id = int.Parse(listaPredstavnistva.SelectedItems[0].SubItems[0].Text);
+
+            DodajPredstavnistvoForma forma = new DodajPredstavnistvoForma(p, id);
+            forma.ShowDialog();
+            popuniPodatke();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (listaPredstavnistva.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Morate selektovati predstavnistvo");
+                return;
+            }
+
+            int id = int.Parse(listaPredstavnistva.SelectedItems[0].SubItems[0].Text);
+            try
+            {
+                DTOManager.obrisiPredstavnistvo(id);
+                popuniPodatke();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Greska prilikom brisanja predstavnistva: \n" + ex.Message);
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (listaPredstavnistva.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Morate selektovati predstavnistvo");
+                return;
+            }
+
+            int id = int.Parse(listaPredstavnistva.SelectedItems[0].SubItems[0].Text);
+            try
+            {
+                RadnjaView r = DTOManager.prikaziSadrzaj(id);
+                RadnjaForma forma = new RadnjaForma(r);
+                forma.ShowDialog();
+                this.popuniPodatke();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
 
         }
     }

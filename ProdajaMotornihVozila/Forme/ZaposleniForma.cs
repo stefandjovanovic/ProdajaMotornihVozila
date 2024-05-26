@@ -54,76 +54,86 @@ namespace ProdajaMotornihVozila.Forme
 
             StringBuilder sb = new StringBuilder();
 
-            if (tipZaposlenog == "EkonomskeStruke")
+            try
             {
-                EkonomStrBasic zaposleni = DTOManager.vratiZaposlenogEkonom(jmbg);
-                sb.AppendLine(zaposleni.Ime + " " + zaposleni.Prezime);
-                sb.AppendLine("Datum rodjenja: " + zaposleni.DatumRodjenja.ToShortDateString());
-                sb.AppendLine("Strucna sprema: " + zaposleni.StrucnaSprema);
-                sb.AppendLine("Datum zaposlenja: " + zaposleni.DatumZaposlenja.ToShortDateString());
-                sb.AppendLine("Godine radnog staza: " + (DateTime.Now.Year - zaposleni.DatumZaposlenja.Year));
-                sb.AppendLine("Tip zaposlenja: " + zaposleni.TipZaposlenja);
-                if (tipZaposlenja == "Stalno")
+                if (tipZaposlenog == "EkonomskeStruke")
                 {
-                    sb.AppendLine("Plata: " + zaposleni.Plata);
+                    EkonomStrBasic zaposleni = DTOManager.vratiZaposlenogEkonom(jmbg);
+                    sb.AppendLine(zaposleni.Ime + " " + zaposleni.Prezime);
+                    sb.AppendLine("Datum rodjenja: " + zaposleni.DatumRodjenja.ToShortDateString());
+                    sb.AppendLine("Strucna sprema: " + zaposleni.StrucnaSprema);
+                    sb.AppendLine("Datum zaposlenja: " + zaposleni.DatumZaposlenja.ToShortDateString());
+                    sb.AppendLine("Godine radnog staza: " + (DateTime.Now.Year - zaposleni.DatumZaposlenja.Year));
+                    sb.AppendLine("Tip zaposlenja: " + zaposleni.TipZaposlenja);
+                    if (tipZaposlenja == "Stalno")
+                    {
+                        sb.AppendLine("Plata: " + zaposleni.Plata);
+                    }
+                    else
+                    {
+                        sb.AppendLine("Datum isteka ugovora:" + zaposleni.DatumIstekaUgovora);
+                    }
+                    sb.AppendLine("Tip struke: Ekonomske");
+
+                    if (zaposleni.PosedujeSertifikat == "Da")
+                    {
+                        sb.AppendLine("Poseduje sertifikat");
+                        sb.AppendLine("Datum sticanja sertifikata: " + zaposleni.DatumSticanja);
+                    }
+
+                }
+                else if (tipZaposlenog == "TehnickeStruke")
+                {
+                    TehnickeStrBasic zaposleni = DTOManager.vratiZaposlenogTehnicke(jmbg);
+                    sb.AppendLine(zaposleni.Ime + " " + zaposleni.Prezime);
+                    sb.AppendLine("Datum rodjenja: " + zaposleni.DatumRodjenja.ToShortDateString());
+                    sb.AppendLine("Strucna sprema: " + zaposleni.StrucnaSprema);
+                    sb.AppendLine("Datum zaposlenja: " + zaposleni.DatumZaposlenja.ToShortDateString());
+                    sb.AppendLine("Godine radnog staza: " + (DateTime.Now.Year - zaposleni.DatumZaposlenja.Year));
+                    sb.AppendLine("Tip zaposlenja: " + zaposleni.TipZaposlenja);
+                    if (tipZaposlenja == "Stalno")
+                    {
+                        sb.AppendLine("Plata: " + zaposleni.Plata);
+                    }
+                    else
+                    {
+                        sb.AppendLine("Datum isteka ugovora:" + zaposleni.DatumIstekaUgovora);
+                    }
+                    sb.AppendLine("Tip struke: Tehnicke");
+
+                    sb.AppendLine("Naziv specijalnosti: " + zaposleni.NazivSpecijalnosti);
+                    sb.AppendLine("Datum sticanja specijalnosti: " + zaposleni.DatumSticanjaDiplome.ToShortDateString());
+                    sb.AppendLine("Institucija na kojoj je stekao specijalnost: " + zaposleni.Institucija);
                 }
                 else
                 {
-                    sb.AppendLine("Datum isteka ugovora:" + zaposleni.DatumIstekaUgovora);
+                    ZaposleniView zaposleni = DTOManager.vratiZaposlenog(jmbg);
+                    sb.AppendLine(zaposleni.Ime + " " + zaposleni.Prezime);
+                    sb.AppendLine("Datum rodjenja: " + zaposleni.DatumRodjenja.ToShortDateString());
+                    sb.AppendLine("Strucna sprema: " + zaposleni.StrucnaSprema);
+                    sb.AppendLine("Datum zaposlenja: " + zaposleni.DatumZaposlenja.ToShortDateString());
+                    sb.AppendLine("Godine radnog staza: " + (DateTime.Now.Year - zaposleni.DatumZaposlenja.Year));
+                    sb.AppendLine("Tip zaposlenja: " + zaposleni.TipZaposlenja);
+                    if (tipZaposlenja == "Stalno")
+                    {
+                        sb.AppendLine("Plata: " + zaposleni.Plata);
+                    }
+                    else
+                    {
+                        sb.AppendLine("Datum isteka ugovora:" + zaposleni.DatumIstekaUgovora);
+                    }
+                    sb.AppendLine("Tip struke: Ostalo");
                 }
-                sb.AppendLine("Tip struke: Ekonomske");
 
-                if (zaposleni.PosedujeSertifikat == "Da")
-                {
-                    sb.AppendLine("Poseduje sertifikat");
-                    sb.AppendLine("Datum sticanja sertifikata: " + zaposleni.DatumSticanja);
-                }
-
+                MessageBox.Show(sb.ToString());
             }
-            else if (tipZaposlenog == "TehnickeStruke")
+            catch (Exception ex)
             {
-                TehnickeStrBasic zaposleni = DTOManager.vratiZaposlenogTehnicke(jmbg);
-                sb.AppendLine(zaposleni.Ime + " " + zaposleni.Prezime);
-                sb.AppendLine("Datum rodjenja: " + zaposleni.DatumRodjenja.ToShortDateString());
-                sb.AppendLine("Strucna sprema: " + zaposleni.StrucnaSprema);
-                sb.AppendLine("Datum zaposlenja: " + zaposleni.DatumZaposlenja.ToShortDateString());
-                sb.AppendLine("Godine radnog staza: " + (DateTime.Now.Year - zaposleni.DatumZaposlenja.Year));
-                sb.AppendLine("Tip zaposlenja: " + zaposleni.TipZaposlenja);
-                if (tipZaposlenja == "Stalno")
-                {
-                    sb.AppendLine("Plata: " + zaposleni.Plata);
-                }
-                else
-                {
-                    sb.AppendLine("Datum isteka ugovora:" + zaposleni.DatumIstekaUgovora);
-                }
-                sb.AppendLine("Tip struke: Tehnicke");
-
-                sb.AppendLine("Naziv specijalnosti: " + zaposleni.NazivSpecijalnosti);
-                sb.AppendLine("Datum sticanja specijalnosti: " + zaposleni.DatumSticanjaDiplome.ToShortDateString());
-                sb.AppendLine("Institucija na kojoj je stekao specijalnost: " + zaposleni.Institucija);
-            }
-            else
-            {
-                ZaposleniView zaposleni = DTOManager.vratiZaposlenog(jmbg);
-                sb.AppendLine(zaposleni.Ime + " " + zaposleni.Prezime);
-                sb.AppendLine("Datum rodjenja: " + zaposleni.DatumRodjenja.ToShortDateString());
-                sb.AppendLine("Strucna sprema: " + zaposleni.StrucnaSprema);
-                sb.AppendLine("Datum zaposlenja: " + zaposleni.DatumZaposlenja.ToShortDateString());
-                sb.AppendLine("Godine radnog staza: " + (DateTime.Now.Year - zaposleni.DatumZaposlenja.Year));
-                sb.AppendLine("Tip zaposlenja: " + zaposleni.TipZaposlenja);
-                if (tipZaposlenja == "Stalno")
-                {
-                    sb.AppendLine("Plata: " + zaposleni.Plata);
-                }
-                else
-                {
-                    sb.AppendLine("Datum isteka ugovora:" + zaposleni.DatumIstekaUgovora);
-                }
-                sb.AppendLine("Tip struke: Ostalo");
+                MessageBox.Show(ex.Message);
+                return;
             }
 
-            MessageBox.Show(sb.ToString());
+            
 
         }
 
@@ -151,20 +161,31 @@ namespace ProdajaMotornihVozila.Forme
 
             if (result == DialogResult.OK)
             {
-                if (tipZaposlenog == "EkonomskeStruke")
+                try
                 {
-                    DTOManager.obrisiEkonomskeStruke(jmbg);
+                    if (tipZaposlenog == "EkonomskeStruke")
+                    {
+                        DTOManager.obrisiEkonomskeStruke(jmbg);
+                    }
+                    else if (tipZaposlenog == "TehnickeStruke")
+                    {
+                        DTOManager.obrisiTehnickeStruke(jmbg);
+                    }
+                    else
+                    {
+                        DTOManager.obrisiZaposlenog(jmbg);
+                    }
+                    MessageBox.Show("Brisanje zaposlenog je uspesno obavljeno!");
+                    this.popuniPodatke();
                 }
-                else if (tipZaposlenog == "TehnickeStruke")
+                catch (Exception ex)
                 {
-                    DTOManager.obrisiTehnickeStruke(jmbg);
+                    MessageBox.Show(ex.Message);
+                    return;
                 }
-                else
-                {
-                    DTOManager.obrisiZaposlenog(jmbg);
-                }
-                MessageBox.Show("Brisanje zaposlenog je uspesno obavljeno!");
-                this.popuniPodatke();
+
+
+               
             }
 
         }
@@ -179,10 +200,86 @@ namespace ProdajaMotornihVozila.Forme
             string jmbg = listaZaposlenih.SelectedItems[0].SubItems[0].Text;
             string tipZaposlenog = listaZaposlenih.SelectedItems[0].SubItems[5].Text;
 
+
+
             DodajZaposlenogForma forma = new DodajZaposlenogForma(jmbg, tipZaposlenog);
             forma.ShowDialog();
             this.popuniPodatke();
 
+        }
+
+        private void btnPrikaziRkv_Click(object sender, EventArgs e)
+        {
+            if (listaZaposlenih.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Morate selektovati zaposlenog");
+                return;
+            }
+            string jmbg = listaZaposlenih.SelectedItems[0].SubItems[0].Text;
+
+            try
+            {
+                ZaposleniBasic zaposleni = DTOManager.prikaziRukovodioca(jmbg);
+                if (zaposleni == null)
+                {
+                    MessageBox.Show("Izabrani zaposleni nema rukovodioca");
+                    return;
+                }
+                MessageBox.Show("Rukovodilac zaposlenog je: " + zaposleni.Ime + " " + zaposleni.Prezime);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+
+           
+
+        }
+
+        private void btnPostaviRkv_Click(object sender, EventArgs e)
+        {
+            if (listaZaposlenih.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Morate selektovati zaposlenog");
+                return;
+            }
+            string jmbg = listaZaposlenih.SelectedItems[0].SubItems[0].Text;
+            PostaviRukovodiocaForm postaviRukovodiocaForm = new PostaviRukovodiocaForm(jmbg);
+            postaviRukovodiocaForm.ShowDialog();
+
+
+        }
+
+        private void btnPodredjeni_Click(object sender, EventArgs e)
+        {
+            if (listaZaposlenih.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Morate selektovati zaposlenog");
+                return;
+            }
+            string jmbg = listaZaposlenih.SelectedItems[0].SubItems[0].Text;
+
+            try
+            {
+                List<ZaposleniBasic> podredjeni = DTOManager.prikaziPodredjene(jmbg);
+                if (podredjeni == null || podredjeni.Count == 0)
+                {
+                    MessageBox.Show("Izabrani zaposleni nema podredjene");
+                    return;
+                }
+                StringBuilder sb = new StringBuilder();
+                foreach (ZaposleniBasic z in podredjeni)
+                {
+                    sb.AppendLine(z.Ime + " " + z.Prezime);
+                }
+                MessageBox.Show("Podredjeni zaposleni su: \n" + sb.ToString());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
         }
     }
 }

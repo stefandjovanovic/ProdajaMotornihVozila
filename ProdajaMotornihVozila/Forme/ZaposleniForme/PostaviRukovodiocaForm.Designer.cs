@@ -1,4 +1,4 @@
-﻿namespace ProdajaMotornihVozila.Forme
+﻿namespace ProdajaMotornihVozila.Forme.ZaposleniForme
 {
     partial class PostaviRukovodiocaForm
     {
@@ -28,69 +28,56 @@
         /// </summary>
         private void InitializeComponent()
         {
-            textBox1 = new TextBox();
             label1 = new Label();
+            textBox1 = new TextBox();
             button1 = new Button();
-            button2 = new Button();
             SuspendLayout();
-            // 
-            // textBox1
-            // 
-            textBox1.Location = new Point(205, 73);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(344, 27);
-            textBox1.TabIndex = 0;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(296, 38);
+            label1.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label1.Location = new Point(110, 116);
             label1.Name = "label1";
-            label1.Size = new Size(170, 20);
-            label1.TabIndex = 1;
-            label1.Text = "Unesi jmbg rukovodioca";
+            label1.Size = new Size(574, 31);
+            label1.TabIndex = 0;
+            label1.Text = "Unesite jmbg rukovodioca za selektovanog zaposlenog";
+            // 
+            // textBox1
+            // 
+            textBox1.Location = new Point(237, 194);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(271, 27);
+            textBox1.TabIndex = 1;
             // 
             // button1
             // 
-            button1.Location = new Point(205, 141);
+            button1.Location = new Point(310, 267);
             button1.Name = "button1";
-            button1.Size = new Size(136, 39);
+            button1.Size = new Size(119, 40);
             button1.TabIndex = 2;
-            button1.Text = "Potvrdi";
+            button1.Text = "Unesi";
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
-            // 
-            // button2
-            // 
-            button2.Location = new Point(413, 141);
-            button2.Name = "button2";
-            button2.Size = new Size(136, 39);
-            button2.TabIndex = 3;
-            button2.Text = "Odustani";
-            button2.UseVisualStyleBackColor = true;
-            button2.Click += button2_Click;
             // 
             // PostaviRukovodiocaForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(794, 303);
-            Controls.Add(button2);
+            ClientSize = new Size(800, 450);
             Controls.Add(button1);
-            Controls.Add(label1);
             Controls.Add(textBox1);
+            Controls.Add(label1);
             Name = "PostaviRukovodiocaForm";
             Text = "PostaviRukovodiocaForm";
-            Load += PostaviRukovodiocaForm_Load;
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private TextBox textBox1;
         private Label label1;
+        private TextBox textBox1;
         private Button button1;
-        private Button button2;
     }
 }

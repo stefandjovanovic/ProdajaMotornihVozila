@@ -53,6 +53,7 @@
             btnPrikaziZaposlene.TabIndex = 1;
             btnPrikaziZaposlene.Text = "Prikazi zaposlene";
             btnPrikaziZaposlene.UseVisualStyleBackColor = true;
+            btnPrikaziZaposlene.Click += btnPrikaziZaposlene_Click;
             // 
             // labelServis
             // 
@@ -82,6 +83,7 @@
             btnPrikaziServis.TabIndex = 4;
             btnPrikaziServis.Text = "Prikazi detalje o servisu";
             btnPrikaziServis.UseVisualStyleBackColor = true;
+            btnPrikaziServis.Click += btnPrikaziServis_Click;
             // 
             // RadnjaForma
             // 
@@ -95,6 +97,7 @@
             Controls.Add(labelSef);
             Name = "RadnjaForma";
             Text = "RadnjaForma";
+            Load += RadnjaForma_Load;
             ResumeLayout(false);
             PerformLayout();
         }

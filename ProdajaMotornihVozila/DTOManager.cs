@@ -164,7 +164,7 @@ namespace ProdajaMotornihVozila
             }
         }
 
-        public static ZaposleniBasic prikaziRukovodioca(int id)
+        public static ZaposleniBasic prikaziRukovodioca(string id)
         {
             ZaposleniBasic zaposleniBasic = new ZaposleniBasic();
 
@@ -207,7 +207,7 @@ namespace ProdajaMotornihVozila
             return zaposleniBasic;
         }
 
-        public static List<ZaposleniBasic> prikaziPodredjene(int id)
+        public static List<ZaposleniBasic> prikaziPodredjene(string id)
         {
             List<ZaposleniBasic> zaposleni = new List<ZaposleniBasic>();
 
@@ -250,7 +250,7 @@ namespace ProdajaMotornihVozila
             return zaposleni;
         }
 
-        public static void postaviRukovodioca(int idRukovodioca, int idPodredjenog)
+        public static void postaviRukovodioca(string idRukovodioca, string idPodredjenog)
         {
             try
             {
@@ -548,7 +548,7 @@ namespace ProdajaMotornihVozila
 
                 foreach (Predstavnistvo p in predstavnistva)
                 {
-                    values.Add(new PredstavnistvoBasic(p.Id, p.Grad, p.Adresa, p.Direktor.Ime, p.Direktor.Prezime));
+                    values.Add(new PredstavnistvoBasic(p.Id, p.Grad, p.Adresa, p.Direktor.Ime, p.Direktor.Prezime, p.Direktor.MaticniBroj));
                 }
 
                 s.Close();
@@ -597,16 +597,40 @@ namespace ProdajaMotornihVozila
                     Grad = predstavnistvoView.Grad,
                     Direktor = session.Load<Zaposleni>(predstavnistvoView.IdDirektora)
                 };
+                session.SaveOrUpdate(p);
+                session.Flush();
+                session.Close();
             }
             catch (Exception ex)
             {
                 throw new Exception("Neuspesno dodavanje predstavnistva! " + ex.Message);
             }
 
+        }
 
-            #endregion
+        public static void azurirajPredstavnistvo(int idPredstavnistva, PredstavnistvoView predstavnistvoView)
+        {
+            try
+            {
+                ISession session = DataLayer.GetSession();
+
+                Predstavnistvo p = session.Load<Predstavnistvo>(idPredstavnistva);
+
+                p.Adresa = predstavnistvoView.Adresa;
+                p.Grad = predstavnistvoView.Grad;
+                p.Direktor = session.Load<Zaposleni>(predstavnistvoView.IdDirektora);
+
+                session.SaveOrUpdate(p);
+                session.Flush();
+                session.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Neuspesno azuriranje predstavnistva! " + ex.Message);
+            }
 
         }
+        #endregion
 
         public static RadnjaView prikaziSadrzaj(int idPredstavnistva)
         {
@@ -621,10 +645,10 @@ namespace ProdajaMotornihVozila
                     return new RadnjaView
                     {
                         Id = radnja.Id,
-                        ImeSefa = radnja.SefRadnje.Ime,
-                        PrezimeSefa = radnja.SefRadnje.Prezime,
-                        SalonF = radnja.SalonF,
-                        ServisF = radnja.ServisF
+                        ImeSefa = radnja.SefRadnje != null ? radnja.SefRadnje.Ime : null,
+                        PrezimeSefa = radnja.SefRadnje != null ? radnja.SefRadnje.Prezime : null,
+                        SalonF = radnja.GetType() == typeof(Salon) || radnja.GetType() == typeof(OvlasceniServisISalon) ? "Da" : "Ne",
+                        ServisF = radnja.GetType() == typeof(OvlasceniServis) || radnja.GetType() == typeof(OvlasceniServisISalon) ? "Da" : "Ne"
                     };
 
                 }
@@ -632,16 +656,17 @@ namespace ProdajaMotornihVozila
                 {
                     throw new Exception("Ne postoji radnja u predstavnistvu!");
                 }
+
+
             }
 
             catch (Exception ex)
             {
                 throw new Exception("Neuspesno vracanje sadrzaja radnje! " + ex.Message);
             }
-
         }
 
-        public static List<ZaposleniBasic> prikaziZaposlene (int idRadnje)
+        public static List<ZaposleniBasic> prikaziZaposleneURadnji (int idRadnje)
         {
             List<ZaposleniBasic> zaposleni = new List<ZaposleniBasic>();
             try
@@ -682,9 +707,11 @@ namespace ProdajaMotornihVozila
                 ISession session = DataLayer.GetSession();
                 Radnja radnja = session.Load<Radnja>(idRadnje);
 
-                if( radnja.GetType() == typeof(OvlasceniServis))
+                Type actualType = NHibernateUtil.GetClass(radnja);
+
+                if ( actualType == typeof(OvlasceniServis))
                 {
-                    OvlasceniServis s = radnja as OvlasceniServis;
+                    OvlasceniServis s = session.Load<OvlasceniServis>(idRadnje);
                     ServisView sv = new()
                     {
                         Id = s.Id,
@@ -697,9 +724,9 @@ namespace ProdajaMotornihVozila
                     return sv;
 
                 }
-                else if (radnja.GetType() == typeof(OvlasceniServisISalon))
+                else if (actualType == typeof(OvlasceniServisISalon))
                 {
-                    OvlasceniServisISalon s = radnja as OvlasceniServisISalon;
+                    OvlasceniServisISalon s = session.Load<OvlasceniServisISalon>(idRadnje);
                     ServisView sv = new()
                     {
                         Id = s.Id,
@@ -733,10 +760,16 @@ namespace ProdajaMotornihVozila
             {
                 ISession session = DataLayer.GetSession();
                 Radnja radnja = session.Load<Radnja>(idRadnje);
+                Type actualType = NHibernateUtil.GetClass(radnja);
 
-                if(radnja.GetType() == typeof(OvlasceniServis))
+
+                if (actualType == typeof(OvlasceniServis))
                 {
-                    OvlasceniServis s = radnja as OvlasceniServis;
+                    OvlasceniServis s = session.Load<OvlasceniServis>(idRadnje);
+                    if (s.ServisVisegRanga == null)
+                    {
+                        throw new Exception("Salon nema servis viseg ranga!");
+                    }
                     ServisVisegNizegRangaView sv = new()
                     {
                         Id = s.ServisVisegRanga.Id,
@@ -750,9 +783,13 @@ namespace ProdajaMotornihVozila
 
                 }
 
-                else if (radnja.GetType() == typeof(OvlasceniServisISalon))
+                else if (actualType == typeof(OvlasceniServisISalon))
                 {
-                    OvlasceniServisISalon s = radnja as OvlasceniServisISalon;
+                    OvlasceniServisISalon s = session.Load<OvlasceniServisISalon>(idRadnje);
+                    if(s.ServisVisegRanga == null)
+                    {
+                        throw new Exception("Salon nema servis viseg ranga!");
+                    }
                     ServisVisegNizegRangaView sv = new()
                     {
                         Id = s.ServisVisegRanga.Id,
@@ -785,10 +822,11 @@ namespace ProdajaMotornihVozila
                 ISession session = DataLayer.GetSession();
 
                 Radnja radnja = session.Load<Radnja>(idRadnje);
+                Type actualType = NHibernateUtil.GetClass(radnja);
 
-                if (radnja.GetType() == typeof(OvlasceniServis))
+                if (actualType == typeof(OvlasceniServis))
                 {
-                    OvlasceniServis s = radnja as OvlasceniServis;
+                    OvlasceniServis s = session.Load<OvlasceniServis>(idRadnje);
                     foreach(OvlasceniServis os in s.ServisiNizegRanga)
                     {
                         ServisVisegNizegRangaView servis = new()
@@ -806,9 +844,9 @@ namespace ProdajaMotornihVozila
 
                 }
 
-                else if (radnja.GetType() == typeof(OvlasceniServisISalon))
+                else if (actualType == typeof(OvlasceniServisISalon))
                 {
-                    OvlasceniServisISalon s = radnja as OvlasceniServisISalon;
+                    OvlasceniServisISalon s = session.Load<OvlasceniServisISalon>(idRadnje);
                     
                     foreach(Radnja os in s.ServisiNizegRanga)
                     {

@@ -125,14 +125,16 @@ namespace ProdajaMotornihVozila
         public string ImeDirektora { get; set; }
 
         public string PrezimeDirektora { get; set; }
+        public string JmbgDirektora { get; set; }
 
-        public PredstavnistvoBasic(int predstavnistvoId, string grad, string adresa, string imeDirektora, string prezimeDirektora)
+        public PredstavnistvoBasic(int predstavnistvoId, string grad, string adresa, string imeDirektora, string prezimeDirektora, string jmbgDirektora)
         {
             PredstavnistvoId = predstavnistvoId;
             Grad = grad;
             Adresa = adresa;
             ImeDirektora = imeDirektora;
             PrezimeDirektora = prezimeDirektora;
+            JmbgDirektora = jmbgDirektora;
         }
 
         public PredstavnistvoBasic()
@@ -165,9 +167,9 @@ namespace ProdajaMotornihVozila
     public class RadnjaView
     {
         public int Id { get; set; }
-        public string ImeSefa { get; set; }
+        public string? ImeSefa { get; set; }
 
-        public string PrezimeSefa { get; set; }
+        public string? PrezimeSefa { get; set; }
 
         public string SalonF { get; set; }
 

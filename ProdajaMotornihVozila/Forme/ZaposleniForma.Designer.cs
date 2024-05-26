@@ -141,6 +141,7 @@
             btnPrikaziRkv.TabIndex = 5;
             btnPrikaziRkv.Text = "Prikazi rukovodioca";
             btnPrikaziRkv.UseVisualStyleBackColor = true;
+            btnPrikaziRkv.Click += btnPrikaziRkv_Click;
             // 
             // btnPostaviRkv
             // 
@@ -150,6 +151,7 @@
             btnPostaviRkv.TabIndex = 6;
             btnPostaviRkv.Text = "Postavi rukovodioca";
             btnPostaviRkv.UseVisualStyleBackColor = true;
+            btnPostaviRkv.Click += btnPostaviRkv_Click;
             // 
             // groupBox1
             // 
@@ -194,6 +196,7 @@
             btnPodredjeni.TabIndex = 7;
             btnPodredjeni.Text = "Prikazi podredjene";
             btnPodredjeni.UseVisualStyleBackColor = true;
+            btnPodredjeni.Click += btnPodredjeni_Click;
             // 
             // ZaposleniForma
             // 

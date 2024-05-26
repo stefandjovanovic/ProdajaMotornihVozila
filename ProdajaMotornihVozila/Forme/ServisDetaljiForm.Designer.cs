@@ -106,6 +106,7 @@
             button1.TabIndex = 6;
             button1.Text = "Servis viseg ranga";
             button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // button2
             // 
@@ -115,6 +116,7 @@
             button2.TabIndex = 7;
             button2.Text = "Servisi nizeg ranga";
             button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
             // 
             // ServisDetaljiForm
             // 
@@ -131,6 +133,7 @@
             Controls.Add(labelStepenOpr);
             Name = "ServisDetaljiForm";
             Text = "ServisDetaljiForm";
+            Load += ServisDetaljiForm_Load;
             ResumeLayout(false);
             PerformLayout();
         }
