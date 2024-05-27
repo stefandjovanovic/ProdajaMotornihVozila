@@ -474,6 +474,7 @@
             // 
             // textBoxBrSalona
             // 
+            textBoxBrSalona.Enabled = false;
             textBoxBrSalona.Location = new Point(215, 183);
             textBoxBrSalona.Margin = new Padding(3, 2, 3, 2);
             textBoxBrSalona.Name = "textBoxBrSalona";
@@ -492,6 +493,7 @@
             // 
             // textBoxZaposleniPrijem
             // 
+            textBoxZaposleniPrijem.Enabled = false;
             textBoxZaposleniPrijem.Location = new Point(215, 121);
             textBoxZaposleniPrijem.Margin = new Padding(3, 2, 3, 2);
             textBoxZaposleniPrijem.Name = "textBoxZaposleniPrijem";

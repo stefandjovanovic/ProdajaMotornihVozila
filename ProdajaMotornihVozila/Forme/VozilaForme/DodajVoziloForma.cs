@@ -97,28 +97,59 @@ namespace ProdajaMotornihVozila.Forme.VozilaForme
                     comboBoxVlasnistvo.SelectedItem = "Vozilo Kompanije";
                     gbSluzbeno.Enabled = true;
 
+                    
+
                     if (vozilo.UvezenoF == "Da")
                     {
                         cbUvezeno.Checked = true;
                         cbUvezeno.Enabled = true;
                         dateTimePicker1.Enabled = true;
-                        dateTimePicker1.Value = vozilo.DatumUvoza;
-                        cbIzlozeno.Enabled = true;
+                        dateTimePicker1.Value = (DateTime)vozilo.DatumUvoza;
+                        
                         if (vozilo.MbrIzvrsiocaPrijemaUvoza != null)
                         {
-                            cbIzlozeno.Checked = true;
-                            textBoxBrSalona.Text = vozilo.MbrIzvrsiocaPrijemaUvoza;
+                            cbUvezeno.Checked = true;
+                            textBoxZaposleniPrijem.Text = vozilo.MbrIzvrsiocaPrijemaUvoza;
                         }
 
                         else
                             cbIzlozeno.Checked = false;
 
                     }
+                    else if(vozilo.IdSalona != -1)
+                    {
+                        cbIzlozeno.Checked = true;
+                        cbIzlozeno.Enabled = true;
+                        textBoxBrSalona.Enabled = true;
+                        textBoxBrSalona.Text = vozilo.IdSalona.ToString();
+                    }
+                    else if(vozilo.IdSalona == -1 && vozilo.UvezenoF == "Da")
+                    {
+                        cbUvezeno.Checked = true;
+                        cbUvezeno.Enabled = true;
+                        dateTimePicker1.Enabled = true;
+                        dateTimePicker1.Value = (DateTime)vozilo.DatumUvoza;
+
+                        if (vozilo.MbrIzvrsiocaPrijemaUvoza != null)
+                        {
+                            cbUvezeno.Checked = true;
+                            textBoxZaposleniPrijem.Text = vozilo.MbrIzvrsiocaPrijemaUvoza;
+                        }
+
+                        else
+                            cbIzlozeno.Checked = false;
+
+                        cbIzlozeno.Checked = true;
+                        cbIzlozeno.Enabled = true;
+                        textBoxBrSalona.Enabled = true;
+                        textBoxBrSalona.Text = vozilo.IdSalona.ToString();
+                    }
                     else
                     {
                         cbUvezeno.Checked = false;
-                        cbUvezeno.Enabled = true;
+                        cbUvezeno.Enabled = false;
                         dateTimePicker1.Enabled = false;
+
 
                     }
 
@@ -248,8 +279,8 @@ namespace ProdajaMotornihVozila.Forme.VozilaForme
                     }
 
                 if (this.rezimIzmene)
-                    // DTOManager.azurirajNezavisnoVozilo(vozilo);
-                    return;
+                   // DTOManager.azuriraj(vozilo);
+                    
 
                 if(!this.rezimIzmene)
                     DTOManager.dodajNezavisnoVozilo(vozilo);
@@ -290,13 +321,9 @@ namespace ProdajaMotornihVozila.Forme.VozilaForme
                     }
                 }
 
-               
 
-                if(int.TryParse(textBoxBrSalona.Text, out int n) == false)
-                {
-                    MessageBox.Show("Broj salona mora biti broj!");
-                    return;
-                }
+
+                
                 
 
 
@@ -307,16 +334,42 @@ namespace ProdajaMotornihVozila.Forme.VozilaForme
                     vozilo.Kubikaza = (int)numericUpDownKubikaza.Value;
                     vozilo.TipGoriva = comboBoxTipGoriva.SelectedItem.ToString();
                     vozilo.BrojSasije = textBoxBrSasije.Text;
-                    vozilo.DatumUvoza = dateTimePicker1.Value;
-                    vozilo.MbrIzvrsiocaPrijemaUvoza = textBoxZaposleniPrijem.Text;
-                    vozilo.IdSalona = n;
+
+
+                    if (cbUvezeno.Checked)
+                    {
+                        vozilo.UvezenoF = "Da";
+                        vozilo.DatumUvoza = dateTimePicker1.Value;
+                        vozilo.MbrIzvrsiocaPrijemaUvoza = textBoxZaposleniPrijem.Text;
+                    }
+                    else
+                    {
+                        vozilo.UvezenoF = "Ne";
+                    }
+
+                    if (cbIzlozeno.Checked)
+                    {
+                        if (int.TryParse(textBoxBrSalona.Text, out int n) == false)
+                        {
+                            MessageBox.Show("Broj salona mora biti broj!");
+                            return;
+                        }
+                        vozilo.IdSalona = n;
+                    }
+                    else
+                    {
+                        vozilo.IdSalona = -1;
+                    }
+
+                
 
 
                 if (comboBoxTipVozila.SelectedItem.ToString() == "Putnicko")
                     {
                         vozilo.PutnickaF = "Da";
                         vozilo.TeretnaF = "Ne";
-                    }
+                        vozilo.BrojPutnika = int.Parse(textBoxBrPutnika.Text);
+                }
                     else if (comboBoxTipVozila.SelectedItem.ToString() == "Teretno")
                     {
                         vozilo.TeretnaF = "Da";
@@ -330,8 +383,9 @@ namespace ProdajaMotornihVozila.Forme.VozilaForme
                         vozilo.TeretnaF = "Da";
                         vozilo.Nosivost = int.Parse(textBoxNosivost.Text);
                         vozilo.TeretniProstorOtvorenogTipa = comboBox1.SelectedItem.ToString();
-                    
-                    }
+                        vozilo.BrojPutnika = int.Parse(textBoxBrPutnika.Text);
+
+                }
 
 
                 if (this.rezimIzmene)

@@ -12,7 +12,7 @@ namespace ProdajaMotornihVozila.Entiteti
 
         public virtual string? UvezenoF { get; set; }
 
-        public virtual DateTime Datum_Uvoza { get; set; }
+        public virtual DateTime? Datum_Uvoza { get; set; }
 
         public virtual Zaposleni? MbrIzvrsiocaPrijemaUvoza { get; set; }
 

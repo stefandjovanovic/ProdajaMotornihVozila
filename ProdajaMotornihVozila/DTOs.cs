@@ -399,7 +399,7 @@ namespace ProdajaMotornihVozila
 
         public string MbrIzvrsiocaPrijemaUvoza { get; set; }
 
-        public DateTime DatumUvoza { get; set; }
+        public DateTime? DatumUvoza { get; set; }
 
 
         public VoziloKompanijeBasic(string brojSasije, string boja, string model, string tipGoriva, int kubikaza, string brojMotora, string putnickaF, int brojPutnika, string teretnaF, int nosivost, string teretniProstorOtvorenogTipa, string uvezenoF, int idSalona, string mbrIzvrsiocaPrijemaUvoza, DateTime datumUvoza, string vlasnistvo) : base(brojSasije, boja, model, tipGoriva, kubikaza, brojMotora, putnickaF, brojPutnika, teretnaF, nosivost, teretniProstorOtvorenogTipa, vlasnistvo)

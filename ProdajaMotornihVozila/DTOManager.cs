@@ -1419,9 +1419,9 @@ namespace ProdajaMotornihVozila
                 {
                     ISession session = DataLayer.GetSession();
 
-                    Zaposleni zaposleni = session.Load<Zaposleni>(voziloKompanijeBasic.MbrIzvrsiocaPrijemaUvoza);
+                    
 
-                    Radnja radnja = session.Load<Radnja>(voziloKompanijeBasic.IdSalona);
+                    
 
 
                     VoziloKompanije vk = new()
@@ -1438,13 +1438,23 @@ namespace ProdajaMotornihVozila
                         Nosivost = voziloKompanijeBasic.Nosivost,
                         TeretniProstorOtvorenogTipa = voziloKompanijeBasic.TeretniProstorOtvorenogTipa,
                         UvezenoF = voziloKompanijeBasic.UvezenoF,
-                        Datum_Uvoza = voziloKompanijeBasic.DatumUvoza,
-                        MbrIzvrsiocaPrijemaUvoza = zaposleni,
-                        IdSalona = radnja
+                        Datum_Uvoza = voziloKompanijeBasic.DatumUvoza
+                        
 
                     };
 
+                    if(voziloKompanijeBasic.UvezenoF == "Da")
+                {
+                    Zaposleni zaposleni = session.Load<Zaposleni>(voziloKompanijeBasic.MbrIzvrsiocaPrijemaUvoza);
+                    vk.MbrIzvrsiocaPrijemaUvoza = zaposleni;
                     zaposleni.UvezenaVozila.Add(vk);
+                }
+
+
+                if (voziloKompanijeBasic.IdSalona != -1)
+                {
+                    Radnja radnja = session.Load<Radnja>(voziloKompanijeBasic.IdSalona);
+                    vk.IdSalona = radnja;
 
 
                     if (radnja.GetType() == typeof(Salon))
@@ -1459,7 +1469,9 @@ namespace ProdajaMotornihVozila
                         s.IzlozenaVozila.Add(vk);
                     }
 
+                    vk.IdSalona = radnja;
 
+                }
 
 
                     session.SaveOrUpdate(vk);
@@ -1497,10 +1509,14 @@ namespace ProdajaMotornihVozila
                 voziloKompanijeBasic.TeretnaF = voziloKompanije.TeretnaF;
                 voziloKompanijeBasic.Nosivost = voziloKompanije.Nosivost;
                 voziloKompanijeBasic.TeretniProstorOtvorenogTipa = voziloKompanije.TeretniProstorOtvorenogTipa;
-                voziloKompanijeBasic.UvezenoF = voziloKompanije.UvezenoF;
-                voziloKompanijeBasic.DatumUvoza = voziloKompanije.Datum_Uvoza;
+                if (voziloKompanije.UvezenoF == "Da")
+                {
+                    voziloKompanijeBasic.UvezenoF = voziloKompanije.UvezenoF;
+                    voziloKompanijeBasic.DatumUvoza = voziloKompanije.Datum_Uvoza;
+                }
                 voziloKompanijeBasic.MbrIzvrsiocaPrijemaUvoza = voziloKompanije.MbrIzvrsiocaPrijemaUvoza.MaticniBroj;
-                voziloKompanijeBasic.IdSalona = voziloKompanije.IdSalona.Id;
+                if(voziloKompanije.IdSalona != null)
+                    voziloKompanijeBasic.IdSalona = voziloKompanije.IdSalona.Id;
 
                 session.Close();
 
