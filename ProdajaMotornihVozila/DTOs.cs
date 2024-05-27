@@ -318,8 +318,10 @@ namespace ProdajaMotornihVozila
 
         public string BrojMotora { get; set; }
 
+        public string VlasnistvoVozila { get; set; }
 
-        public VoziloBasic(string brojSasije, string boja, string model, string tipGoriva, int kubikaza, string brojMotora)
+
+        public VoziloBasic(string brojSasije, string boja, string model, string tipGoriva, int kubikaza, string brojMotora, string vlasnistvoVozila)
         {
             BrojSasije = brojSasije;
             Boja = boja;
@@ -327,6 +329,7 @@ namespace ProdajaMotornihVozila
             TipGoriva = tipGoriva;
             Kubikaza = kubikaza;
             BrojMotora = brojMotora;
+            VlasnistvoVozila = vlasnistvoVozila;
         }
 
         public VoziloBasic()
@@ -347,8 +350,10 @@ namespace ProdajaMotornihVozila
 
         public string TeretniProstorOtvorenogTipa { get; set; }
 
+        
 
-        public VoziloView(string brojSasije, string boja, string model, string tipGoriva, int kubikaza, string brojMotora, string putnickaF, int brojPutnika, string teretnaF, int nosivost, string teretniProstorOtvorenogTipa) : base(brojSasije, boja, model, tipGoriva, kubikaza, brojMotora)
+
+        public VoziloView(string brojSasije, string boja, string model, string tipGoriva, int kubikaza, string brojMotora, string putnickaF, int brojPutnika, string teretnaF, int nosivost, string teretniProstorOtvorenogTipa, string vlasnistvo) : base(brojSasije, boja, model, tipGoriva, kubikaza, brojMotora, vlasnistvo)
             
         {
             PutnickaF = putnickaF;
@@ -356,6 +361,7 @@ namespace ProdajaMotornihVozila
             TeretnaF = teretnaF;
             Nosivost = nosivost;
             TeretniProstorOtvorenogTipa = teretniProstorOtvorenogTipa;
+            
         }
 
         public VoziloView()
@@ -372,7 +378,7 @@ namespace ProdajaMotornihVozila
 
         public string BrojTelefonaVlasnika { get; set; }
 
-        public NezavisnoVoziloBasic(string brojSasije, string boja, string model, string tipGoriva, int kubikaza, string brojMotora, string putnickaF, int brojPutnika, string teretnaF, int nosivost, string teretniProstorOtvorenogTipa, string imeVlasnika, string prezimeVlasnika, string brojTelefonaVlasnika): base(brojSasije, boja, model, tipGoriva, kubikaza, brojMotora, putnickaF, brojPutnika, teretnaF, nosivost, teretniProstorOtvorenogTipa)
+        public NezavisnoVoziloBasic(string brojSasije, string boja, string model, string tipGoriva, int kubikaza, string brojMotora, string putnickaF, int brojPutnika, string teretnaF, int nosivost, string teretniProstorOtvorenogTipa, string imeVlasnika, string prezimeVlasnika, string brojTelefonaVlasnika, string vlasnistvo): base(brojSasije, boja, model, tipGoriva, kubikaza, brojMotora, putnickaF, brojPutnika, teretnaF, nosivost, teretniProstorOtvorenogTipa, vlasnistvo)
         {
             ImeVlasnika = imeVlasnika;
             PrezimeVlasnika = prezimeVlasnika;
@@ -396,7 +402,7 @@ namespace ProdajaMotornihVozila
         public DateTime DatumUvoza { get; set; }
 
 
-        public VoziloKompanijeBasic(string brojSasije, string boja, string model, string tipGoriva, int kubikaza, string brojMotora, string putnickaF, int brojPutnika, string teretnaF, int nosivost, string teretniProstorOtvorenogTipa, string uvezenoF, int idSalona, string mbrIzvrsiocaPrijemaUvoza, DateTime datumUvoza) : base(brojSasije, boja, model, tipGoriva, kubikaza, brojMotora, putnickaF, brojPutnika, teretnaF, nosivost, teretniProstorOtvorenogTipa)
+        public VoziloKompanijeBasic(string brojSasije, string boja, string model, string tipGoriva, int kubikaza, string brojMotora, string putnickaF, int brojPutnika, string teretnaF, int nosivost, string teretniProstorOtvorenogTipa, string uvezenoF, int idSalona, string mbrIzvrsiocaPrijemaUvoza, DateTime datumUvoza, string vlasnistvo) : base(brojSasije, boja, model, tipGoriva, kubikaza, brojMotora, putnickaF, brojPutnika, teretnaF, nosivost, teretniProstorOtvorenogTipa, vlasnistvo)
         {
             UvezenoF = uvezenoF;
             IdSalona = idSalona;

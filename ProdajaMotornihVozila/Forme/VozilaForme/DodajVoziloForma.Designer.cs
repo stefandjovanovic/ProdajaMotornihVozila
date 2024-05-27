@@ -85,9 +85,9 @@
             // 
             Model.AutoSize = true;
             Model.Font = new Font("Segoe UI", 12F);
-            Model.Location = new Point(37, 33);
+            Model.Location = new Point(32, 25);
             Model.Name = "Model";
-            Model.Size = new Size(129, 28);
+            Model.Size = new Size(101, 21);
             Model.TabIndex = 0;
             Model.Text = "Model vozila:";
             // 
@@ -95,9 +95,9 @@
             // 
             Boja.AutoSize = true;
             Boja.Font = new Font("Segoe UI", 12F);
-            Boja.Location = new Point(56, 105);
+            Boja.Location = new Point(49, 79);
             Boja.Name = "Boja";
-            Boja.Size = new Size(110, 28);
+            Boja.Size = new Size(87, 21);
             Boja.TabIndex = 1;
             Boja.Text = "Boja vozila:";
             // 
@@ -105,9 +105,9 @@
             // 
             Gorivo.AutoSize = true;
             Gorivo.Font = new Font("Segoe UI", 12F);
-            Gorivo.Location = new Point(62, 175);
+            Gorivo.Location = new Point(54, 131);
             Gorivo.Name = "Gorivo";
-            Gorivo.Size = new Size(104, 28);
+            Gorivo.Size = new Size(82, 21);
             Gorivo.TabIndex = 2;
             Gorivo.Text = "Tip goriva:";
             // 
@@ -115,9 +115,9 @@
             // 
             Kubikaza.AutoSize = true;
             Kubikaza.Font = new Font("Segoe UI", 12F);
-            Kubikaza.Location = new Point(1, 239);
+            Kubikaza.Location = new Point(1, 179);
             Kubikaza.Name = "Kubikaza";
-            Kubikaza.Size = new Size(165, 28);
+            Kubikaza.Size = new Size(130, 21);
             Kubikaza.TabIndex = 3;
             Kubikaza.Text = "Kubikaza motora:";
             // 
@@ -125,9 +125,9 @@
             // 
             BrMotora.AutoSize = true;
             BrMotora.Font = new Font("Segoe UI", 12F);
-            BrMotora.Location = new Point(45, 304);
+            BrMotora.Location = new Point(39, 228);
             BrMotora.Name = "BrMotora";
-            BrMotora.Size = new Size(121, 28);
+            BrMotora.Size = new Size(96, 21);
             BrMotora.TabIndex = 4;
             BrMotora.Text = "Broj motora:";
             // 
@@ -135,54 +135,63 @@
             // 
             BrSasije.AutoSize = true;
             BrSasije.Font = new Font("Segoe UI", 12F);
-            BrSasije.Location = new Point(64, 372);
+            BrSasije.Location = new Point(56, 279);
             BrSasije.Name = "BrSasije";
-            BrSasije.Size = new Size(102, 28);
+            BrSasije.Size = new Size(83, 21);
             BrSasije.TabIndex = 5;
             BrSasije.Text = "Broj sasije:";
             // 
             // textBoxModel
             // 
-            textBoxModel.Location = new Point(190, 34);
+            textBoxModel.Location = new Point(166, 26);
+            textBoxModel.Margin = new Padding(3, 2, 3, 2);
             textBoxModel.Name = "textBoxModel";
-            textBoxModel.Size = new Size(186, 27);
+            textBoxModel.Size = new Size(163, 23);
             textBoxModel.TabIndex = 6;
             // 
             // textBoxBoja
             // 
-            textBoxBoja.Location = new Point(190, 106);
+            textBoxBoja.Location = new Point(166, 80);
+            textBoxBoja.Margin = new Padding(3, 2, 3, 2);
             textBoxBoja.Name = "textBoxBoja";
-            textBoxBoja.Size = new Size(186, 27);
+            textBoxBoja.Size = new Size(163, 23);
             textBoxBoja.TabIndex = 7;
             // 
             // textBoxBrMotora
             // 
-            textBoxBrMotora.Location = new Point(190, 305);
+            textBoxBrMotora.Location = new Point(166, 229);
+            textBoxBrMotora.Margin = new Padding(3, 2, 3, 2);
             textBoxBrMotora.Name = "textBoxBrMotora";
-            textBoxBrMotora.Size = new Size(186, 27);
+            textBoxBrMotora.Size = new Size(163, 23);
             textBoxBrMotora.TabIndex = 10;
             // 
             // textBoxBrSasije
             // 
-            textBoxBrSasije.Location = new Point(190, 373);
+            textBoxBrSasije.Location = new Point(166, 280);
+            textBoxBrSasije.Margin = new Padding(3, 2, 3, 2);
             textBoxBrSasije.Name = "textBoxBrSasije";
-            textBoxBrSasije.Size = new Size(186, 27);
+            textBoxBrSasije.Size = new Size(163, 23);
             textBoxBrSasije.TabIndex = 11;
             // 
             // numericUpDownKubikaza
             // 
             numericUpDownKubikaza.Font = new Font("Segoe UI", 10F);
-            numericUpDownKubikaza.Location = new Point(190, 237);
+            numericUpDownKubikaza.Increment = new decimal(new int[] { 100, 0, 0, 0 });
+            numericUpDownKubikaza.Location = new Point(166, 178);
+            numericUpDownKubikaza.Margin = new Padding(3, 2, 3, 2);
+            numericUpDownKubikaza.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             numericUpDownKubikaza.Name = "numericUpDownKubikaza";
-            numericUpDownKubikaza.Size = new Size(186, 30);
+            numericUpDownKubikaza.Size = new Size(163, 25);
             numericUpDownKubikaza.TabIndex = 12;
             // 
             // comboBoxTipGoriva
             // 
             comboBoxTipGoriva.FormattingEnabled = true;
-            comboBoxTipGoriva.Location = new Point(190, 175);
+            comboBoxTipGoriva.Items.AddRange(new object[] { "Benzin", "Dizel", "Elektricna energija", "Hibrid", "Autoplin", "Biogoriva" });
+            comboBoxTipGoriva.Location = new Point(166, 131);
+            comboBoxTipGoriva.Margin = new Padding(3, 2, 3, 2);
             comboBoxTipGoriva.Name = "comboBoxTipGoriva";
-            comboBoxTipGoriva.Size = new Size(186, 28);
+            comboBoxTipGoriva.Size = new Size(163, 23);
             comboBoxTipGoriva.TabIndex = 13;
             // 
             // gbInformacije
@@ -199,9 +208,11 @@
             gbInformacije.Controls.Add(textBoxBoja);
             gbInformacije.Controls.Add(BrSasije);
             gbInformacije.Controls.Add(textBoxModel);
-            gbInformacije.Location = new Point(12, 16);
+            gbInformacije.Location = new Point(10, 12);
+            gbInformacije.Margin = new Padding(3, 2, 3, 2);
             gbInformacije.Name = "gbInformacije";
-            gbInformacije.Size = new Size(392, 426);
+            gbInformacije.Padding = new Padding(3, 2, 3, 2);
+            gbInformacije.Size = new Size(343, 320);
             gbInformacije.TabIndex = 14;
             gbInformacije.TabStop = false;
             gbInformacije.Text = "Osnovne informacije o vozilu";
@@ -210,28 +221,33 @@
             // 
             groupBoxEnd.Controls.Add(btnDodaj);
             groupBoxEnd.Controls.Add(btnOdustani);
-            groupBoxEnd.Location = new Point(1049, 553);
+            groupBoxEnd.Location = new Point(918, 415);
+            groupBoxEnd.Margin = new Padding(3, 2, 3, 2);
             groupBoxEnd.Name = "groupBoxEnd";
-            groupBoxEnd.Size = new Size(391, 72);
+            groupBoxEnd.Padding = new Padding(3, 2, 3, 2);
+            groupBoxEnd.Size = new Size(342, 54);
             groupBoxEnd.TabIndex = 15;
             groupBoxEnd.TabStop = false;
             // 
             // btnDodaj
             // 
             btnDodaj.Font = new Font("Segoe UI", 12F);
-            btnDodaj.Location = new Point(223, 18);
+            btnDodaj.Location = new Point(195, 14);
+            btnDodaj.Margin = new Padding(3, 2, 3, 2);
             btnDodaj.Name = "btnDodaj";
-            btnDodaj.Size = new Size(152, 44);
+            btnDodaj.Size = new Size(133, 33);
             btnDodaj.TabIndex = 17;
             btnDodaj.Text = "Dodaj vozilo";
             btnDodaj.UseVisualStyleBackColor = true;
+            btnDodaj.Click += btnDodaj_Click;
             // 
             // btnOdustani
             // 
             btnOdustani.Font = new Font("Segoe UI", 12F);
-            btnOdustani.Location = new Point(15, 18);
+            btnOdustani.Location = new Point(13, 14);
+            btnOdustani.Margin = new Padding(3, 2, 3, 2);
             btnOdustani.Name = "btnOdustani";
-            btnOdustani.Size = new Size(129, 44);
+            btnOdustani.Size = new Size(113, 33);
             btnOdustani.TabIndex = 16;
             btnOdustani.Text = "Odustani";
             btnOdustani.UseVisualStyleBackColor = true;
@@ -241,9 +257,9 @@
             // 
             TipVozila.AutoSize = true;
             TipVozila.Font = new Font("Segoe UI", 12F);
-            TipVozila.Location = new Point(185, 39);
+            TipVozila.Location = new Point(162, 29);
             TipVozila.Name = "TipVozila";
-            TipVozila.Size = new Size(99, 28);
+            TipVozila.Size = new Size(78, 21);
             TipVozila.TabIndex = 16;
             TipVozila.Text = "Tip vozila:";
             // 
@@ -251,9 +267,9 @@
             // 
             BrPutnika.AutoSize = true;
             BrPutnika.Font = new Font("Segoe UI", 12F);
-            BrPutnika.Location = new Point(162, 111);
+            BrPutnika.Location = new Point(142, 83);
             BrPutnika.Name = "BrPutnika";
-            BrPutnika.Size = new Size(122, 28);
+            BrPutnika.Size = new Size(97, 21);
             BrPutnika.TabIndex = 17;
             BrPutnika.Text = "Broj putnika:";
             // 
@@ -261,9 +277,9 @@
             // 
             Nosivost.AutoSize = true;
             Nosivost.Font = new Font("Segoe UI", 12F);
-            Nosivost.Location = new Point(191, 184);
+            Nosivost.Location = new Point(167, 138);
             Nosivost.Name = "Nosivost";
-            Nosivost.Size = new Size(93, 28);
+            Nosivost.Size = new Size(74, 21);
             Nosivost.TabIndex = 18;
             Nosivost.Text = "Nosivost:";
             // 
@@ -271,53 +287,59 @@
             // 
             TeretniProstor.AutoSize = true;
             TeretniProstor.Font = new Font("Segoe UI", 12F);
-            TeretniProstor.Location = new Point(3, 252);
+            TeretniProstor.Location = new Point(3, 189);
             TeretniProstor.Name = "TeretniProstor";
-            TeretniProstor.Size = new Size(281, 28);
+            TeretniProstor.Size = new Size(220, 21);
             TeretniProstor.TabIndex = 19;
             TeretniProstor.Text = "Teretni prostor otvorenog tipa:";
             // 
             // comboBoxTipVozila
             // 
             comboBoxTipVozila.FormattingEnabled = true;
-            comboBoxTipVozila.Items.AddRange(new object[] { "Putnicko", "Teretno" });
-            comboBoxTipVozila.Location = new Point(329, 39);
+            comboBoxTipVozila.Items.AddRange(new object[] { "Putnicko", "Teretno", "PutnickoTeretno" });
+            comboBoxTipVozila.Location = new Point(288, 29);
+            comboBoxTipVozila.Margin = new Padding(3, 2, 3, 2);
             comboBoxTipVozila.Name = "comboBoxTipVozila";
-            comboBoxTipVozila.Size = new Size(183, 28);
+            comboBoxTipVozila.Size = new Size(161, 23);
             comboBoxTipVozila.TabIndex = 20;
+            comboBoxTipVozila.SelectedIndexChanged += comboBoxTipVozila_SelectedIndexChanged;
             // 
             // textBoxBrPutnika
             // 
             textBoxBrPutnika.Enabled = false;
-            textBoxBrPutnika.Location = new Point(329, 115);
+            textBoxBrPutnika.Location = new Point(288, 86);
+            textBoxBrPutnika.Margin = new Padding(3, 2, 3, 2);
             textBoxBrPutnika.Name = "textBoxBrPutnika";
-            textBoxBrPutnika.Size = new Size(183, 27);
+            textBoxBrPutnika.Size = new Size(161, 23);
             textBoxBrPutnika.TabIndex = 21;
             // 
             // textBoxNosivost
             // 
             textBoxNosivost.Enabled = false;
-            textBoxNosivost.Location = new Point(329, 185);
+            textBoxNosivost.Location = new Point(288, 139);
+            textBoxNosivost.Margin = new Padding(3, 2, 3, 2);
             textBoxNosivost.Name = "textBoxNosivost";
-            textBoxNosivost.Size = new Size(183, 27);
+            textBoxNosivost.Size = new Size(161, 23);
             textBoxNosivost.TabIndex = 22;
             // 
             // comboBox1
             // 
             comboBox1.Enabled = false;
             comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(329, 252);
+            comboBox1.Items.AddRange(new object[] { "Da", "Ne" });
+            comboBox1.Location = new Point(288, 189);
+            comboBox1.Margin = new Padding(3, 2, 3, 2);
             comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(183, 28);
+            comboBox1.Size = new Size(161, 23);
             comboBox1.TabIndex = 23;
             // 
             // VlasnistvoVozila
             // 
             VlasnistvoVozila.AutoSize = true;
             VlasnistvoVozila.Font = new Font("Segoe UI", 12F);
-            VlasnistvoVozila.Location = new Point(41, 35);
+            VlasnistvoVozila.Location = new Point(36, 26);
             VlasnistvoVozila.Name = "VlasnistvoVozila";
-            VlasnistvoVozila.Size = new Size(133, 28);
+            VlasnistvoVozila.Size = new Size(107, 21);
             VlasnistvoVozila.TabIndex = 24;
             VlasnistvoVozila.Text = "Vlasnik vozila:";
             // 
@@ -325,9 +347,9 @@
             // 
             ImeVlasnika.AutoSize = true;
             ImeVlasnika.Font = new Font("Segoe UI", 12F);
-            ImeVlasnika.Location = new Point(108, 32);
+            ImeVlasnika.Location = new Point(94, 24);
             ImeVlasnika.Name = "ImeVlasnika";
-            ImeVlasnika.Size = new Size(122, 28);
+            ImeVlasnika.Size = new Size(99, 21);
             ImeVlasnika.TabIndex = 25;
             ImeVlasnika.Text = "Ime vlasnika:";
             // 
@@ -335,9 +357,9 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 12F);
-            label2.Location = new Point(71, 104);
+            label2.Location = new Point(62, 78);
             label2.Name = "label2";
-            label2.Size = new Size(159, 28);
+            label2.Size = new Size(129, 21);
             label2.TabIndex = 26;
             label2.Text = "Prezime vlasnika:";
             // 
@@ -345,9 +367,9 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 12F);
-            label3.Location = new Point(97, 180);
+            label3.Location = new Point(85, 135);
             label3.Name = "label3";
-            label3.Size = new Size(127, 28);
+            label3.Size = new Size(101, 21);
             label3.TabIndex = 27;
             label3.Text = "Broj telefona:";
             // 
@@ -355,9 +377,9 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 12F);
-            label4.Location = new Point(26, 66);
+            label4.Location = new Point(23, 50);
             label4.Name = "label4";
-            label4.Size = new Size(132, 28);
+            label4.Size = new Size(105, 21);
             label4.TabIndex = 28;
             label4.Text = "Datum uvoza:";
             // 
@@ -365,30 +387,35 @@
             // 
             comboBoxVlasnistvo.FormattingEnabled = true;
             comboBoxVlasnistvo.Items.AddRange(new object[] { "Nezavisno vozilo", "Vozilo kompanije" });
-            comboBoxVlasnistvo.Location = new Point(261, 37);
+            comboBoxVlasnistvo.Location = new Point(228, 28);
+            comboBoxVlasnistvo.Margin = new Padding(3, 2, 3, 2);
             comboBoxVlasnistvo.Name = "comboBoxVlasnistvo";
-            comboBoxVlasnistvo.Size = new Size(173, 28);
+            comboBoxVlasnistvo.Size = new Size(152, 23);
             comboBoxVlasnistvo.TabIndex = 29;
+            comboBoxVlasnistvo.SelectedIndexChanged += comboBoxVlasnistvo_SelectedIndexChanged;
             // 
             // textBoxImeVlasnika
             // 
-            textBoxImeVlasnika.Location = new Point(246, 40);
+            textBoxImeVlasnika.Location = new Point(215, 30);
+            textBoxImeVlasnika.Margin = new Padding(3, 2, 3, 2);
             textBoxImeVlasnika.Name = "textBoxImeVlasnika";
-            textBoxImeVlasnika.Size = new Size(173, 27);
+            textBoxImeVlasnika.Size = new Size(152, 23);
             textBoxImeVlasnika.TabIndex = 30;
             // 
             // textBoxPrezimeVlasnika
             // 
-            textBoxPrezimeVlasnika.Location = new Point(246, 108);
+            textBoxPrezimeVlasnika.Location = new Point(215, 81);
+            textBoxPrezimeVlasnika.Margin = new Padding(3, 2, 3, 2);
             textBoxPrezimeVlasnika.Name = "textBoxPrezimeVlasnika";
-            textBoxPrezimeVlasnika.Size = new Size(173, 27);
+            textBoxPrezimeVlasnika.Size = new Size(152, 23);
             textBoxPrezimeVlasnika.TabIndex = 31;
             // 
             // textBoxBrTelefona
             // 
-            textBoxBrTelefona.Location = new Point(246, 178);
+            textBoxBrTelefona.Location = new Point(215, 134);
+            textBoxBrTelefona.Margin = new Padding(3, 2, 3, 2);
             textBoxBrTelefona.Name = "textBoxBrTelefona";
-            textBoxBrTelefona.Size = new Size(173, 27);
+            textBoxBrTelefona.Size = new Size(152, 23);
             textBoxBrTelefona.TabIndex = 32;
             // 
             // gbTeretnaPutnicka
@@ -401,9 +428,11 @@
             gbTeretnaPutnicka.Controls.Add(textBoxBrPutnika);
             gbTeretnaPutnicka.Controls.Add(textBoxNosivost);
             gbTeretnaPutnicka.Controls.Add(comboBox1);
-            gbTeretnaPutnicka.Location = new Point(955, 16);
+            gbTeretnaPutnicka.Location = new Point(836, 12);
+            gbTeretnaPutnicka.Margin = new Padding(3, 2, 3, 2);
             gbTeretnaPutnicka.Name = "gbTeretnaPutnicka";
-            gbTeretnaPutnicka.Size = new Size(531, 310);
+            gbTeretnaPutnicka.Padding = new Padding(3, 2, 3, 2);
+            gbTeretnaPutnicka.Size = new Size(465, 232);
             gbTeretnaPutnicka.TabIndex = 33;
             gbTeretnaPutnicka.TabStop = false;
             gbTeretnaPutnicka.Text = "Teretna/Putnicka";
@@ -414,9 +443,11 @@
             gbNezavisnoSluzbeno.Controls.Add(gbNezavisno);
             gbNezavisnoSluzbeno.Controls.Add(VlasnistvoVozila);
             gbNezavisnoSluzbeno.Controls.Add(comboBoxVlasnistvo);
-            gbNezavisnoSluzbeno.Location = new Point(434, 16);
+            gbNezavisnoSluzbeno.Location = new Point(380, 12);
+            gbNezavisnoSluzbeno.Margin = new Padding(3, 2, 3, 2);
             gbNezavisnoSluzbeno.Name = "gbNezavisnoSluzbeno";
-            gbNezavisnoSluzbeno.Size = new Size(488, 686);
+            gbNezavisnoSluzbeno.Padding = new Padding(3, 2, 3, 2);
+            gbNezavisnoSluzbeno.Size = new Size(427, 514);
             gbNezavisnoSluzbeno.TabIndex = 34;
             gbNezavisnoSluzbeno.TabStop = false;
             gbNezavisnoSluzbeno.Text = "Nezavisno/Sluzbeno vozilo";
@@ -432,76 +463,85 @@
             gbSluzbeno.Controls.Add(cbIzlozeno);
             gbSluzbeno.Controls.Add(cbUvezeno);
             gbSluzbeno.Enabled = false;
-            gbSluzbeno.Location = new Point(15, 316);
+            gbSluzbeno.Location = new Point(13, 237);
+            gbSluzbeno.Margin = new Padding(3, 2, 3, 2);
             gbSluzbeno.Name = "gbSluzbeno";
-            gbSluzbeno.Size = new Size(449, 293);
+            gbSluzbeno.Padding = new Padding(3, 2, 3, 2);
+            gbSluzbeno.Size = new Size(393, 220);
             gbSluzbeno.TabIndex = 35;
             gbSluzbeno.TabStop = false;
             gbSluzbeno.Text = "Vozilo kompanije";
             // 
             // textBoxBrSalona
             // 
-            textBoxBrSalona.Location = new Point(246, 244);
+            textBoxBrSalona.Location = new Point(215, 183);
+            textBoxBrSalona.Margin = new Padding(3, 2, 3, 2);
             textBoxBrSalona.Name = "textBoxBrSalona";
-            textBoxBrSalona.Size = new Size(173, 27);
+            textBoxBrSalona.Size = new Size(152, 23);
             textBoxBrSalona.TabIndex = 39;
             // 
             // label5
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 12F);
-            label5.Location = new Point(26, 240);
+            label5.Location = new Point(23, 180);
             label5.Name = "label5";
-            label5.Size = new Size(112, 28);
+            label5.Size = new Size(90, 21);
             label5.TabIndex = 38;
             label5.Text = "Broj salona:";
             // 
             // textBoxZaposleniPrijem
             // 
-            textBoxZaposleniPrijem.Location = new Point(246, 161);
+            textBoxZaposleniPrijem.Location = new Point(215, 121);
+            textBoxZaposleniPrijem.Margin = new Padding(3, 2, 3, 2);
             textBoxZaposleniPrijem.Name = "textBoxZaposleniPrijem";
-            textBoxZaposleniPrijem.Size = new Size(173, 27);
+            textBoxZaposleniPrijem.Size = new Size(152, 23);
             textBoxZaposleniPrijem.TabIndex = 37;
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 10F);
-            label1.Location = new Point(26, 126);
+            label1.Location = new Point(23, 94);
             label1.Name = "label1";
-            label1.Size = new Size(347, 23);
+            label1.Size = new Size(279, 19);
             label1.TabIndex = 36;
             label1.Text = "Zaposleni koji je izvrsio prijem vozila (JMBG):";
             // 
             // dateTimePicker1
             // 
             dateTimePicker1.Enabled = false;
-            dateTimePicker1.Location = new Point(182, 67);
+            dateTimePicker1.Location = new Point(159, 50);
+            dateTimePicker1.Margin = new Padding(3, 2, 3, 2);
             dateTimePicker1.Name = "dateTimePicker1";
-            dateTimePicker1.Size = new Size(237, 27);
+            dateTimePicker1.Size = new Size(208, 23);
             dateTimePicker1.TabIndex = 34;
             // 
             // cbIzlozeno
             // 
             cbIzlozeno.AutoSize = true;
             cbIzlozeno.Font = new Font("Segoe UI", 10F);
-            cbIzlozeno.Location = new Point(26, 210);
+            cbIzlozeno.Location = new Point(23, 158);
+            cbIzlozeno.Margin = new Padding(3, 2, 3, 2);
             cbIzlozeno.Name = "cbIzlozeno";
-            cbIzlozeno.Size = new Size(174, 27);
+            cbIzlozeno.Size = new Size(140, 23);
             cbIzlozeno.TabIndex = 35;
             cbIzlozeno.Text = "Izlozeno u salonu?";
             cbIzlozeno.UseVisualStyleBackColor = true;
+            cbIzlozeno.CheckedChanged += cbIzlozeno_CheckedChanged;
             // 
             // cbUvezeno
             // 
             cbUvezeno.AutoSize = true;
             cbUvezeno.Font = new Font("Segoe UI", 10F);
-            cbUvezeno.Location = new Point(26, 36);
+            cbUvezeno.Location = new Point(23, 27);
+            cbUvezeno.Margin = new Padding(3, 2, 3, 2);
             cbUvezeno.Name = "cbUvezeno";
-            cbUvezeno.Size = new Size(106, 27);
+            cbUvezeno.Size = new Size(87, 23);
             cbUvezeno.TabIndex = 33;
             cbUvezeno.Text = "Uvezeno?";
             cbUvezeno.UseVisualStyleBackColor = true;
+            cbUvezeno.CheckedChanged += cbUvezeno_CheckedChanged;
             // 
             // gbNezavisno
             // 
@@ -512,22 +552,25 @@
             gbNezavisno.Controls.Add(ImeVlasnika);
             gbNezavisno.Controls.Add(textBoxBrTelefona);
             gbNezavisno.Enabled = false;
-            gbNezavisno.Location = new Point(15, 83);
+            gbNezavisno.Location = new Point(13, 62);
+            gbNezavisno.Margin = new Padding(3, 2, 3, 2);
             gbNezavisno.Name = "gbNezavisno";
-            gbNezavisno.Size = new Size(449, 227);
+            gbNezavisno.Padding = new Padding(3, 2, 3, 2);
+            gbNezavisno.Size = new Size(393, 170);
             gbNezavisno.TabIndex = 35;
             gbNezavisno.TabStop = false;
             gbNezavisno.Text = "Nezavisno vozilo";
             // 
             // DodajVoziloForma
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1498, 649);
+            ClientSize = new Size(1311, 487);
             Controls.Add(gbNezavisnoSluzbeno);
             Controls.Add(gbTeretnaPutnicka);
             Controls.Add(groupBoxEnd);
             Controls.Add(gbInformacije);
+            Margin = new Padding(3, 2, 3, 2);
             Name = "DodajVoziloForma";
             Text = "DodajVoziloForma";
             Load += DodajVoziloForma_Load;
