@@ -27,6 +27,8 @@ namespace ProdajaMotornihVozila.Mapiranja
 
             References(x => x.IdSalona, "ID_SALONA").LazyLoad();
 
+            References(x => x.MbrIzvrsiocaPrijemaUvoza, "MBR_IZVRSIOCA_PRIJEMA_UVOZA").LazyLoad();
+
 
         }
     }
