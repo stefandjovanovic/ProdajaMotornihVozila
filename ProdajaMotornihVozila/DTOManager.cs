@@ -1407,6 +1407,7 @@ namespace ProdajaMotornihVozila
 
             }
 
+            //promenio sam id da je string
             public static ObavljeniServisView vratiObavljeniServis(int id)
             {
                 ObavljeniServisView osw = new ObavljeniServisView();

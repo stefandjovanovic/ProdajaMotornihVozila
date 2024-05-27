@@ -28,29 +28,31 @@
         /// </summary>
         private void InitializeComponent()
         {
-            listView1 = new ListView();
+            listaObavljenihServisa = new ListView();
             columnHeader1 = new ColumnHeader();
             columnHeader2 = new ColumnHeader();
             columnHeader3 = new ColumnHeader();
             columnHeader4 = new ColumnHeader();
             groupBox1 = new GroupBox();
             groupBox2 = new GroupBox();
+            btnObrisi = new Button();
+            btnIzmeni = new Button();
             btnDodaj = new Button();
             btnInfo = new Button();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             SuspendLayout();
             // 
-            // listView1
+            // listaObavljenihServisa
             // 
-            listView1.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2, columnHeader3, columnHeader4 });
-            listView1.GridLines = true;
-            listView1.Location = new Point(6, 26);
-            listView1.Name = "listView1";
-            listView1.Size = new Size(560, 447);
-            listView1.TabIndex = 0;
-            listView1.UseCompatibleStateImageBehavior = false;
-            listView1.View = View.Details;
+            listaObavljenihServisa.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2, columnHeader3, columnHeader4 });
+            listaObavljenihServisa.GridLines = true;
+            listaObavljenihServisa.Location = new Point(6, 26);
+            listaObavljenihServisa.Name = "listaObavljenihServisa";
+            listaObavljenihServisa.Size = new Size(572, 447);
+            listaObavljenihServisa.TabIndex = 0;
+            listaObavljenihServisa.UseCompatibleStateImageBehavior = false;
+            listaObavljenihServisa.View = View.Details;
             // 
             // columnHeader1
             // 
@@ -74,24 +76,44 @@
             // 
             // groupBox1
             // 
-            groupBox1.Controls.Add(listView1);
+            groupBox1.Controls.Add(listaObavljenihServisa);
             groupBox1.Location = new Point(31, 12);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(572, 479);
+            groupBox1.Size = new Size(584, 479);
             groupBox1.TabIndex = 1;
             groupBox1.TabStop = false;
             groupBox1.Text = "Lista obavljenih servisa";
             // 
             // groupBox2
             // 
+            groupBox2.Controls.Add(btnObrisi);
+            groupBox2.Controls.Add(btnIzmeni);
             groupBox2.Controls.Add(btnDodaj);
             groupBox2.Controls.Add(btnInfo);
             groupBox2.Location = new Point(638, 12);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(281, 163);
+            groupBox2.Size = new Size(281, 311);
             groupBox2.TabIndex = 2;
             groupBox2.TabStop = false;
             groupBox2.Text = "Informacije o obavljenom servisu";
+            // 
+            // btnObrisi
+            // 
+            btnObrisi.Location = new Point(49, 236);
+            btnObrisi.Name = "btnObrisi";
+            btnObrisi.Size = new Size(182, 46);
+            btnObrisi.TabIndex = 3;
+            btnObrisi.Text = "Obrisi";
+            btnObrisi.UseVisualStyleBackColor = true;
+            // 
+            // btnIzmeni
+            // 
+            btnIzmeni.Location = new Point(49, 165);
+            btnIzmeni.Name = "btnIzmeni";
+            btnIzmeni.Size = new Size(182, 46);
+            btnIzmeni.TabIndex = 2;
+            btnIzmeni.Text = "Izmeni";
+            btnIzmeni.UseVisualStyleBackColor = true;
             // 
             // btnDodaj
             // 
@@ -111,6 +133,7 @@
             btnInfo.TabIndex = 0;
             btnInfo.Text = "Informacije";
             btnInfo.UseVisualStyleBackColor = true;
+            btnInfo.Click += btnInfo_Click;
             // 
             // ServisForma
             // 
@@ -121,6 +144,7 @@
             Controls.Add(groupBox1);
             Name = "ServisForma";
             Text = "ServisForma";
+            Load += ServisForma_Load;
             groupBox1.ResumeLayout(false);
             groupBox2.ResumeLayout(false);
             ResumeLayout(false);
@@ -128,7 +152,7 @@
 
         #endregion
 
-        private ListView listView1;
+        private ListView listaObavljenihServisa;
         private GroupBox groupBox1;
         private GroupBox groupBox2;
         private ColumnHeader columnHeader1;
@@ -137,5 +161,7 @@
         private ColumnHeader columnHeader4;
         private Button btnDodaj;
         private Button btnInfo;
+        private Button btnObrisi;
+        private Button btnIzmeni;
     }
 }
