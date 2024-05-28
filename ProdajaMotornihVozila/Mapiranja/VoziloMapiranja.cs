@@ -28,8 +28,8 @@ namespace ProdajaMotornihVozila.Mapiranja
             Map(x => x.Nosivost, "NOSIVOST");
             Map(x => x.TeretniProstorOtvorenogTipa, "TERETNI_PROSTOR_OTVORENOG_TIPA");
 
-            HasMany(x => x.JePrimljeno)
-                .KeyColumn("BROJ_SASIJE_VOZILA")
+            HasMany(x => x.ObavljeniServisi)
+                .KeyColumn("BROJ_SASIJE")
                 .Inverse()
                 .Cascade.All();
 

@@ -19,7 +19,9 @@ namespace ProdajaMotornihVozila.Entiteti
 
         public virtual IList<Zaposleni>? ZaposleniURadnji { get; set; } = [];
 
-       
+        public virtual IList<ObavljeniServis> ObavljeniServisiURadnji { get; set; } = [];
+
+
     }
 
     public class OvlasceniServis: Radnja

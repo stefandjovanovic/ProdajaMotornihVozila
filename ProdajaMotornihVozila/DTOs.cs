@@ -463,13 +463,16 @@ namespace ProdajaMotornihVozila
         public string AdresaServisa { get; set; }
 
         public string GradServisa { get; set; }
+        public string BrojSasijeVozila { get; set; }
 
-        public ObavljeniServisView(int id, string registarskiBroj, string model, string opis, string mbrIzvrsiocaPrijema, string godinaProizvodnje, int servisId, DateTime datumPrijema, DateTime datumZavrsetka, string adresaServisa, string gradServisa) : base(id, registarskiBroj, model, opis, mbrIzvrsiocaPrijema, godinaProizvodnje, servisId)
+        public ObavljeniServisView(int id, string registarskiBroj, string model, string opis, string mbrIzvrsiocaPrijema, string godinaProizvodnje, int servisId, DateTime datumPrijema, DateTime datumZavrsetka, string adresaServisa, string gradServisa, string brojSasije) 
+            : base(id, registarskiBroj, model, opis, mbrIzvrsiocaPrijema, godinaProizvodnje, servisId)
         {
             DatumPrijema = datumPrijema;
             DatumZavrsetka = datumZavrsetka;
             AdresaServisa = adresaServisa;
             GradServisa = gradServisa;
+            BrojSasijeVozila = brojSasije;
         }
 
         public ObavljeniServisView()
@@ -484,9 +487,10 @@ namespace ProdajaMotornihVozila
 
         public DateTime DatumPrijemaVozila { get; set; }
 
-        public DateTime DatumZavrsetkaServisa { get; set; }
+        public DateTime? DatumZavrsetkaServisa { get; set; }
 
-        public ObavljeniServisCreate(int id, string registarskiBroj, string model, string opis, string mbrIzvrsiocaPrijema, string godinaProizvodnje, int servisId, string brojSasijeVozila, DateTime datumPrijemaVozila, DateTime datumZavrsetkaServisa) : base(id, registarskiBroj, model, opis, mbrIzvrsiocaPrijema, godinaProizvodnje, servisId)
+        public ObavljeniServisCreate(int id, string registarskiBroj, string model, string opis, string mbrIzvrsiocaPrijema, string godinaProizvodnje, int servisId, string brojSasijeVozila, DateTime datumPrijemaVozila, DateTime? datumZavrsetkaServisa) 
+            : base(id, registarskiBroj, model, opis, mbrIzvrsiocaPrijema, godinaProizvodnje, servisId)
         {
             BrojSasijeVozila = brojSasijeVozila;
             DatumPrijemaVozila = datumPrijemaVozila;

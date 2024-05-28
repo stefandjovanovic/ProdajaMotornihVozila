@@ -22,6 +22,7 @@ namespace ProdajaMotornihVozila.Forme
         {
             DodajServisForma forma = new DodajServisForma();
             forma.ShowDialog();
+            popuniPodacima();
         }
 
         private void ServisForma_Load(object sender, EventArgs e)
@@ -45,28 +46,71 @@ namespace ProdajaMotornihVozila.Forme
 
         private void btnInfo_Click(object sender, EventArgs e)
         {
-            if(listaObavljenihServisa.SelectedItems.Count == 0)
+            if (listaObavljenihServisa.SelectedItems.Count == 0)
             {
                 MessageBox.Show("Morate izabrati servis iz liste.");
                 return;
             }
-            //string model = listaObavljenihServisa.SelectedItems[0].SubItems[0].Text;
-            string rgBroj = listaObavljenihServisa.SelectedItems[0].SubItems[1].Text;
-            //string jmbgIzvrsioca = listaObavljenihServisa.SelectedItems[0].SubItems[2].Text;
+            ObavljeniServisBasic obavljeniServis = listaObavljenihServisa.SelectedItems[0].Tag as ObavljeniServisBasic;
+            int id = obavljeniServis.Id;
 
             StringBuilder sb = new StringBuilder();
 
             try
             {
-                /*ObavljeniServisBasic obavljeniServis = DTOManager.vratiObavljeniServis();
-                sb.AppendLine("Model vozila: " + obavljeniServis.Model);
-                MessageBox.Show(sb.ToString());*/
+                ObavljeniServisView servis = DTOManager.vratiObavljeniServis(id);
+                sb.AppendLine("Model vozila: " + servis.Model);
+                sb.AppendLine("Registarski broj: " + servis.RegistarskiBroj);
+                sb.AppendLine("Godina proizvodnje: " + servis.GodinaProizvodnje);
+                sb.AppendLine("Datum prijema:" + servis.DatumPrijema);
+                sb.AppendLine("Datum zavrsetka: " + (servis.DatumZavrsetka != null ? servis.DatumZavrsetka : "Nije zavrsen"));
+                sb.AppendLine("Mesto servisa: " + servis.GradServisa + ", " + servis.AdresaServisa);
+                sb.AppendLine("MBR izvrsioca prijema: " + servis.MbrIzvrsiocaPrijema);
+                sb.AppendLine("Opis: " + servis.Opis);
+                MessageBox.Show(sb.ToString());
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
                 return;
             }
+        }
+
+        private void btnObrisi_Click(object sender, EventArgs e)
+        {
+            if (listaObavljenihServisa.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Morate izabrati servis iz liste.");
+                return;
+            }
+            ObavljeniServisBasic obavljeniServis = listaObavljenihServisa.SelectedItems[0].Tag as ObavljeniServisBasic;
+            int id = obavljeniServis.Id;
+
+            try
+            {
+                DTOManager.obrisiObavljeniServis(id);
+                popuniPodacima();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+        }
+
+        private void btnIzmeni_Click(object sender, EventArgs e)
+        {
+            if (listaObavljenihServisa.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Morate izabrati servis iz liste.");
+                return;
+            }
+            ObavljeniServisBasic obavljeniServis = listaObavljenihServisa.SelectedItems[0].Tag as ObavljeniServisBasic;
+            int id = obavljeniServis.Id;
+
+            DodajServisForma forma = new DodajServisForma(id);
+            forma.ShowDialog();
+            popuniPodacima();
         }
     }
 }

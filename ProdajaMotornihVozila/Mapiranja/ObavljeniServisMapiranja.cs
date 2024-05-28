@@ -16,16 +16,18 @@ namespace ProdajaMotornihVozila.Mapiranja
 
             Id(x => x.Id, "ID").GeneratedBy.TriggerIdentity();
 
-            Map(x => x.DatumPrjema, "DATUM_PRJEMA");
+            Map(x => x.DatumPrjema, "DATUM_PRIJEMA");
             Map(x => x.DatumZavrsetka, "DATUM_ZAVRSETKA");
-            //Map(x => x.MbrIzvrsiocaPrijema, "MBR_IZVRIOCA_PRIJEMA");
-            //Map(x => x.IdServisa, "ID_SERVISA");
+            Map(x => x.Model, "MODEL");
+            Map(x => x.GodinaProizvodnje, "GODINA_PROIZVODNJE");
+            Map(x => x.Opis, "OPIS");
+            Map(x => x.RegistarskiBroj, "REGISTARSKI_BROJ");
 
-            References(x => x.MbrIzvrsiocaPrijema).Column("MBR_IZVRIOCA_PRIJEMA").LazyLoad();
 
-            HasMany(x => x.JePrimljeno)
-                .KeyColumn("ID_OBAVLJENOG_SERVISA")
-                .Cascade.All();
+            References(x => x.MbrIzvrsiocaPrijema).Column("MBR_IZVRSIOCA_PRIJEMA").LazyLoad();
+            References(x => x.PrimljenoVozilo, "BROJ_SASIJE").LazyLoad();
+            References(x => x.IdServisa, "ID_SERVISA").LazyLoad();
+
         }
     }
 }

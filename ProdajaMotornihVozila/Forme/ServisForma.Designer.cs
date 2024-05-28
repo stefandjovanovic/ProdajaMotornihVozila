@@ -46,6 +46,7 @@
             // listaObavljenihServisa
             // 
             listaObavljenihServisa.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2, columnHeader3, columnHeader4 });
+            listaObavljenihServisa.FullRowSelect = true;
             listaObavljenihServisa.GridLines = true;
             listaObavljenihServisa.Location = new Point(6, 26);
             listaObavljenihServisa.Name = "listaObavljenihServisa";
@@ -105,6 +106,7 @@
             btnObrisi.TabIndex = 3;
             btnObrisi.Text = "Obrisi";
             btnObrisi.UseVisualStyleBackColor = true;
+            btnObrisi.Click += btnObrisi_Click;
             // 
             // btnIzmeni
             // 
@@ -114,6 +116,7 @@
             btnIzmeni.TabIndex = 2;
             btnIzmeni.Text = "Izmeni";
             btnIzmeni.UseVisualStyleBackColor = true;
+            btnIzmeni.Click += btnIzmeni_Click;
             // 
             // btnDodaj
             // 

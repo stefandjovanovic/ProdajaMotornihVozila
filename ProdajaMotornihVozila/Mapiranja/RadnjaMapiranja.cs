@@ -16,22 +16,20 @@ namespace ProdajaMotornihVozila.Mapiranja
 
             Id(x => x.Id, "ID").GeneratedBy.TriggerIdentity();
 
-            DiscriminateSubClassesOnColumn("").Formula("(CASE WHEN (OVLASCENI_SERVIS_F = 'Da' AND SALON_F = 'Ne' ) " +
-                "THEN 'Servis'" +
-                " WHEN (OVLASCENI_SERVIS_F = 'Ne' AND SALON_F = 'Da' )" +
-                " THEN 'Salon' " +
-                "WHEN (OVLASCENI_SERVIS_F = 'Da' AND SALON_F = 'Da' ) THEN " +
-                "'ServisSalon'" +
-                "ELSE 'Nepoznato'" +
-                "END)");
+            DiscriminateSubClassesOnColumn("").Formula("CASE WHEN (OVLASCENI_SERVIS_F = 'Da' AND SALON_F = 'Ne' ) THEN 'Servis' " +
+                "WHEN (OVLASCENI_SERVIS_F = 'Ne' AND SALON_F = 'Da' ) THEN 'Salon' " +
+                "WHEN (OVLASCENI_SERVIS_F = 'Da' AND SALON_F = 'Da' ) THEN 'ServisSalon' " +
+                "ELSE 'Nepoznato' " +
+                "END");
 
 
             References(x => x.PripadaPredstavnistvu).Column("ID_PREDSTAVNISTVA").LazyLoad();
             References(x => x.SefRadnje).Column("MATICNI_BROJ_SEFA").LazyLoad();
 
             HasMany(x => x.ZaposleniURadnji).KeyColumn("ID_RADNJE_ANGAZOVANJA").Cascade.All().Inverse();
+            HasMany(x => x.ObavljeniServisiURadnji).KeyColumn("ID_SERVISA").Cascade.All().Inverse();
 
-            
+
         }
     }
 

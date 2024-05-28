@@ -1543,12 +1543,19 @@ namespace ProdajaMotornihVozila
                 {
                     ISession session = DataLayer.GetSession();
 
-                    IEnumerable<JePrimljeno> obavljeniServisi = from o in session.Query<JePrimljeno>()
+                    IEnumerable<ObavljeniServis> obavljeniServisi = from o in session.Query<ObavljeniServis>()
                                                                 select o;
 
-                    foreach (JePrimljeno o in obavljeniServisi)
+                    foreach (ObavljeniServis o in obavljeniServisi)
                     {
-                        ob.Add(new ObavljeniServisBasic(o.Id, o.RegistarskiBroj, o.Model, o.Opis, o.IdObavljenogServisa.MbrIzvrsiocaPrijema.MaticniBroj, o.GodinaProizvodnje, o.IdObavljenogServisa.Id));
+                        ob.Add(new ObavljeniServisBasic(
+                            o.Id,
+                            o.RegistarskiBroj,
+                            o.Model,
+                            o.Opis,
+                            o.MbrIzvrsiocaPrijema.MaticniBroj,
+                            o.GodinaProizvodnje,
+                            o.IdServisa.Id));
                     }
 
                     session.Close();
@@ -1572,21 +1579,22 @@ namespace ProdajaMotornihVozila
                 {
                     ISession session = DataLayer.GetSession();
 
-                    JePrimljeno os = session.Load<JePrimljeno>(id);
+                    ObavljeniServis os = session.Load<ObavljeniServis>(id);
 
                     osw.Id = os.Id;
-                    osw.ServisId = os.Id;
+                    osw.ServisId = os.IdServisa.Id;
                     osw.RegistarskiBroj = os.RegistarskiBroj;
                     osw.Opis = os.Opis;
                     osw.Model = os.Model;
-                    osw.MbrIzvrsiocaPrijema = os.IdObavljenogServisa.MbrIzvrsiocaPrijema.MaticniBroj;
+                    osw.MbrIzvrsiocaPrijema = os.MbrIzvrsiocaPrijema.MaticniBroj;
                     osw.GodinaProizvodnje = os.GodinaProizvodnje;
-                    osw.DatumPrijema = os.IdObavljenogServisa.DatumPrjema;
-                    osw.DatumZavrsetka = os.IdObavljenogServisa.DatumZavrsetka;
-                    osw.AdresaServisa = os.IdObavljenogServisa.IdServisa.PripadaPredstavnistvu.Adresa;
-                    osw.GradServisa = os.IdObavljenogServisa.IdServisa.PripadaPredstavnistvu.Grad;
+                    osw.DatumPrijema = os.DatumPrjema;
+                    osw.DatumZavrsetka = os.DatumZavrsetka;
+                    osw.AdresaServisa = os.IdServisa.PripadaPredstavnistvu.Adresa;
+                    osw.GradServisa = os.IdServisa.PripadaPredstavnistvu.Grad;
+                    osw.BrojSasijeVozila = os.PrimljenoVozilo.BrojSasije;
 
-                    session.Close();
+                session.Close();
 
                 }
                 catch (Exception ex)
@@ -1608,27 +1616,17 @@ namespace ProdajaMotornihVozila
                         DatumPrjema = osc.DatumPrijemaVozila,
                         DatumZavrsetka = osc.DatumZavrsetkaServisa,
                         MbrIzvrsiocaPrijema = session.Load<Zaposleni>(osc.MbrIzvrsiocaPrijema),
-                        IdServisa = session.Load<Radnja>(osc.ServisId)
-                    };
-
-
-                    session.SaveOrUpdate(os);
-
-                    JePrimljeno jp = new JePrimljeno
-                    {
+                        IdServisa = session.Load<Radnja>(osc.ServisId),
                         RegistarskiBroj = osc.RegistarskiBroj,
                         Model = osc.Model,
                         Opis = osc.Opis,
                         GodinaProizvodnje = osc.GodinaProizvodnje,
-                        IdObavljenogServisa = os,
-                        BrojSasijeVozila = session.Load<Vozilo>(osc.BrojSasijeVozila)
+                        PrimljenoVozilo = session.Load<Vozilo>(osc.BrojSasijeVozila)
+
                     };
 
 
-
-                    os.JePrimljeno.Add(jp);
-
-                    session.SaveOrUpdate(jp);
+                    session.SaveOrUpdate(os);
 
                     session.Flush();
 
@@ -1640,6 +1638,58 @@ namespace ProdajaMotornihVozila
                 catch (Exception ex)
                 {
                     throw new Exception("Neuspesno obavljanje servisa! " + ex.Message);
+                }
+            }
+
+        public static void azurirajObavljeniServis(ObavljeniServisCreate osv)
+        {
+            try
+            {
+                ISession session = DataLayer.GetSession();
+
+                ObavljeniServis os = session.Load<ObavljeniServis>(osv.Id);
+
+                os.DatumPrjema = osv.DatumPrijemaVozila;
+                os.DatumZavrsetka = osv.DatumZavrsetkaServisa;
+                os.MbrIzvrsiocaPrijema = session.Load<Zaposleni>(osv.MbrIzvrsiocaPrijema);
+                os.IdServisa = session.Load<Radnja>(osv.ServisId);
+                os.RegistarskiBroj = osv.RegistarskiBroj;
+                os.Model = osv.Model;
+                os.Opis = osv.Opis;
+                os.GodinaProizvodnje = osv.GodinaProizvodnje;
+                os.PrimljenoVozilo = session.Load<Vozilo>(osv.BrojSasijeVozila);
+
+                session.SaveOrUpdate(os);
+
+                session.Flush();
+
+                session.Close();
+            }
+
+            catch (Exception ex)
+            {
+                throw new Exception("Neuspesno azuriranje obavljenog servisa! " + ex.Message);
+            }
+        }
+
+        public static void obrisiObavljeniServis(int id)
+        {
+                try
+            {
+                    ISession session = DataLayer.GetSession();
+
+                    ObavljeniServis os = session.Load<ObavljeniServis>(id);
+
+                    session.Delete(os);
+
+                    session.Flush();
+
+                    session.Close();
+                }
+
+                catch (Exception ex)
+            {
+                    throw new Exception("Neuspesno brisanje obavljenog servisa! " + ex.Message);
                 }
             }
 

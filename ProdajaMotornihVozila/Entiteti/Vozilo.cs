@@ -31,11 +31,11 @@ namespace ProdajaMotornihVozila.Entiteti
         public virtual string? TeretniProstorOtvorenogTipa { get; set; }
 
 
-        public virtual IList<JePrimljeno>? JePrimljeno { get; set; }
+        public virtual IList<ObavljeniServis>? ObavljeniServisi { get; set; }
 
         public Vozilo()
         {
-            JePrimljeno = new List<JePrimljeno>();
+            ObavljeniServisi = new List<ObavljeniServis>();
         }
     }
 }

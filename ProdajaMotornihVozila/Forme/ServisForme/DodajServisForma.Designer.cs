@@ -49,6 +49,7 @@
             textBoxModel = new TextBox();
             textBoxGodProizv = new TextBox();
             textBoxOpis = new TextBox();
+            checkBoxZavrsen = new CheckBox();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
@@ -66,7 +67,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 12F);
-            label2.Location = new Point(59, 95);
+            label2.Location = new Point(59, 108);
             label2.Name = "label2";
             label2.Size = new Size(224, 28);
             label2.TabIndex = 1;
@@ -116,7 +117,8 @@
             // 
             // dateTimePicker2
             // 
-            dateTimePicker2.Location = new Point(317, 96);
+            dateTimePicker2.Enabled = false;
+            dateTimePicker2.Location = new Point(317, 108);
             dateTimePicker2.Name = "dateTimePicker2";
             dateTimePicker2.Size = new Size(250, 27);
             dateTimePicker2.TabIndex = 7;
@@ -140,6 +142,7 @@
             btnDodaj.TabIndex = 1;
             btnDodaj.Text = "Dodaj";
             btnDodaj.UseVisualStyleBackColor = true;
+            btnDodaj.Click += btnDodaj_Click;
             // 
             // btnOdustani
             // 
@@ -238,11 +241,23 @@
             textBoxOpis.Size = new Size(266, 27);
             textBoxOpis.TabIndex = 18;
             // 
+            // checkBoxZavrsen
+            // 
+            checkBoxZavrsen.AutoSize = true;
+            checkBoxZavrsen.Location = new Point(317, 78);
+            checkBoxZavrsen.Name = "checkBoxZavrsen";
+            checkBoxZavrsen.Size = new Size(138, 24);
+            checkBoxZavrsen.TabIndex = 19;
+            checkBoxZavrsen.Text = "Servis je zavrsen";
+            checkBoxZavrsen.UseVisualStyleBackColor = true;
+            checkBoxZavrsen.CheckedChanged += checkBoxZavrsen_CheckedChanged;
+            // 
             // DodajServisForma
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1136, 450);
+            Controls.Add(checkBoxZavrsen);
             Controls.Add(textBoxOpis);
             Controls.Add(textBoxGodProizv);
             Controls.Add(textBoxModel);
@@ -293,5 +308,6 @@
         private TextBox textBoxModel;
         private TextBox textBoxGodProizv;
         private TextBox textBoxOpis;
+        private CheckBox checkBoxZavrsen;
     }
 }
