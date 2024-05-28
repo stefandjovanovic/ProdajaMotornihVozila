@@ -1409,9 +1409,44 @@ namespace ProdajaMotornihVozila
                 return nv;
         }
 
+            public static void azurirajNezavisnoVozilo(NezavisnoVoziloBasic nezavisnoVoziloBasic)
+        {
+            try
+            {
+                ISession session = DataLayer.GetSession();
+
+                NezavisnoVozilo nv = session.Load<NezavisnoVozilo>(nezavisnoVoziloBasic.BrojSasije);
+
+                nv.Boja = nezavisnoVoziloBasic.Boja;
+                nv.Model = nezavisnoVoziloBasic.Model;
+                nv.TipGoriva = nezavisnoVoziloBasic.TipGoriva;
+                nv.KubikazaMotora = nezavisnoVoziloBasic.Kubikaza;
+                nv.BrojMotora = nezavisnoVoziloBasic.BrojMotora;
+                nv.PutnickaF = nezavisnoVoziloBasic.PutnickaF;
+                nv.BrojPutnika = nezavisnoVoziloBasic.BrojPutnika;
+                nv.TeretnaF = nezavisnoVoziloBasic.TeretnaF;
+                nv.Nosivost = nezavisnoVoziloBasic.Nosivost;
+                nv.TeretniProstorOtvorenogTipa = nezavisnoVoziloBasic.TeretniProstorOtvorenogTipa;
+                nv.ImeVlasnika = nezavisnoVoziloBasic.ImeVlasnika;
+                nv.PrezimeVlasnika = nezavisnoVoziloBasic.PrezimeVlasnika;
+                nv.BrojTelefonaVlasnika = nezavisnoVoziloBasic.BrojTelefonaVlasnika;
+
+                session.SaveOrUpdate(nv);
+
+                session.Flush();
+
+                session.Close();
+            }
+
+            catch (Exception ex)
+            {
+                throw new Exception("Neuspesno azuriranje nezavisnog vozila! " + ex.Message);
+            }   
+        }
+
             #endregion
 
-            #region VoziloKompanije
+        #region VoziloKompanije
 
             public static void dodajVoziloKompanije(VoziloKompanijeBasic voziloKompanijeBasic)
             {
@@ -1513,8 +1548,9 @@ namespace ProdajaMotornihVozila
                 {
                     voziloKompanijeBasic.UvezenoF = voziloKompanije.UvezenoF;
                     voziloKompanijeBasic.DatumUvoza = voziloKompanije.Datum_Uvoza;
+                    voziloKompanijeBasic.MbrIzvrsiocaPrijemaUvoza = voziloKompanije.MbrIzvrsiocaPrijemaUvoza.MaticniBroj;
                 }
-                voziloKompanijeBasic.MbrIzvrsiocaPrijemaUvoza = voziloKompanije.MbrIzvrsiocaPrijemaUvoza.MaticniBroj;
+                
                 if(voziloKompanije.IdSalona != null)
                     voziloKompanijeBasic.IdSalona = voziloKompanije.IdSalona.Id;
 
@@ -1528,6 +1564,61 @@ namespace ProdajaMotornihVozila
             }
 
             return voziloKompanijeBasic;
+        }
+
+            public static void azurirajVoziloKompanije (VoziloKompanijeBasic voziloKompanijeBasic)
+            {
+            try
+            {
+                ISession session = DataLayer.GetSession();
+
+                VoziloKompanije vk = session.Load<VoziloKompanije>(voziloKompanijeBasic.BrojSasije);
+
+                if (voziloKompanijeBasic.UvezenoF == "Da")
+                    vk.MbrIzvrsiocaPrijemaUvoza = session.Load<Zaposleni>(voziloKompanijeBasic.MbrIzvrsiocaPrijemaUvoza);
+
+                if (voziloKompanijeBasic.UvezenoF == "Ne")
+                {
+                    vk.MbrIzvrsiocaPrijemaUvoza = null;
+                }
+
+                if (voziloKompanijeBasic.IdSalona != -1)
+                {
+                    vk.IdSalona = session.Load<Radnja>(voziloKompanijeBasic.IdSalona);
+                }
+
+                if (voziloKompanijeBasic.IdSalona == -1)
+                {
+                    vk.IdSalona = null;
+                }
+
+                vk.Boja = voziloKompanijeBasic.Boja;
+                vk.Model = voziloKompanijeBasic.Model;
+                vk.TipGoriva = voziloKompanijeBasic.TipGoriva;
+                vk.KubikazaMotora = voziloKompanijeBasic.Kubikaza;
+                vk.BrojMotora = voziloKompanijeBasic.BrojMotora;
+                vk.PutnickaF = voziloKompanijeBasic.PutnickaF;
+                vk.BrojPutnika = voziloKompanijeBasic.BrojPutnika;
+                vk.TeretnaF = voziloKompanijeBasic.TeretnaF;
+                vk.Nosivost = voziloKompanijeBasic.Nosivost;
+                vk.TeretniProstorOtvorenogTipa = voziloKompanijeBasic.TeretniProstorOtvorenogTipa;
+                vk.UvezenoF = voziloKompanijeBasic.UvezenoF;
+                vk.Datum_Uvoza = voziloKompanijeBasic.DatumUvoza;
+
+                session.SaveOrUpdate(vk);
+
+                session.Flush();
+
+                session.Close();
+
+            }
+
+            catch (Exception ex)
+            {
+                throw new Exception("Neuspesno azuriranje vozila kompanije! " + ex.Message);
+            }
+
+
         }
 
 
