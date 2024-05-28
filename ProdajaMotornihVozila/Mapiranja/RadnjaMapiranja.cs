@@ -61,6 +61,7 @@ namespace ProdajaMotornihVozila.Mapiranja
             DiscriminatorValue("Salon");
 
             HasMany(x => x.ProdataVozila).KeyColumn("ID_MESTA_PRODAJE").Cascade.All().Inverse();
+            HasMany(x => x.IzlozenaVozila).KeyColumn("ID_SALONA").Cascade.All().Inverse();
         }
     }
 

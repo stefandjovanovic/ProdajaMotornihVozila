@@ -1,5 +1,6 @@
 ﻿using NHibernate;
 using ProdajaMotornihVozila.Entiteti;
+using ProdajaMotornihVozila.Forme.ProdajaForme;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -1661,7 +1662,6 @@ namespace ProdajaMotornihVozila
 
             }
 
-            //promenio sam id da je string
             public static ObavljeniServisView vratiObavljeniServis(int id)
             {
                 ObavljeniServisView osw = new ObavljeniServisView();
@@ -1788,190 +1788,212 @@ namespace ProdajaMotornihVozila
 
         #region Prodaja
 
-        public static void dodajProdaju(ProdajaView prodajaView)
+        public static void DodajProdaju(ProdajaCreate prodaja)
         {
             try
             {
-                ISession s = DataLayer.GetSession();
-
-                ProdajaVozila prodajaVozila = new()
+                ISession session = DataLayer.GetSession();
+                if(session != null)
                 {
-                    //NECE NE ZNAM STO
-                };
+                    Salon radnja = session.Load<Salon>(prodaja.IdMestaProdaje);
+                    VoziloKompanije vozilo = session.Load<VoziloKompanije>(prodaja.BrojSasije);
+                    Zaposleni zaposleni = session.Load<Zaposleni>(prodaja.MBRProdavca);
+                    Kupac kupac;
+                    if(prodaja.Kupac.TipKupca == "Fizicko")
+                    {
+                        kupac = new FizickoLice
+                        {
+                            MaticniBroj = prodaja.Kupac.MaticniBroj,
+                            Ime = prodaja.Kupac.Ime,
+                            Prezime = prodaja.Kupac.Prezime,
+                            BrojTelefona = prodaja.Kupac.BrojTelefona
+                        };
+                    }
+                    else if(prodaja.Kupac.TipKupca == "Pravno")
+                    {
+                        kupac = new PravnoLice
+                        {
+                            Pib = prodaja.Kupac.Pib,
+                            Ime = prodaja.Kupac.Ime,
+                            Prezime = prodaja.Kupac.Prezime,
+                            BrojTelefona = prodaja.Kupac.BrojTelefona
+                        };
+                    }else
+                    {
+                        kupac = null;
+                    }
 
-                s.SaveOrUpdate(prodajaVozila);
+                    ProdajaVozila novaProdaja = new()
+                    {
+                        ProdatoVozilo = vozilo,
+                        KupacVozila = kupac,
+                        IzvrsioProdaju = zaposleni,
+                        MestoProdaje = radnja,
+                    };
 
-                s.Flush();
+                    session.Save(novaProdaja);
+                    session.Flush();
+                    session.Close();
 
-                s.Close();
-
+                }
             }
-
-            catch (Exception e)
+            catch (Exception ex)
             {
-                throw new Exception("Neuspesno dodavanje zaposlenog! " + e.Message);
+                throw new Exception("Neuspesno dodavanje prodaje! " + ex.Message);
             }
         }
 
-        public List<ProdajaBasic> vratiProdaje()
+        public static List<ProdajaBasic> VratiSveProdaje()
         {
-            List<ProdajaBasic> pr = new List<ProdajaBasic>();
+            List<ProdajaBasic> prodaje = new List<ProdajaBasic>();
 
             try
             {
                 ISession session = DataLayer.GetSession();
 
-                IEnumerable<ProdajaVozila> prodajaVozila = from o in session.Query<ProdajaVozila>()
-                                                            select o;
+                IEnumerable<ProdajaVozila> prodajeIzBaze = from p in session.Query<ProdajaVozila>()
+                                                           select p;
 
-                foreach (ProdajaVozila p in prodajaVozila)
+                foreach (ProdajaVozila p in prodajeIzBaze)
                 {
                     string tipKupca;
-
-                    if (p.GetType() == typeof(FizickoLice))
+                    if (p.KupacVozila.GetType() == typeof(FizickoLice))
                     {
-                        tipKupca = "Fizicko lice";
+                        tipKupca = "Fizicko";
                     }
                     else
                     {
-
-                        tipKupca = "Pravno lice";
+                        tipKupca = "Pravno";
                     }
 
-
-                    pr.Add(new ProdajaBasic(p.Id,p.ProdatoVozilo.BrojSasije,p.KupacVozila.Id,p.MestoProdaje.Id,p.IzvrsioProdaju.MaticniBroj,p.KupacVozila.TipKupca));
-
+                    prodaje.Add(new ProdajaBasic(
+                                               p.Id,
+                                               p.ProdatoVozilo.BrojSasije,
+                                               p.KupacVozila.Id,
+                                               p.MestoProdaje.Id,
+                                               p.IzvrsioProdaju.MaticniBroj,
+                                               tipKupca));
                 }
 
                 session.Close();
             }
-
             catch (Exception ex)
             {
-                throw new Exception("Neuspesno vracanje obavljenih prodaja! " + ex.Message);
+                throw new Exception("Neuspesno vracanje prodaja! " + ex.Message);
             }
 
-            return pr;
+            return prodaje;
         }
 
-        public ProdajaView vratiProdaju(int id)
+        public static ProdajaView VratiProdaju(int id)
         {
-            ProdajaView prodajaView = new ProdajaView();
+            ProdajaView prodaja = new ProdajaView();
 
             try
             {
                 ISession session = DataLayer.GetSession();
 
-                ProdajaVozila prodaja = session.Load<ProdajaVozila>(id);
+                ProdajaVozila p = session.Load<ProdajaVozila>(id);
 
                 string tipKupca;
-
-                if (prodaja.GetType() == typeof(FizickoLice))
+                if (p.KupacVozila.GetType() == typeof(FizickoLice))
                 {
-                    tipKupca = "Fizicko lice";
+                    tipKupca = "Fizicko";
                 }
                 else
                 {
-
-                    tipKupca = "Pravno lice";
+                    tipKupca = "Pravno";
                 }
 
-                prodajaView.BrojSasije = prodaja.ProdatoVozilo.BrojSasije;
-                prodajaView.IdKupca = prodaja.KupacVozila.Id;
-                prodajaView.IdMestaProdaje = prodaja.MestoProdaje.Id;
-                prodajaView.MBRIzvrsioca = prodaja.IzvrsioProdaju.MaticniBroj;
-                prodajaView.Ime = prodaja.KupacVozila.Ime;
-                prodajaView.Prezime = prodaja.KupacVozila.Prezime;
-                prodajaView.BrojTelefona = prodaja.KupacVozila.BrojTelefona;
-                prodajaView.TipKupca = tipKupca;
+                prodaja.ImeKupca = p.KupacVozila.Ime;
+                prodaja.PrezimeKupca = p.KupacVozila.Prezime;
+                prodaja.BrojTelefona = p.KupacVozila.BrojTelefona;
+                prodaja.AdresaSalona = p.MestoProdaje.PripadaPredstavnistvu.Adresa;
+                prodaja.GradSalona = p.MestoProdaje.PripadaPredstavnistvu.Grad;
+                prodaja.ImeProdavca = p.IzvrsioProdaju.Ime;
+                prodaja.PrezimeProdavca = p.IzvrsioProdaju.Prezime;
+                prodaja.ModelVozila = p.ProdatoVozilo.Model;
 
-                
+                prodaja.Id = p.Id;
+                prodaja.BrojSasije = p.ProdatoVozilo.BrojSasije;
+                prodaja.IdKupca = p.KupacVozila.Id;
+                prodaja.IdMestaProdaje = p.MestoProdaje.Id;
+                prodaja.MBRProdavca = p.IzvrsioProdaju.MaticniBroj;
+                prodaja.TipKupca = tipKupca;
 
                 session.Close();
             }
-
             catch (Exception ex)
             {
                 throw new Exception("Neuspesno vracanje prodaje! " + ex.Message);
             }
 
-            return prodajaView;
+            return prodaja;
         }
-        //DOVRSI OVAJ REGION
-        public static void obrisiProdajuFizickomlicu(int id)
+
+        public static void AzurirajProdaju(ProdajaCreate prodaja)
         {
             try
             {
                 ISession session = DataLayer.GetSession();
-
-                ProdajaVozila prodaja = session.Load<ProdajaVozila>(id);
-
-                // VoziloKompanije vozilokomp = session.Load<VoziloKompanije>(brojSasije);
-
-                //session.Delete(vozilokomp);
-                //session.Flush();
-
-
-
-
-
-                session.Delete(prodaja);
-                session.Flush();
-
-                session.Close();
-            }
-
-            catch (Exception ex)
-            {
-                throw new Exception("Neuspesno brisanje prodaje! " + ex.Message);
-            }
-        }
-
-        public static void obrisiProdajuPravnom(int id)
-        {
-            try
-            {
-                ISession session = DataLayer.GetSession();
-
-                ProdajaVozila prodaja = session.Load<ProdajaVozila>(id);
-
-                // VoziloKompanije vozilokomp = session.Load<VoziloKompanije>(brojSasije);
-
-                //session.Delete(vozilokomp);
-                //session.Flush();
-
-
-
-
-
-                session.Delete(prodaja);
-                session.Flush();
-
-                session.Close();
-            }
-
-            catch (Exception ex)
-            {
-                throw new Exception("Neuspesno brisanje prodaje! " + ex.Message);
-            }
-        }
-        //DODAJ REGION ZA PRAVNO I FIZICKO LICE
-        #endregion
-
-        #region PravnoLice
-
-        public static void dodajProdajuPravnomLicu(PravnoLiceBasic pravnoLiceBasic)
-        {
-            try
-            {
-                ISession session = DataLayer.GetSession();
-
-                ProdajaVozila pl = new()
+                if (session != null)
                 {
-                    //NECE NE ZNAM STO
-                };
+                    ProdajaVozila p = session.Load<ProdajaVozila>(prodaja.Id);
+                    Salon radnja = session.Load<Salon>(prodaja.IdMestaProdaje);
+                    VoziloKompanije vozilo = session.Load<VoziloKompanije>(prodaja.BrojSasije);
+                    Zaposleni zaposleni = session.Load<Zaposleni>(prodaja.MBRProdavca);
+                    Kupac kupac;
+                    if (prodaja.Kupac.TipKupca == "Fizicko")
+                    {
+                        kupac = new FizickoLice
+                        {
+                            MaticniBroj = prodaja.Kupac.MaticniBroj,
+                            Ime = prodaja.Kupac.Ime,
+                            Prezime = prodaja.Kupac.Prezime,
+                            BrojTelefona = prodaja.Kupac.BrojTelefona
+                        };
+                    }
+                    else if (prodaja.Kupac.TipKupca == "Pravno")
+                    {
+                        kupac = new PravnoLice
+                        {
+                            Pib = prodaja.Kupac.Pib,
+                            Ime = prodaja.Kupac.Ime,
+                            Prezime = prodaja.Kupac.Prezime,
+                            BrojTelefona = prodaja.Kupac.BrojTelefona
+                        };
+                    }
+                    else
+                    {
+                        kupac = null;
+                    }
 
-                session.SaveOrUpdate(pl);
+                    p.ProdatoVozilo = vozilo;
+                    p.KupacVozila = kupac;
+                    p.IzvrsioProdaju = zaposleni;
+                    p.MestoProdaje = radnja;
+
+                    session.SaveOrUpdate(p);
+                    session.Flush();
+                    session.Close();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Neuspesno azuriranje prodaje! " + ex.Message);
+            }
+        }
+
+        public static void ObrisiProdaju(int id)
+        {
+            try
+            {
+                ISession session = DataLayer.GetSession();
+
+                ProdajaVozila p = session.Load<ProdajaVozila>(id);
+
+                session.Delete(p);
 
                 session.Flush();
 
@@ -1979,12 +2001,12 @@ namespace ProdajaMotornihVozila
             }
             catch (Exception ex)
             {
-                throw new Exception("Neuspesno obavljanje prodaje! " + ex.Message);
+                throw new Exception("Neuspesno brisanje prodaje! " + ex.Message);
             }
         }
 
-        #endregion
 
+        #endregion
     }
 
 }
