@@ -1643,8 +1643,98 @@ namespace ProdajaMotornihVozila
                 }
             }
 
-            #endregion
+        #endregion
+
+        #region Prodaja
+
+        public List<ProdajaBasic> vratiProdaje()
+        {
+            List<ProdajaBasic> pr = new List<ProdajaBasic>();
+
+            try
+            {
+                ISession session = DataLayer.GetSession();
+
+                IEnumerable<ProdajaVozila> prodajaVozila = from o in session.Query<ProdajaVozila>()
+                                                            select o;
+
+                foreach (ProdajaVozila p in prodajaVozila)
+                {
+                    string tipKupca;
+
+                    if (p.GetType() == typeof(FizickoLice))
+                    {
+                        tipKupca = "Fizicko lice";
+                    }
+                    else
+                    {
+
+                        tipKupca = "Pravno lice";
+                    }
+
+
+                    pr.Add(new ProdajaBasic(p.Id,p.ProdatoVozilo.BrojSasije,p.KupacVozila.Id,p.MestoProdaje.Id,p.IzvrsioProdaju.MaticniBroj,p.KupacVozila.TipKupca));
+
+                }
+
+                session.Close();
+            }
+
+            catch (Exception ex)
+            {
+                throw new Exception("Neuspesno vracanje obavljenih prodaja! " + ex.Message);
+            }
+
+            return pr;
         }
+
+        public ProdajaView vratiProdaju(int id)
+        {
+            ProdajaView prodajaView = new ProdajaView();
+
+            try
+            {
+                ISession session = DataLayer.GetSession();
+
+                ProdajaVozila prodaja = session.Load<ProdajaVozila>(id);
+
+                string tipKupca;
+
+                if (prodaja.GetType() == typeof(FizickoLice))
+                {
+                    tipKupca = "Fizicko lice";
+                }
+                else
+                {
+
+                    tipKupca = "Pravno lice";
+                }
+
+                prodajaView.BrojSasije = prodaja.ProdatoVozilo.BrojSasije;
+                prodajaView.IdKupca = prodaja.KupacVozila.Id;
+                prodajaView.IdMestaProdaje = prodaja.MestoProdaje.Id;
+                prodajaView.MBRIzvrsioca = prodaja.IzvrsioProdaju.MaticniBroj;
+                prodajaView.Ime = prodaja.KupacVozila.Ime;
+                prodajaView.Prezime = prodaja.KupacVozila.Prezime;
+                prodajaView.BrojTelefona = prodaja.KupacVozila.BrojTelefona;
+                prodajaView.TipKupca = tipKupca;
+
+                
+
+                session.Close();
+            }
+
+            catch (Exception ex)
+            {
+                throw new Exception("Neuspesno vracanje prodaje! " + ex.Message);
+            }
+
+            return prodajaView;
+        }
+        //DOVRSI OVAJ REGION
+        //DODAJ REGION ZA PRAVNO I FIZICKO LICE
+        #endregion
+    }
 
 }
 

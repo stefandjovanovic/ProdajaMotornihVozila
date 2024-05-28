@@ -22,6 +22,7 @@ namespace ProdajaMotornihVozila.Forme
         {
             DodajServisForma forma = new DodajServisForma();
             forma.ShowDialog();
+            this.popuniPodacima();
         }
 
         private void ServisForma_Load(object sender, EventArgs e)
@@ -45,28 +46,34 @@ namespace ProdajaMotornihVozila.Forme
 
         private void btnInfo_Click(object sender, EventArgs e)
         {
-            if(listaObavljenihServisa.SelectedItems.Count == 0)
+            if (listaObavljenihServisa.SelectedItems.Count == 0)
             {
                 MessageBox.Show("Morate izabrati servis iz liste.");
                 return;
             }
-            //string model = listaObavljenihServisa.SelectedItems[0].SubItems[0].Text;
-            string rgBroj = listaObavljenihServisa.SelectedItems[0].SubItems[1].Text;
-            //string jmbgIzvrsioca = listaObavljenihServisa.SelectedItems[0].SubItems[2].Text;
+
 
             StringBuilder sb = new StringBuilder();
 
             try
             {
-                /*ObavljeniServisBasic obavljeniServis = DTOManager.vratiObavljeniServis();
-                sb.AppendLine("Model vozila: " + obavljeniServis.Model);
-                MessageBox.Show(sb.ToString());*/
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
                 return;
             }
+        }
+
+        private void btnIzmeni_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnObrisi_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
