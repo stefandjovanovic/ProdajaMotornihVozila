@@ -1788,6 +1788,31 @@ namespace ProdajaMotornihVozila
 
         #region Prodaja
 
+        public static void dodajProdaju(ProdajaView prodajaView)
+        {
+            try
+            {
+                ISession s = DataLayer.GetSession();
+
+                ProdajaVozila prodajaVozila = new()
+                {
+                    //NECE NE ZNAM STO
+                };
+
+                s.SaveOrUpdate(prodajaVozila);
+
+                s.Flush();
+
+                s.Close();
+
+            }
+
+            catch (Exception e)
+            {
+                throw new Exception("Neuspesno dodavanje zaposlenog! " + e.Message);
+            }
+        }
+
         public List<ProdajaBasic> vratiProdaje()
         {
             List<ProdajaBasic> pr = new List<ProdajaBasic>();
@@ -1873,8 +1898,93 @@ namespace ProdajaMotornihVozila
             return prodajaView;
         }
         //DOVRSI OVAJ REGION
+        public static void obrisiProdajuFizickomlicu(int id)
+        {
+            try
+            {
+                ISession session = DataLayer.GetSession();
+
+                ProdajaVozila prodaja = session.Load<ProdajaVozila>(id);
+
+                // VoziloKompanije vozilokomp = session.Load<VoziloKompanije>(brojSasije);
+
+                //session.Delete(vozilokomp);
+                //session.Flush();
+
+
+
+
+
+                session.Delete(prodaja);
+                session.Flush();
+
+                session.Close();
+            }
+
+            catch (Exception ex)
+            {
+                throw new Exception("Neuspesno brisanje prodaje! " + ex.Message);
+            }
+        }
+
+        public static void obrisiProdajuPravnom(int id)
+        {
+            try
+            {
+                ISession session = DataLayer.GetSession();
+
+                ProdajaVozila prodaja = session.Load<ProdajaVozila>(id);
+
+                // VoziloKompanije vozilokomp = session.Load<VoziloKompanije>(brojSasije);
+
+                //session.Delete(vozilokomp);
+                //session.Flush();
+
+
+
+
+
+                session.Delete(prodaja);
+                session.Flush();
+
+                session.Close();
+            }
+
+            catch (Exception ex)
+            {
+                throw new Exception("Neuspesno brisanje prodaje! " + ex.Message);
+            }
+        }
         //DODAJ REGION ZA PRAVNO I FIZICKO LICE
         #endregion
+
+        #region PravnoLice
+
+        public static void dodajProdajuPravnomLicu(PravnoLiceBasic pravnoLiceBasic)
+        {
+            try
+            {
+                ISession session = DataLayer.GetSession();
+
+                ProdajaVozila pl = new()
+                {
+                    //NECE NE ZNAM STO
+                };
+
+                session.SaveOrUpdate(pl);
+
+                session.Flush();
+
+                session.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Neuspesno obavljanje prodaje! " + ex.Message);
+            }
+        }
+
+        #endregion
+
     }
 
 }
