@@ -21,5 +21,10 @@ namespace ProdajaMotornihVozila.Forme.ProdajaForme
         {
             this.Close();
         }
+
+        private void btnDodaj_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
