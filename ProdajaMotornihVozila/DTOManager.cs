@@ -917,7 +917,7 @@ namespace ProdajaMotornihVozila
                         ServisVisegRanga = servisVisegNivoa,
                         PripadaPredstavnistvu = predstavnistvo
                     };
-                    session.SaveOrUpdate(noviServis);
+                    session.Save(noviServis);
                     session.Flush();
                     session.Close();
 

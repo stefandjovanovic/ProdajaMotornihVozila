@@ -130,7 +130,6 @@ namespace ProdajaMotornihVozila.Forme.PredstavnistvoForme
             string mehanicarske = checkBoxMehanicarske.Checked ? "Da" : "Ne";
             string vulkanizerske = checkBoxVulkanizerske.Checked ? "Da" : "Ne";
             string farbarske = checkBoxFarbarske.Checked ? "Da" : "Ne";
-            MessageBox.Show(farbarske + limarske + vulkanizerske + mehanicarske);
             int? idServisVisegRanga = textBoxServisVisegRanga.Text.Length == 0 ? null : Int32.Parse(textBoxServisVisegRanga.Text);
 
             try
