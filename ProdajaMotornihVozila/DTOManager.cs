@@ -1409,9 +1409,44 @@ namespace ProdajaMotornihVozila
                 return nv;
         }
 
+            public static void azurirajNezavisnoVozilo(NezavisnoVoziloBasic nezavisnoVoziloBasic)
+        {
+            try
+            {
+                ISession session = DataLayer.GetSession();
+
+                NezavisnoVozilo nv = session.Load<NezavisnoVozilo>(nezavisnoVoziloBasic.BrojSasije);
+
+                nv.Boja = nezavisnoVoziloBasic.Boja;
+                nv.Model = nezavisnoVoziloBasic.Model;
+                nv.TipGoriva = nezavisnoVoziloBasic.TipGoriva;
+                nv.KubikazaMotora = nezavisnoVoziloBasic.Kubikaza;
+                nv.BrojMotora = nezavisnoVoziloBasic.BrojMotora;
+                nv.PutnickaF = nezavisnoVoziloBasic.PutnickaF;
+                nv.BrojPutnika = nezavisnoVoziloBasic.BrojPutnika;
+                nv.TeretnaF = nezavisnoVoziloBasic.TeretnaF;
+                nv.Nosivost = nezavisnoVoziloBasic.Nosivost;
+                nv.TeretniProstorOtvorenogTipa = nezavisnoVoziloBasic.TeretniProstorOtvorenogTipa;
+                nv.ImeVlasnika = nezavisnoVoziloBasic.ImeVlasnika;
+                nv.PrezimeVlasnika = nezavisnoVoziloBasic.PrezimeVlasnika;
+                nv.BrojTelefonaVlasnika = nezavisnoVoziloBasic.BrojTelefonaVlasnika;
+
+                session.SaveOrUpdate(nv);
+
+                session.Flush();
+
+                session.Close();
+            }
+
+            catch (Exception ex)
+            {
+                throw new Exception("Neuspesno azuriranje nezavisnog vozila! " + ex.Message);
+            }   
+        }
+
             #endregion
 
-            #region VoziloKompanije
+        #region VoziloKompanije
 
             public static void dodajVoziloKompanije(VoziloKompanijeBasic voziloKompanijeBasic)
             {
@@ -1513,8 +1548,9 @@ namespace ProdajaMotornihVozila
                 {
                     voziloKompanijeBasic.UvezenoF = voziloKompanije.UvezenoF;
                     voziloKompanijeBasic.DatumUvoza = voziloKompanije.Datum_Uvoza;
+                    voziloKompanijeBasic.MbrIzvrsiocaPrijemaUvoza = voziloKompanije.MbrIzvrsiocaPrijemaUvoza.MaticniBroj;
                 }
-                voziloKompanijeBasic.MbrIzvrsiocaPrijemaUvoza = voziloKompanije.MbrIzvrsiocaPrijemaUvoza.MaticniBroj;
+                
                 if(voziloKompanije.IdSalona != null)
                     voziloKompanijeBasic.IdSalona = voziloKompanije.IdSalona.Id;
 
@@ -1528,6 +1564,61 @@ namespace ProdajaMotornihVozila
             }
 
             return voziloKompanijeBasic;
+        }
+
+            public static void azurirajVoziloKompanije (VoziloKompanijeBasic voziloKompanijeBasic)
+            {
+            try
+            {
+                ISession session = DataLayer.GetSession();
+
+                VoziloKompanije vk = session.Load<VoziloKompanije>(voziloKompanijeBasic.BrojSasije);
+
+                if (voziloKompanijeBasic.UvezenoF == "Da")
+                    vk.MbrIzvrsiocaPrijemaUvoza = session.Load<Zaposleni>(voziloKompanijeBasic.MbrIzvrsiocaPrijemaUvoza);
+
+                if (voziloKompanijeBasic.UvezenoF == "Ne")
+                {
+                    vk.MbrIzvrsiocaPrijemaUvoza = null;
+                }
+
+                if (voziloKompanijeBasic.IdSalona != -1)
+                {
+                    vk.IdSalona = session.Load<Radnja>(voziloKompanijeBasic.IdSalona);
+                }
+
+                if (voziloKompanijeBasic.IdSalona == -1)
+                {
+                    vk.IdSalona = null;
+                }
+
+                vk.Boja = voziloKompanijeBasic.Boja;
+                vk.Model = voziloKompanijeBasic.Model;
+                vk.TipGoriva = voziloKompanijeBasic.TipGoriva;
+                vk.KubikazaMotora = voziloKompanijeBasic.Kubikaza;
+                vk.BrojMotora = voziloKompanijeBasic.BrojMotora;
+                vk.PutnickaF = voziloKompanijeBasic.PutnickaF;
+                vk.BrojPutnika = voziloKompanijeBasic.BrojPutnika;
+                vk.TeretnaF = voziloKompanijeBasic.TeretnaF;
+                vk.Nosivost = voziloKompanijeBasic.Nosivost;
+                vk.TeretniProstorOtvorenogTipa = voziloKompanijeBasic.TeretniProstorOtvorenogTipa;
+                vk.UvezenoF = voziloKompanijeBasic.UvezenoF;
+                vk.Datum_Uvoza = voziloKompanijeBasic.DatumUvoza;
+
+                session.SaveOrUpdate(vk);
+
+                session.Flush();
+
+                session.Close();
+
+            }
+
+            catch (Exception ex)
+            {
+                throw new Exception("Neuspesno azuriranje vozila kompanije! " + ex.Message);
+            }
+
+
         }
 
 
@@ -1693,8 +1784,98 @@ namespace ProdajaMotornihVozila
                 }
             }
 
-            #endregion
+        #endregion
+
+        #region Prodaja
+
+        public List<ProdajaBasic> vratiProdaje()
+        {
+            List<ProdajaBasic> pr = new List<ProdajaBasic>();
+
+            try
+            {
+                ISession session = DataLayer.GetSession();
+
+                IEnumerable<ProdajaVozila> prodajaVozila = from o in session.Query<ProdajaVozila>()
+                                                            select o;
+
+                foreach (ProdajaVozila p in prodajaVozila)
+                {
+                    string tipKupca;
+
+                    if (p.GetType() == typeof(FizickoLice))
+                    {
+                        tipKupca = "Fizicko lice";
+                    }
+                    else
+                    {
+
+                        tipKupca = "Pravno lice";
+                    }
+
+
+                    pr.Add(new ProdajaBasic(p.Id,p.ProdatoVozilo.BrojSasije,p.KupacVozila.Id,p.MestoProdaje.Id,p.IzvrsioProdaju.MaticniBroj,p.KupacVozila.TipKupca));
+
+                }
+
+                session.Close();
+            }
+
+            catch (Exception ex)
+            {
+                throw new Exception("Neuspesno vracanje obavljenih prodaja! " + ex.Message);
+            }
+
+            return pr;
         }
+
+        public ProdajaView vratiProdaju(int id)
+        {
+            ProdajaView prodajaView = new ProdajaView();
+
+            try
+            {
+                ISession session = DataLayer.GetSession();
+
+                ProdajaVozila prodaja = session.Load<ProdajaVozila>(id);
+
+                string tipKupca;
+
+                if (prodaja.GetType() == typeof(FizickoLice))
+                {
+                    tipKupca = "Fizicko lice";
+                }
+                else
+                {
+
+                    tipKupca = "Pravno lice";
+                }
+
+                prodajaView.BrojSasije = prodaja.ProdatoVozilo.BrojSasije;
+                prodajaView.IdKupca = prodaja.KupacVozila.Id;
+                prodajaView.IdMestaProdaje = prodaja.MestoProdaje.Id;
+                prodajaView.MBRIzvrsioca = prodaja.IzvrsioProdaju.MaticniBroj;
+                prodajaView.Ime = prodaja.KupacVozila.Ime;
+                prodajaView.Prezime = prodaja.KupacVozila.Prezime;
+                prodajaView.BrojTelefona = prodaja.KupacVozila.BrojTelefona;
+                prodajaView.TipKupca = tipKupca;
+
+                
+
+                session.Close();
+            }
+
+            catch (Exception ex)
+            {
+                throw new Exception("Neuspesno vracanje prodaje! " + ex.Message);
+            }
+
+            return prodajaView;
+        }
+        //DOVRSI OVAJ REGION
+        //DODAJ REGION ZA PRAVNO I FIZICKO LICE
+        #endregion
+    }
 
 }
 

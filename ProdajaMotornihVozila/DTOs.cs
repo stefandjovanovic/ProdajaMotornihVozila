@@ -503,4 +503,76 @@ namespace ProdajaMotornihVozila
     }
 
     #endregion
+
+    #region Prodaja
+
+    public class ProdajaBasic
+    {
+        public int Id { get; set; }
+        public string BrojSasije { get; set; }
+        public int IdKupca { get; set; }
+        public int IdMestaProdaje { get; set; }
+        public string MBRIzvrsioca { get; set; }
+        public string TipKupca { get; set; }
+
+        public ProdajaBasic(int id, string brojSasije, int idKupca, int idMestaProdaje, string mBRIzvrsioca, string tipKupca)
+        {
+            Id = id;
+            BrojSasije = brojSasije;
+            IdKupca = idKupca;
+            IdMestaProdaje = idMestaProdaje;
+            MBRIzvrsioca = mBRIzvrsioca;
+            TipKupca = tipKupca;
+        }
+        public ProdajaBasic()
+        {
+
+        }
+    }
+    public class ProdajaView : ProdajaBasic
+    {
+        public string Ime { get; set; }
+        public string Prezime { get; set; }
+        public string BrojTelefona { get; set; }
+
+        public ProdajaView(int id, string brojSasije, int idKupca, int idMestaProdaje, string mBRIzvrsioca, string tipKupca, string ime, string prezime, string brTel):base(id, brojSasije, idKupca, idMestaProdaje, mBRIzvrsioca, tipKupca)
+        {
+            Ime = ime;
+            Prezime = prezime;
+            BrojTelefona = brTel;
+        }
+        public ProdajaView()
+        {
+
+        }
+        
+    }
+    public class PravnoLiceBasic : ProdajaView
+    {
+        public string Pib { get; set; }
+        public PravnoLiceBasic(int id, string brojSasije, int idKupca, int idMestaProdaje, string mBRIzvrsioca,string tipKupca, string ime, string prezime, string brTel, string pib) : base(id, brojSasije, idKupca, idMestaProdaje, mBRIzvrsioca, tipKupca, ime, prezime, brTel)
+        {
+            Pib = pib;
+        }
+        public PravnoLiceBasic()
+        {
+
+        }
+
+    }
+
+    public class FizickoLiceBasic : ProdajaView
+    {
+        public string Mbr { get; set; }
+        public FizickoLiceBasic(int id, string brojSasije, int idKupca, int idMestaProdaje, string mBRIzvrsioca, string tipKupca, string ime, string prezime, string brTel, string mbr) : base(id, brojSasije, idKupca, idMestaProdaje, mBRIzvrsioca, tipKupca,ime, prezime, brTel)
+        {
+            Mbr = mbr;
+        }
+        public FizickoLiceBasic()
+        {
+
+        }
+    }
+
+    #endregion
 }

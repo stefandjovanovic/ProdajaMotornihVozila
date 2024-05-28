@@ -35,10 +35,10 @@
             columnHeader4 = new ColumnHeader();
             groupBox1 = new GroupBox();
             groupBox2 = new GroupBox();
+            btnObrisi = new Button();
+            btnIzmeni = new Button();
             btnDodaj = new Button();
             btnInfo = new Button();
-            btnIzmeni = new Button();
-            btnObrisi = new Button();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             SuspendLayout();
@@ -98,6 +98,26 @@
             groupBox2.TabStop = false;
             groupBox2.Text = "Upravljaj informacijama";
             // 
+            // btnObrisi
+            // 
+            btnObrisi.Font = new Font("Segoe UI", 9F);
+            btnObrisi.Location = new Point(53, 286);
+            btnObrisi.Name = "btnObrisi";
+            btnObrisi.Size = new Size(186, 54);
+            btnObrisi.TabIndex = 3;
+            btnObrisi.Text = "Obrisi";
+            btnObrisi.UseVisualStyleBackColor = true;
+            // 
+            // btnIzmeni
+            // 
+            btnIzmeni.Font = new Font("Segoe UI", 9F);
+            btnIzmeni.Location = new Point(53, 210);
+            btnIzmeni.Name = "btnIzmeni";
+            btnIzmeni.Size = new Size(186, 54);
+            btnIzmeni.TabIndex = 2;
+            btnIzmeni.Text = "Izmeni";
+            btnIzmeni.UseVisualStyleBackColor = true;
+            // 
             // btnDodaj
             // 
             btnDodaj.Location = new Point(53, 135);
@@ -117,26 +137,6 @@
             btnInfo.Text = "Informacije";
             btnInfo.UseVisualStyleBackColor = true;
             // 
-            // btnIzmeni
-            // 
-            btnIzmeni.Font = new Font("Segoe UI", 9F);
-            btnIzmeni.Location = new Point(53, 210);
-            btnIzmeni.Name = "btnIzmeni";
-            btnIzmeni.Size = new Size(186, 54);
-            btnIzmeni.TabIndex = 2;
-            btnIzmeni.Text = "Izmeni";
-            btnIzmeni.UseVisualStyleBackColor = true;
-            // 
-            // btnObrisi
-            // 
-            btnObrisi.Font = new Font("Segoe UI", 9F);
-            btnObrisi.Location = new Point(53, 286);
-            btnObrisi.Name = "btnObrisi";
-            btnObrisi.Size = new Size(186, 54);
-            btnObrisi.TabIndex = 3;
-            btnObrisi.Text = "Obrisi";
-            btnObrisi.UseVisualStyleBackColor = true;
-            // 
             // ProdajaForma
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -146,6 +146,7 @@
             Controls.Add(groupBox1);
             Name = "ProdajaForma";
             Text = "ProdajaForma";
+            Load += ProdajaForma_Load;
             groupBox1.ResumeLayout(false);
             groupBox2.ResumeLayout(false);
             ResumeLayout(false);

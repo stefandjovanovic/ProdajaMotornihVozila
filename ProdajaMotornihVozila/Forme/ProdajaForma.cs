@@ -24,5 +24,10 @@ namespace ProdajaMotornihVozila.Forme
             DodajProdajuForma forma = new DodajProdajuForma();
             forma.ShowDialog();
         }
+
+        private void ProdajaForma_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

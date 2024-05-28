@@ -48,8 +48,8 @@ namespace ProdajaMotornihVozila.Forme.VozilaForme
                     comboBoxTipGoriva.SelectedItem = vozilo.TipGoriva;
                     textBoxBrSasije.Text = vozilo.BrojSasije;
 
-                    comboBoxVlasnistvo.SelectedItem = "Nezavisno vozilo";
-                    gbNezavisno.Enabled = true;
+                    comboBoxVlasnistvo.SelectedIndex = 0;
+                    comboBoxVlasnistvo.Enabled = false;
 
                     textBoxImeVlasnika.Text = vozilo.ImeVlasnika;
                     textBoxPrezimeVlasnika.Text = vozilo.PrezimeVlasnika;
@@ -94,8 +94,8 @@ namespace ProdajaMotornihVozila.Forme.VozilaForme
                     comboBoxTipGoriva.SelectedItem = vozilo.TipGoriva;
                     textBoxBrSasije.Text = vozilo.BrojSasije;
 
-                    comboBoxVlasnistvo.SelectedItem = "Vozilo Kompanije";
-                    gbSluzbeno.Enabled = true;
+                    comboBoxVlasnistvo.SelectedIndex = 1;
+                    comboBoxVlasnistvo.Enabled = false;
 
                     
 
@@ -129,6 +129,7 @@ namespace ProdajaMotornihVozila.Forme.VozilaForme
                         cbUvezeno.Enabled = true;
                         dateTimePicker1.Enabled = true;
                         dateTimePicker1.Value = (DateTime)vozilo.DatumUvoza;
+                        textBoxBrSalona.Text = (-1).ToString();
 
                         if (vozilo.MbrIzvrsiocaPrijemaUvoza != null)
                         {
@@ -257,8 +258,11 @@ namespace ProdajaMotornihVozila.Forme.VozilaForme
                     vozilo.ImeVlasnika = textBoxImeVlasnika.Text;
                     vozilo.PrezimeVlasnika = textBoxPrezimeVlasnika.Text;
                     vozilo.BrojTelefonaVlasnika = textBoxBrTelefona.Text;
+                    
+                    comboBoxVlasnistvo.SelectedItem = "Nezavisno vozilo";
+                    comboBoxVlasnistvo.Enabled = false;
 
-                    if (comboBoxTipVozila.SelectedItem.ToString() == "Putnicko")
+                if (comboBoxTipVozila.SelectedItem.ToString() == "Putnicko")
                     {
                         vozilo.PutnickaF = "Da";
                         vozilo.TeretnaF = "Ne";
@@ -279,7 +283,7 @@ namespace ProdajaMotornihVozila.Forme.VozilaForme
                     }
 
                 if (this.rezimIzmene)
-                   // DTOManager.azuriraj(vozilo);
+                    DTOManager.azurirajNezavisnoVozilo(vozilo);
                     
 
                 if(!this.rezimIzmene)
@@ -336,7 +340,11 @@ namespace ProdajaMotornihVozila.Forme.VozilaForme
                     vozilo.BrojSasije = textBoxBrSasije.Text;
 
 
-                    if (cbUvezeno.Checked)
+
+                    comboBoxVlasnistvo.SelectedItem = "Vozilo kompanije";
+                    comboBoxVlasnistvo.Enabled = false;
+
+                if (cbUvezeno.Checked)
                     {
                         vozilo.UvezenoF = "Da";
                         vozilo.DatumUvoza = dateTimePicker1.Value;
@@ -389,8 +397,8 @@ namespace ProdajaMotornihVozila.Forme.VozilaForme
 
 
                 if (this.rezimIzmene)
-                    return;
-                    // DTOManager.azurirajNezavisnoVozilo(vozilo);
+                    DTOManager.azurirajVoziloKompanije(vozilo);
+
 
                 if (!this.rezimIzmene)
                     DTOManager.dodajVoziloKompanije(vozilo);
