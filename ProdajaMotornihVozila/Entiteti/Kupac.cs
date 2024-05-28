@@ -12,7 +12,7 @@ namespace ProdajaMotornihVozila.Entiteti
         public virtual required string  Ime { get;  set; }
         public virtual required string Prezime { get; set; }
         public virtual required string BrojTelefona { get; set; }
-        public virtual required string TipKupca { get; set; }
+        public virtual string? TipKupca { get; set; }
 
     }
 

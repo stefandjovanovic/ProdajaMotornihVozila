@@ -508,12 +508,12 @@ namespace ProdajaMotornihVozila
 
     public class ProdajaBasic
     {
-        public int Id { get; set; }
-        public string BrojSasije { get; set; }
-        public int IdKupca { get; set; }
-        public int IdMestaProdaje { get; set; }
-        public string MBRIzvrsioca { get; set; }
-        public string TipKupca { get; set; }
+        public int? Id { get; set; }
+        public string? BrojSasije { get; set; }
+        public int? IdKupca { get; set; }
+        public int? IdMestaProdaje { get; set; }
+        public string? MBRProdavca { get; set; }
+        public string? TipKupca { get; set; }
 
         public ProdajaBasic(int id, string brojSasije, int idKupca, int idMestaProdaje, string mBRIzvrsioca, string tipKupca)
         {
@@ -521,7 +521,7 @@ namespace ProdajaMotornihVozila
             BrojSasije = brojSasije;
             IdKupca = idKupca;
             IdMestaProdaje = idMestaProdaje;
-            MBRIzvrsioca = mBRIzvrsioca;
+            MBRProdavca = mBRIzvrsioca;
             TipKupca = tipKupca;
         }
         public ProdajaBasic()
@@ -531,15 +531,26 @@ namespace ProdajaMotornihVozila
     }
     public class ProdajaView : ProdajaBasic
     {
-        public string Ime { get; set; }
-        public string Prezime { get; set; }
+        public string ImeKupca { get; set; }
+        public string PrezimeKupca { get; set; }
         public string BrojTelefona { get; set; }
+        public string AdresaSalona { get; set; }
+        public string GradSalona { get; set; }
+        public string ImeProdavca { get; set; }
+        public string PrezimeProdavca { get; set; }
+        public string ModelVozila { get; set; }
 
-        public ProdajaView(int id, string brojSasije, int idKupca, int idMestaProdaje, string mBRIzvrsioca, string tipKupca, string ime, string prezime, string brTel):base(id, brojSasije, idKupca, idMestaProdaje, mBRIzvrsioca, tipKupca)
+        public ProdajaView(int id, string brojSasije, int idKupca, int idMestaProdaje, string mBRIzvrsioca, string tipKupca, string ime, string prezime, string brTel, string adresaSalona, string gradSalona, string imeProdavca, string prezimeProdavca, string modelVozila)
+            : base(id, brojSasije, idKupca, idMestaProdaje, mBRIzvrsioca, tipKupca)
         {
-            Ime = ime;
-            Prezime = prezime;
+            ImeKupca = ime;
+            PrezimeKupca = prezime;
             BrojTelefona = brTel;
+            AdresaSalona = adresaSalona;
+            GradSalona = gradSalona;
+            ImeProdavca = imeProdavca;
+            PrezimeProdavca = prezimeProdavca;
+            ModelVozila = modelVozila;
         }
         public ProdajaView()
         {
@@ -547,32 +558,42 @@ namespace ProdajaMotornihVozila
         }
         
     }
-    public class PravnoLiceBasic : ProdajaView
+    public class KupacBasic
     {
-        public string Pib { get; set; }
-        public PravnoLiceBasic(int id, string brojSasije, int idKupca, int idMestaProdaje, string mBRIzvrsioca,string tipKupca, string ime, string prezime, string brTel, string pib) : base(id, brojSasije, idKupca, idMestaProdaje, mBRIzvrsioca, tipKupca, ime, prezime, brTel)
+        public int Id { get; set; } //stavi na -1 ako se kreira novi
+        public string Ime { get; set; }
+        public string Prezime { get; set; }
+        public string BrojTelefona { get; set; }
+        public string TipKupca { get; set; } //Pravno ili Fizicko
+        public string? Pib { get; set; }
+        public string? MaticniBroj { get; set; }
+
+        public KupacBasic(int id, string ime, string prezime, string brojTelefona, string tipKupca, string? pib, string? maticniBroj)
         {
+            Id = id;
+            Ime = ime;
+            Prezime = prezime;
+            BrojTelefona = brojTelefona;
+            TipKupca = tipKupca;
             Pib = pib;
+            MaticniBroj = maticniBroj;
         }
-        public PravnoLiceBasic()
+        public KupacBasic()
         {
 
         }
-
     }
-
-    public class FizickoLiceBasic : ProdajaView
+    public class ProdajaCreate : ProdajaBasic
     {
-        public string Mbr { get; set; }
-        public FizickoLiceBasic(int id, string brojSasije, int idKupca, int idMestaProdaje, string mBRIzvrsioca, string tipKupca, string ime, string prezime, string brTel, string mbr) : base(id, brojSasije, idKupca, idMestaProdaje, mBRIzvrsioca, tipKupca,ime, prezime, brTel)
+        public KupacBasic Kupac { get; set; }
+        public ProdajaCreate(int id, string brojSasije, int idKupca, int idMestaProdaje, string mBRIzvrsioca, string tipKupca, KupacBasic kupac)
+            : base(id, brojSasije, idKupca, idMestaProdaje, mBRIzvrsioca, tipKupca)
         {
-            Mbr = mbr;
-        }
-        public FizickoLiceBasic()
-        {
-
+            Kupac = kupac;
         }
     }
+
+    
 
     #endregion
 }

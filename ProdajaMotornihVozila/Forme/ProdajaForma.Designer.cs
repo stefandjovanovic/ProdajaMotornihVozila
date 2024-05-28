@@ -68,7 +68,7 @@
             // 
             // columnHeader3
             // 
-            columnHeader3.Text = "Mesto prodaje";
+            columnHeader3.Text = "ID salona prodaje";
             columnHeader3.Width = 120;
             // 
             // columnHeader4

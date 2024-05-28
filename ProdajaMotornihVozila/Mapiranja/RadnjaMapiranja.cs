@@ -14,14 +14,16 @@ namespace ProdajaMotornihVozila.Mapiranja
         {
             Table("RADNJA");
 
+            DiscriminateSubClassesOnColumn("").Formula("CASE WHEN (OVLASCENI_SERVIS_F = 'Da' AND SALON_F = 'Ne' ) THEN 'Servis' " +
+              "WHEN (OVLASCENI_SERVIS_F = 'Ne' AND SALON_F = 'Da' ) THEN 'Salon' " +
+              "WHEN (OVLASCENI_SERVIS_F = 'Da' AND SALON_F = 'Da' ) THEN 'ServisSalon' " +
+              "ELSE 'Nepoznato' " +
+              "END");
+
             Id(x => x.Id, "ID").GeneratedBy.TriggerIdentity();
 
-            DiscriminateSubClassesOnColumn("").Formula("CASE WHEN (OVLASCENI_SERVIS_F = 'Da' AND SALON_F = 'Ne' ) THEN 'Servis' " +
-                "WHEN (OVLASCENI_SERVIS_F = 'Ne' AND SALON_F = 'Da' ) THEN 'Salon' " +
-                "WHEN (OVLASCENI_SERVIS_F = 'Da' AND SALON_F = 'Da' ) THEN 'ServisSalon' " +
-                "ELSE 'Nepoznato' " +
-                "END");
-
+            //Map(x => x.SalonF, "SALON_F");
+            //Map(x => x.ServisF, "OVLASCENI_SERVIS_F");
 
             References(x => x.PripadaPredstavnistvu).Column("ID_PREDSTAVNISTVA").LazyLoad();
             References(x => x.SefRadnje).Column("MATICNI_BROJ_SEFA").LazyLoad();
@@ -59,6 +61,7 @@ namespace ProdajaMotornihVozila.Mapiranja
             DiscriminatorValue("Salon");
 
             HasMany(x => x.ProdataVozila).KeyColumn("ID_MESTA_PRODAJE").Cascade.All().Inverse();
+            HasMany(x => x.IzlozenaVozila).KeyColumn("ID_SALONA").Cascade.All().Inverse();
         }
     }
 
