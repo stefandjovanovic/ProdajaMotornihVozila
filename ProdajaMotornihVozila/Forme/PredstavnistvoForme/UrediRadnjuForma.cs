@@ -106,6 +106,10 @@ namespace ProdajaMotornihVozila.Forme.PredstavnistvoForme
                     {
                     }
 
+                }else
+                {
+                    comboBoxStepenOpr.Enabled = false;
+                    textBoxServisVisegRanga.Enabled = false;
                 }
             }
 
@@ -219,8 +223,8 @@ namespace ProdajaMotornihVozila.Forme.PredstavnistvoForme
                 checkBoxVulkanizerske.Enabled = false;
                 checkBoxFarbarske.Enabled = false;
 
-                comboBoxStepenOpr.Enabled = true;
-                textBoxServisVisegRanga.Enabled = true;
+                comboBoxStepenOpr.Enabled = false;
+                textBoxServisVisegRanga.Enabled = false;
 
                 this.tipRadnje = tipRadnje.SALON;
             }

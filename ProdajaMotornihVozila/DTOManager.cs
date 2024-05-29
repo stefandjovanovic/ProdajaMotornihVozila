@@ -982,10 +982,9 @@ namespace ProdajaMotornihVozila
                 ISession session = DataLayer.GetSession();
                 if (session != null)
                 {
-                    int idRadnje = session.Query<Radnja>().FirstOrDefault(r => r.PripadaPredstavnistvu.Id == idPredstavnistva).Id;
+                    Radnja radnja = session.Query<Radnja>().FirstOrDefault(r => r.PripadaPredstavnistvu.Id == idPredstavnistva);
 
-                    Radnja s = session.Load<OvlasceniServis>(idRadnje);
-                    session.Delete(s);
+                    session.Delete(radnja);
                     session.Flush();
                     session.Close();
 

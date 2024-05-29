@@ -22,8 +22,8 @@ namespace ProdajaMotornihVozila.Mapiranja
 
             Id(x => x.Id, "ID").GeneratedBy.TriggerIdentity();
 
-            //Map(x => x.SalonF, "SALON_F");
-            //Map(x => x.ServisF, "OVLASCENI_SERVIS_F");
+            Map(x => x.SalonF, "SALON_F");
+            Map(x => x.ServisF, "OVLASCENI_SERVIS_F");
 
             HasMany(x => x.ProdataVozila).KeyColumn("ID_MESTA_PRODAJE").Cascade.All().Inverse();
 

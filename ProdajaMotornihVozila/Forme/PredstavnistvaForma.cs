@@ -144,6 +144,7 @@ namespace ProdajaMotornihVozila.Forme
                 try
                 {
                     DTOManager.ObrisiRadnjuUPredstavnistvu(id);
+                    MessageBox.Show("Uspesno obrisana radnja");
                 }
                 catch (Exception ex)
                 {
