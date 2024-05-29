@@ -100,7 +100,7 @@ namespace ProdajaMotornihVozila.Forme
             }
 
             string brojSasije = listaVozila.SelectedItems[0].SubItems[0].Text;
-            
+            string vlasnistvo = listaVozila.SelectedItems[0].SubItems[6].Text;
 
             StringBuilder sb = new StringBuilder();
 
@@ -113,7 +113,7 @@ namespace ProdajaMotornihVozila.Forme
                 sb.Append("Tip goriva: " + vw.TipGoriva + "\n");
                 sb.Append("Kubikaza: " + vw.Kubikaza + "\n");
                 sb.Append("Broj motora: " + vw.BrojMotora + "\n");
-                sb.Append("Vlasnistvo vozila: " + vw.VlasnistvoVozila + "\n");
+                sb.Append("Vlasnistvo vozila: " + vlasnistvo + "\n");
                 if (vw.PutnickaF == "Da")
                     sb.Append("Broj Putnika: " + vw.BrojPutnika + "\n");
                 else
