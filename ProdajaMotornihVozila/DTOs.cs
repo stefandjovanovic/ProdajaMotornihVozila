@@ -540,7 +540,11 @@ namespace ProdajaMotornihVozila
         public string PrezimeProdavca { get; set; }
         public string ModelVozila { get; set; }
 
-        public ProdajaView(int id, string brojSasije, int idKupca, int idMestaProdaje, string mBRIzvrsioca, string tipKupca, string ime, string prezime, string brTel, string adresaSalona, string gradSalona, string imeProdavca, string prezimeProdavca, string modelVozila)
+        public string Pib { get; set; }
+
+        public string MBRKupca { get; set; }
+
+        public ProdajaView(int id, string brojSasije, int idKupca, int idMestaProdaje, string mBRIzvrsioca, string tipKupca, string ime, string prezime, string brTel, string adresaSalona, string gradSalona, string imeProdavca, string prezimeProdavca, string modelVozila, string pib, string mbrkupca)
             : base(id, brojSasije, idKupca, idMestaProdaje, mBRIzvrsioca, tipKupca)
         {
             ImeKupca = ime;
@@ -551,6 +555,8 @@ namespace ProdajaMotornihVozila
             ImeProdavca = imeProdavca;
             PrezimeProdavca = prezimeProdavca;
             ModelVozila = modelVozila;
+            Pib = pib;
+            MBRKupca = mbrkupca;
         }
         public ProdajaView()
         {
@@ -590,6 +596,11 @@ namespace ProdajaMotornihVozila
             : base(id, brojSasije, idKupca, idMestaProdaje, mBRIzvrsioca, tipKupca)
         {
             Kupac = kupac;
+        }
+
+        public ProdajaCreate()
+        {
+
         }
     }
 

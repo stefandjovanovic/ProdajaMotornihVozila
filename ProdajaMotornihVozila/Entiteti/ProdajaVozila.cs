@@ -10,7 +10,7 @@ namespace ProdajaMotornihVozila.Entiteti
     {
         public virtual int Id { get; protected set; }
 
-        public virtual Salon? MestoProdaje { get; set; }
+        public virtual Radnja? MestoProdaje { get; set; }
         public virtual Zaposleni? IzvrsioProdaju { get; set; }
         public virtual Kupac? KupacVozila { get; set; }
         public virtual VoziloKompanije? ProdatoVozilo {  get; set; }

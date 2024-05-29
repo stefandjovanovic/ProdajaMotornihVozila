@@ -1799,7 +1799,7 @@ namespace ProdajaMotornihVozila
                     VoziloKompanije vozilo = session.Load<VoziloKompanije>(prodaja.BrojSasije);
                     Zaposleni zaposleni = session.Load<Zaposleni>(prodaja.MBRProdavca);
                     Kupac kupac;
-                    if(prodaja.Kupac.TipKupca == "Fizicko")
+                    if(prodaja.Kupac.TipKupca == "Fizicko lice")
                     {
                         kupac = new FizickoLice
                         {
@@ -1809,7 +1809,7 @@ namespace ProdajaMotornihVozila
                             BrojTelefona = prodaja.Kupac.BrojTelefona
                         };
                     }
-                    else if(prodaja.Kupac.TipKupca == "Pravno")
+                    else if(prodaja.Kupac.TipKupca == "Pravno lice")
                     {
                         kupac = new PravnoLice
                         {
@@ -1831,6 +1831,7 @@ namespace ProdajaMotornihVozila
                         MestoProdaje = radnja,
                     };
 
+                    session.Save(kupac);
                     session.Save(novaProdaja);
                     session.Flush();
                     session.Close();
@@ -1895,14 +1896,28 @@ namespace ProdajaMotornihVozila
 
                 ProdajaVozila p = session.Load<ProdajaVozila>(id);
 
+
+               
+                string maticniBroj = null;
+                string PIB = null;
+
+
                 string tipKupca;
-                if (p.KupacVozila.GetType() == typeof(FizickoLice))
+
+                Type type = NHibernateUtil.GetClass(p.KupacVozila);
+                if (type == typeof(FizickoLice))
                 {
+
                     tipKupca = "Fizicko";
+                    FizickoLice pa = session.Load<FizickoLice>(p.KupacVozila.Id);
+                    maticniBroj  = pa.MaticniBroj;
+
                 }
                 else
                 {
                     tipKupca = "Pravno";
+                    PravnoLice pa = session.Load<PravnoLice>(p.KupacVozila.Id);
+                    PIB = pa.Pib;
                 }
 
                 prodaja.ImeKupca = p.KupacVozila.Ime;
@@ -1919,6 +1934,8 @@ namespace ProdajaMotornihVozila
                 prodaja.IdKupca = p.KupacVozila.Id;
                 prodaja.IdMestaProdaje = p.MestoProdaje.Id;
                 prodaja.MBRProdavca = p.IzvrsioProdaju.MaticniBroj;
+                prodaja.Pib = PIB;
+                prodaja.MBRKupca = maticniBroj;
                 prodaja.TipKupca = tipKupca;
 
                 session.Close();
@@ -1939,40 +1956,42 @@ namespace ProdajaMotornihVozila
                 if (session != null)
                 {
                     ProdajaVozila p = session.Load<ProdajaVozila>(prodaja.Id);
-                    Salon radnja = session.Load<Salon>(prodaja.IdMestaProdaje);
+                    Radnja radnja = session.Load<Radnja>(prodaja.IdMestaProdaje);
                     VoziloKompanije vozilo = session.Load<VoziloKompanije>(prodaja.BrojSasije);
                     Zaposleni zaposleni = session.Load<Zaposleni>(prodaja.MBRProdavca);
-                    Kupac kupac;
-                    if (prodaja.Kupac.TipKupca == "Fizicko")
+                    Type type = NHibernateUtil.GetClass(p.KupacVozila);
+
+                    if (type == typeof(FizickoLice))
                     {
-                        kupac = new FizickoLice
-                        {
-                            MaticniBroj = prodaja.Kupac.MaticniBroj,
-                            Ime = prodaja.Kupac.Ime,
-                            Prezime = prodaja.Kupac.Prezime,
-                            BrojTelefona = prodaja.Kupac.BrojTelefona
-                        };
-                    }
-                    else if (prodaja.Kupac.TipKupca == "Pravno")
-                    {
-                        kupac = new PravnoLice
-                        {
-                            Pib = prodaja.Kupac.Pib,
-                            Ime = prodaja.Kupac.Ime,
-                            Prezime = prodaja.Kupac.Prezime,
-                            BrojTelefona = prodaja.Kupac.BrojTelefona
-                        };
-                    }
-                    else
-                    {
-                        kupac = null;
+
+
+                        FizickoLice pa = session.Load<FizickoLice>(p.KupacVozila.Id);
+                        pa.Ime = prodaja.Kupac.Ime;
+                        pa.Prezime = prodaja.Kupac.Prezime;
+                        pa.BrojTelefona = prodaja.Kupac.BrojTelefona;
+                        pa.MaticniBroj = prodaja.Kupac.MaticniBroj;
+                        p.KupacVozila = pa;
+
                     }
 
+                    else
+                    {
+                        PravnoLice pa = session.Load<PravnoLice>(p.KupacVozila.Id);
+                        pa.Ime = prodaja.Kupac.Ime;
+                        pa.Prezime = prodaja.Kupac.Prezime;
+                        pa.BrojTelefona = prodaja.Kupac.BrojTelefona;
+                        pa.Pib = prodaja.Kupac.Pib;
+                        p.KupacVozila = pa;
+                    }
+                
+                    
+
                     p.ProdatoVozilo = vozilo;
-                    p.KupacVozila = kupac;
+                   
                     p.IzvrsioProdaju = zaposleni;
                     p.MestoProdaje = radnja;
 
+                    
                     session.SaveOrUpdate(p);
                     session.Flush();
                     session.Close();

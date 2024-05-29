@@ -48,12 +48,14 @@
             listaObavljenihServisa.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2, columnHeader3, columnHeader4 });
             listaObavljenihServisa.FullRowSelect = true;
             listaObavljenihServisa.GridLines = true;
-            listaObavljenihServisa.Location = new Point(6, 26);
+            listaObavljenihServisa.Location = new Point(5, 20);
+            listaObavljenihServisa.Margin = new Padding(3, 2, 3, 2);
             listaObavljenihServisa.Name = "listaObavljenihServisa";
-            listaObavljenihServisa.Size = new Size(572, 447);
+            listaObavljenihServisa.Size = new Size(501, 336);
             listaObavljenihServisa.TabIndex = 0;
             listaObavljenihServisa.UseCompatibleStateImageBehavior = false;
             listaObavljenihServisa.View = View.Details;
+            listaObavljenihServisa.SelectedIndexChanged += listaObavljenihServisa_SelectedIndexChanged;
             // 
             // columnHeader1
             // 
@@ -78,9 +80,11 @@
             // groupBox1
             // 
             groupBox1.Controls.Add(listaObavljenihServisa);
-            groupBox1.Location = new Point(31, 12);
+            groupBox1.Location = new Point(27, 9);
+            groupBox1.Margin = new Padding(3, 2, 3, 2);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(584, 479);
+            groupBox1.Padding = new Padding(3, 2, 3, 2);
+            groupBox1.Size = new Size(511, 359);
             groupBox1.TabIndex = 1;
             groupBox1.TabStop = false;
             groupBox1.Text = "Lista obavljenih servisa";
@@ -91,18 +95,21 @@
             groupBox2.Controls.Add(btnIzmeni);
             groupBox2.Controls.Add(btnDodaj);
             groupBox2.Controls.Add(btnInfo);
-            groupBox2.Location = new Point(638, 12);
+            groupBox2.Location = new Point(558, 9);
+            groupBox2.Margin = new Padding(3, 2, 3, 2);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(281, 311);
+            groupBox2.Padding = new Padding(3, 2, 3, 2);
+            groupBox2.Size = new Size(246, 233);
             groupBox2.TabIndex = 2;
             groupBox2.TabStop = false;
             groupBox2.Text = "Informacije o obavljenom servisu";
             // 
             // btnObrisi
             // 
-            btnObrisi.Location = new Point(49, 236);
+            btnObrisi.Location = new Point(43, 177);
+            btnObrisi.Margin = new Padding(3, 2, 3, 2);
             btnObrisi.Name = "btnObrisi";
-            btnObrisi.Size = new Size(182, 46);
+            btnObrisi.Size = new Size(159, 34);
             btnObrisi.TabIndex = 3;
             btnObrisi.Text = "Obrisi";
             btnObrisi.UseVisualStyleBackColor = true;
@@ -110,9 +117,10 @@
             // 
             // btnIzmeni
             // 
-            btnIzmeni.Location = new Point(49, 165);
+            btnIzmeni.Location = new Point(43, 124);
+            btnIzmeni.Margin = new Padding(3, 2, 3, 2);
             btnIzmeni.Name = "btnIzmeni";
-            btnIzmeni.Size = new Size(182, 46);
+            btnIzmeni.Size = new Size(159, 34);
             btnIzmeni.TabIndex = 2;
             btnIzmeni.Text = "Izmeni";
             btnIzmeni.UseVisualStyleBackColor = true;
@@ -120,9 +128,10 @@
             // 
             // btnDodaj
             // 
-            btnDodaj.Location = new Point(49, 99);
+            btnDodaj.Location = new Point(43, 74);
+            btnDodaj.Margin = new Padding(3, 2, 3, 2);
             btnDodaj.Name = "btnDodaj";
-            btnDodaj.Size = new Size(182, 44);
+            btnDodaj.Size = new Size(159, 33);
             btnDodaj.TabIndex = 1;
             btnDodaj.Text = "Obavi novi servis";
             btnDodaj.UseVisualStyleBackColor = true;
@@ -130,9 +139,10 @@
             // 
             // btnInfo
             // 
-            btnInfo.Location = new Point(49, 35);
+            btnInfo.Location = new Point(43, 26);
+            btnInfo.Margin = new Padding(3, 2, 3, 2);
             btnInfo.Name = "btnInfo";
-            btnInfo.Size = new Size(182, 44);
+            btnInfo.Size = new Size(159, 33);
             btnInfo.TabIndex = 0;
             btnInfo.Text = "Informacije";
             btnInfo.UseVisualStyleBackColor = true;
@@ -140,11 +150,12 @@
             // 
             // ServisForma
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(953, 519);
+            ClientSize = new Size(834, 389);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
+            Margin = new Padding(3, 2, 3, 2);
             Name = "ServisForma";
             Text = "ServisForma";
             Load += ServisForma_Load;

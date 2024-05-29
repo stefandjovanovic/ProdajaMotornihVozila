@@ -198,6 +198,7 @@
             comboBoxTipKupca.Name = "comboBoxTipKupca";
             comboBoxTipKupca.Size = new Size(148, 23);
             comboBoxTipKupca.TabIndex = 6;
+            comboBoxTipKupca.SelectedIndexChanged += comboBoxTipKupca_SelectedIndexChanged;
             // 
             // label6
             // 
@@ -295,6 +296,7 @@
             Margin = new Padding(3, 2, 3, 2);
             Name = "DodajProdajuForma";
             Text = "DodajProdajuForma";
+            Load += DodajProdajuForma_Load;
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             groupBox2.ResumeLayout(false);

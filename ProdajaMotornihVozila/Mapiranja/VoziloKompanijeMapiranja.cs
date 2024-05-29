@@ -17,9 +17,6 @@ namespace ProdajaMotornihVozila.Mapiranja
 
             KeyColumn("BROJ_SASIJE");
 
-            DiscriminatorValue("Ne");
-
-
 
             Map(x => x.UvezenoF, "UVEZENO_F");
 

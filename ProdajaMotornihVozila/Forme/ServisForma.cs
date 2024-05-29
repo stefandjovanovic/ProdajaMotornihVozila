@@ -112,5 +112,10 @@ namespace ProdajaMotornihVozila.Forme
             forma.ShowDialog();
             popuniPodacima();
         }
+
+        private void listaObavljenihServisa_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

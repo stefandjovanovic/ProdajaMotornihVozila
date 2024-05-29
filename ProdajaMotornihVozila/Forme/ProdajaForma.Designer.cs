@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             listView1 = new ListView();
+            columnHeader5 = new ColumnHeader();
             columnHeader1 = new ColumnHeader();
             columnHeader2 = new ColumnHeader();
             columnHeader3 = new ColumnHeader();
@@ -45,7 +46,7 @@
             // 
             // listView1
             // 
-            listView1.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2, columnHeader3, columnHeader4 });
+            listView1.Columns.AddRange(new ColumnHeader[] { columnHeader5, columnHeader1, columnHeader2, columnHeader3, columnHeader4 });
             listView1.FullRowSelect = true;
             listView1.GridLines = true;
             listView1.Location = new Point(5, 20);
@@ -56,25 +57,29 @@
             listView1.UseCompatibleStateImageBehavior = false;
             listView1.View = View.Details;
             // 
+            // columnHeader5
+            // 
+            columnHeader5.Text = "Id";
+            columnHeader5.Width = 50;
+            // 
             // columnHeader1
             // 
             columnHeader1.Text = "JMBG zaposlenog";
-            columnHeader1.Width = 140;
+            columnHeader1.Width = 120;
             // 
             // columnHeader2
             // 
             columnHeader2.Text = "Broj sasije";
-            columnHeader2.Width = 120;
+            columnHeader2.Width = 100;
             // 
             // columnHeader3
             // 
-            columnHeader3.Text = "ID salona prodaje";
-            columnHeader3.Width = 120;
+            columnHeader3.Text = "ID salona";
+            columnHeader3.Width = 80;
             // 
             // columnHeader4
             // 
             columnHeader4.Text = "ID Kupca";
-            columnHeader4.Width = 80;
             // 
             // groupBox1
             // 
@@ -125,6 +130,7 @@
             btnIzmeni.TabIndex = 2;
             btnIzmeni.Text = "Izmeni";
             btnIzmeni.UseVisualStyleBackColor = true;
+            btnIzmeni.Click += btnIzmeni_Click;
             // 
             // btnDodaj
             // 
@@ -146,6 +152,7 @@
             btnInfo.TabIndex = 0;
             btnInfo.Text = "Informacije";
             btnInfo.UseVisualStyleBackColor = true;
+            btnInfo.Click += btnInfo_Click;
             // 
             // ProdajaForma
             // 
@@ -176,5 +183,6 @@
         private Button btnInfo;
         private Button btnObrisi;
         private Button btnIzmeni;
+        private ColumnHeader columnHeader5;
     }
 }

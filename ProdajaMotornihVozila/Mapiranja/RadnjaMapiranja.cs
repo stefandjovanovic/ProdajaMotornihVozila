@@ -25,6 +25,8 @@ namespace ProdajaMotornihVozila.Mapiranja
             //Map(x => x.SalonF, "SALON_F");
             //Map(x => x.ServisF, "OVLASCENI_SERVIS_F");
 
+            HasMany(x => x.ProdataVozila).KeyColumn("ID_MESTA_PRODAJE").Cascade.All().Inverse();
+
             References(x => x.PripadaPredstavnistvu).Column("ID_PREDSTAVNISTVA").LazyLoad();
             References(x => x.SefRadnje).Column("MATICNI_BROJ_SEFA").LazyLoad();
 
@@ -60,7 +62,7 @@ namespace ProdajaMotornihVozila.Mapiranja
         {
             DiscriminatorValue("Salon");
 
-            HasMany(x => x.ProdataVozila).KeyColumn("ID_MESTA_PRODAJE").Cascade.All().Inverse();
+           
             HasMany(x => x.IzlozenaVozila).KeyColumn("ID_SALONA").Cascade.All().Inverse();
         }
     }
@@ -77,6 +79,7 @@ namespace ProdajaMotornihVozila.Mapiranja
             Map(x => x.Vulkanizerske, "VULKANICARSKE");
             Map(x => x.Mehanicarske, "MEHANICARSKE");
 
+            
             References(x => x.ServisVisegRanga).Column("ID_SERVISA_VISEG_RANGA").LazyLoad();
             HasMany(x => x.ServisiNizegRanga).KeyColumn("ID_SERVISA_VISEG_RANGA").Cascade.All().Inverse();
         }
