@@ -86,16 +86,24 @@ namespace ProdajaMotornihVozila.Forme
             ObavljeniServisBasic obavljeniServis = listaObavljenihServisa.SelectedItems[0].Tag as ObavljeniServisBasic;
             int id = obavljeniServis.Id;
 
-            try
+            string poruka = "Da li zelite da obrisete informacije o servisu?";
+            string title = "Pitanje";
+            MessageBoxButtons buttons = MessageBoxButtons.OKCancel;
+            DialogResult result = MessageBox.Show(poruka, title, buttons);
+            if(result == DialogResult.OK)
             {
-                DTOManager.obrisiObavljeniServis(id);
-                popuniPodacima();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                return;
-            }
+                try
+                {
+                    DTOManager.obrisiObavljeniServis(id);
+                    MessageBox.Show("Informacije o servisu su uspesno obrisane.");
+                    popuniPodacima();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    return;
+                }
+            }    
         }
 
         private void btnIzmeni_Click(object sender, EventArgs e)

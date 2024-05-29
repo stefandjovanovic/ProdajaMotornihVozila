@@ -36,7 +36,7 @@ namespace ProdajaMotornihVozila.Forme.ProdajaForme
 
         private void btnDodaj_Click(object sender, EventArgs e)
         {
-            if(textBoxJMBGZaposlenog.Text == "" || textBoxBrSasije.Text == "" || textBoxIDSalona.Text == "" || textBoxImeKupca.Text == "" || textBoxPrezimeKupca.Text == "" || textBoxBrTelefona.Text == "" || comboBoxTipKupca.Text == "")
+            if (textBoxJMBGZaposlenog.Text == "" || textBoxBrSasije.Text == "" || textBoxIDSalona.Text == "" || textBoxImeKupca.Text == "" || textBoxPrezimeKupca.Text == "" || textBoxBrTelefona.Text == "" || comboBoxTipKupca.Text == "")
             {
                 MessageBox.Show("Niste uneli sve podatke!");
                 return;
@@ -59,31 +59,31 @@ namespace ProdajaMotornihVozila.Forme.ProdajaForme
                 }
             }
 
-            
-                KupacBasic kupacBasic = new KupacBasic
-                {
-                    Id = idKupca,
-                    Ime = textBoxImeKupca.Text,
-                    Prezime = textBoxPrezimeKupca.Text,
-                    BrojTelefona = textBoxBrTelefona.Text,
-                    TipKupca = comboBoxTipKupca.Text,
-                    Pib = textBoxPIB.Text,
-                    MaticniBroj = textBoxJMBGKupca.Text
-                };
-                ProdajaCreate prodajaCreate = new ProdajaCreate
-                {
-                    Id = this.id,
-                    BrojSasije = textBoxBrSasije.Text,
-                    IdKupca = idKupca,
-                    IdMestaProdaje = int.Parse(textBoxIDSalona.Text),
-                    MBRProdavca = textBoxJMBGZaposlenog.Text,
-                    TipKupca = comboBoxTipKupca.Text,
-                    Kupac = kupacBasic
-                };
+
+            KupacBasic kupacBasic = new KupacBasic
+            {
+                Id = idKupca,
+                Ime = textBoxImeKupca.Text,
+                Prezime = textBoxPrezimeKupca.Text,
+                BrojTelefona = textBoxBrTelefona.Text,
+                TipKupca = comboBoxTipKupca.Text,
+                Pib = textBoxPIB.Text,
+                MaticniBroj = textBoxJMBGKupca.Text
+            };
+            ProdajaCreate prodajaCreate = new ProdajaCreate
+            {
+                Id = this.id,
+                BrojSasije = textBoxBrSasije.Text,
+                IdKupca = idKupca,
+                IdMestaProdaje = int.Parse(textBoxIDSalona.Text),
+                MBRProdavca = textBoxJMBGZaposlenog.Text,
+                TipKupca = comboBoxTipKupca.Text,
+                Kupac = kupacBasic
+            };
 
             if (this.rezimIzmene)
             {
-                
+
                 DTOManager.AzurirajProdaju(prodajaCreate);
             }
             else
@@ -112,7 +112,7 @@ namespace ProdajaMotornihVozila.Forme.ProdajaForme
 
                 if (p.TipKupca == "Pravno")
                 {
-                    
+
                     textBoxPIB.Text = p.Pib;
                     textBoxJMBGKupca.Text = "";
                     textBoxPIB.Enabled = true;
@@ -120,7 +120,7 @@ namespace ProdajaMotornihVozila.Forme.ProdajaForme
                 }
                 else
                 {
-                    
+
                     textBoxJMBGKupca.Text = p.MBRKupca;
                     textBoxJMBGKupca.Enabled = true;
                     textBoxPIB.Text = "";
@@ -136,16 +136,21 @@ namespace ProdajaMotornihVozila.Forme.ProdajaForme
 
         private void comboBoxTipKupca_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(comboBoxTipKupca.Text == "Pravno")
+            if (comboBoxTipKupca.Text == "Pravno lice")
             {
                 textBoxPIB.Enabled = true;
                 textBoxJMBGKupca.Enabled = false;
             }
-            else
+            else if(comboBoxTipKupca.Text == "Fizicko lice")
             {
                 textBoxPIB.Enabled = false;
                 textBoxJMBGKupca.Enabled = true;
             }
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

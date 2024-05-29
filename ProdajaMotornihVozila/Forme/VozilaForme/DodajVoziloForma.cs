@@ -252,6 +252,7 @@ namespace ProdajaMotornihVozila.Forme.VozilaForme
                     vozilo.Model = textBoxModel.Text;
                     vozilo.Boja = textBoxBoja.Text;
                     vozilo.BrojMotora = textBoxBrMotora.Text;
+                    vozilo.BrojPutnika = int.Parse(textBoxBrPutnika.Text);
                     vozilo.Kubikaza = (int)numericUpDownKubikaza.Value;
                     vozilo.TipGoriva = comboBoxTipGoriva.SelectedItem.ToString();
                     vozilo.BrojSasije = textBoxBrSasije.Text;
