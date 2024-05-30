@@ -53,7 +53,7 @@
             listaVozila.GridLines = true;
             listaVozila.Location = new Point(5, 27);
             listaVozila.Name = "listaVozila";
-            listaVozila.Size = new Size(654, 195);
+            listaVozila.Size = new Size(814, 195);
             listaVozila.TabIndex = 0;
             listaVozila.UseCompatibleStateImageBehavior = false;
             listaVozila.View = View.Details;
@@ -98,7 +98,7 @@
             groupBox1.Controls.Add(listaVozila);
             groupBox1.Location = new Point(63, 35);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(666, 228);
+            groupBox1.Size = new Size(825, 228);
             groupBox1.TabIndex = 1;
             groupBox1.TabStop = false;
             groupBox1.Text = "Lista vozila";
@@ -109,7 +109,7 @@
             groupBox2.Controls.Add(btnInfo);
             groupBox2.Controls.Add(btnIzmeni);
             groupBox2.Controls.Add(btnDodaj);
-            groupBox2.Location = new Point(69, 284);
+            groupBox2.Location = new Point(120, 305);
             groupBox2.Name = "groupBox2";
             groupBox2.Size = new Size(661, 276);
             groupBox2.TabIndex = 2;
@@ -160,7 +160,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(789, 623);
+            ClientSize = new Size(971, 623);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
             Name = "VozilaForma";

@@ -42,7 +42,7 @@ namespace ProdajaMotornihVozila.Forme.ProdajaForme
                 return;
             }
 
-            if (comboBoxTipKupca.Text == "Pravno")
+            if (comboBoxTipKupca.Text == "Pravno lice")
             {
                 if (textBoxPIB.Text == "")
                 {
