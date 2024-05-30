@@ -81,14 +81,24 @@ namespace ProdajaMotornihVozila.Forme.ZaposleniForme
                     comboBoxSertifikat.SelectedItem!.ToString() == "Da" ? dateTimePickerSertifikata.Value : null
                     );
 
-                if(this.rezimIzmene)
+                try
                 {
-                    DTOManager.azurirajEkonomskeStruke(ekonmske);
+                    if (this.rezimIzmene)
+                    {
+                        DTOManager.azurirajEkonomskeStruke(ekonmske);
+                    }
+                    else
+                    {
+                        DTOManager.dodajEkonomskeStruke(ekonmske);
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    DTOManager.dodajEkonomskeStruke(ekonmske);
+                    MessageBox.Show(ex.Message);
+                    return;
                 }
+
+                
 
 
             }
@@ -117,14 +127,24 @@ namespace ProdajaMotornihVozila.Forme.ZaposleniForme
                     dateTimePickerDiplome.Value
                     );
 
-                if(this.rezimIzmene)
+                try
                 {
-                    DTOManager.azurirajTehnickeStuke(tehnicke);
+                    if (this.rezimIzmene)
+                    {
+                        DTOManager.azurirajTehnickeStuke(tehnicke);
+                    }
+                    else
+                    {
+                        DTOManager.dodajTehnickeStruke(tehnicke);
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    DTOManager.dodajTehnickeStruke(tehnicke);
+                    MessageBox.Show(ex.Message);
+                    return;
                 }
+
+                
 
 
 
@@ -144,14 +164,24 @@ namespace ProdajaMotornihVozila.Forme.ZaposleniForme
                     datumIstekaUgovora
                     );
 
-                if(this.rezimIzmene)
+                try
                 {
-                    DTOManager.azurirajZaposlenog(zaposleni);
+                    if (this.rezimIzmene)
+                    {
+                        DTOManager.azurirajZaposlenog(zaposleni);
+                    }
+                    else
+                    {
+                        DTOManager.dodajZaposlenog(zaposleni);
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    DTOManager.dodajZaposlenog(zaposleni);
+                    MessageBox.Show(ex.Message);
+                    return;
                 }
+
+                
 
             }
 
